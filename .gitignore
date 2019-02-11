@@ -1,5 +1,8 @@
 *.log
 *.sln
 
-KC*
+KC*/
 *.vs
+build/
+bin/
+releases/
