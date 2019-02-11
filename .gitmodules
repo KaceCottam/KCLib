@@ -1,0 +1,24 @@
+[submodule "KCCore"]
+	path = KCCore
+	url = git@github.com:KaceCottam/KCCore.git
+[submodule "KCColors"]
+	path = KCColors
+	url = git@github.com:KaceCottam/KCColors.git
+[submodule "KCLists"]
+	path = KCLists
+	url = git@github.com:KaceCottam/KCLists.git
+[submodule "KCController"]
+	path = KCController
+	url = git@github.com:KaceCottam/KCController.git
+[submodule "KCCircleLists"]
+	path = KCCircleLists
+	url = git@github.com:KaceCottam/KCCircleLists.git
+[submodule "KCStacks"]
+	path = KCStacks
+	url = git@github.com:KaceCottam/KCStacks.git
+[submodule "KCMusic"]
+	path = KCMusic
+	url = git@github.com:KaceCottam/KCMusic.git
+[submodule "KCLinkedLists"]
+	path = KCLinkedLists
+	url = git@github.com:KaceCottam/KCLinkedLists.git
