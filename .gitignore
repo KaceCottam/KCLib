@@ -1,9 +1,3 @@
-*.log
-*.sln
-
-KC*/
-*.vs
-
 build/
 bin/
 releases/
