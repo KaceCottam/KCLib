@@ -3,6 +3,7 @@
 
 KC*/
 *.vs
+
 build/
 bin/
 releases/
