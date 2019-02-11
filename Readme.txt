@@ -12,6 +12,8 @@ Other notes:
 I use "TODO:" comments to indicate parts of the source code I am planning to add to or customize.
 I use "BUG:" comments to indicate parts of the source code where there is a bug that needs to be fixed.
 
+When cloning, make sure to get the submodules with `git submodule update` and `git clone --recursive`
+
 /////////////////////////////////////////////////////////////////////////////
 CHANGELOG 1.1.0
 	Moved repository to KaceCottam/KCLib.
