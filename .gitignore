@@ -1,5 +1,6 @@
 *.log
 *.sln
 
-KC*
+KC*/
 *.vs
+build/
