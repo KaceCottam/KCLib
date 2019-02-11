@@ -2,5 +2,7 @@ build/
 bin/
 releases/
 *.log
-*.vs
 *.sln
+*.suo
+*.user
+*.ncb
