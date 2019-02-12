@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\KCStateMachine.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{83d169f2-abb0-460d-8844-397e1afa6f7f}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
