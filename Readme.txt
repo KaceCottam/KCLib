@@ -1,6 +1,6 @@
 Name: KCLib
 Author: Kace Cottam
-Version: 1.1.0
+Version: 1.1.1
 
 /////////////////////////////////////////////////////////////////////////////
 Contents:
@@ -15,6 +15,10 @@ I use "BUG:" comments to indicate parts of the source code where there is a bug 
 When cloning, make sure to get the submodules with `git submodule update` and `git clone --recursive`
 
 /////////////////////////////////////////////////////////////////////////////
+CHANGELOG 1.1.1
+	Added module: KCStateMachine
+	It contains a class for a state machine.
+
 CHANGELOG 1.1.0
 	Moved repository to KaceCottam/KCLib.
 	This allows for submodules in github, so more organization.
