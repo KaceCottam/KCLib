@@ -1,5 +1,4 @@
-#ifndef KC_LISTS_H
-#define KC_LISTS_H
+#pragma once
 
 #include <iostream>
 #include <utility>
@@ -314,5 +313,3 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	}
 	return stream;
 }
-
-#endif // !KC_LISTS_H

@@ -1,6 +1,7 @@
-#ifndef KC_COLORS_H
-#define KC_COLORS_H
+#pragma once
+
 #include <functional>
+
 namespace KC
 {
 	namespace Colors
@@ -68,6 +69,3 @@ namespace KC
 		}
 	}
 }
-
-
-#endif // !KC_COLORS_H

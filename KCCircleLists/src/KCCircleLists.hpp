@@ -1,5 +1,4 @@
-#ifndef KCCIRCLELISTS_H
-#define KCCIRCLELISTS_H
+#pragma once
 
 #include <iostream>
 
@@ -200,5 +199,3 @@ KC::CircleList<T>::~CircleList()
 		this->Pull();
 	}
 }
-
-#endif // !KCCIRCLELISTS_H

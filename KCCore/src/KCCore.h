@@ -1,5 +1,4 @@
-#ifndef KC_CORE_H
-#define KC_CORE_H
+#pragma once
 
 #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
@@ -15,6 +14,3 @@ namespace KC
 		auto SetupKCLib() -> void;
 	}
 }
-
-
-#endif // !KC_CORE_H

@@ -1,7 +1,8 @@
-#ifndef KCMUSIC_H
-#define KCMUSIC_H
+#pragma once
+
 #include <Windows.h>
 #include <string>
+
 namespace KC
 {
 		static class Tone final
@@ -48,4 +49,3 @@ namespace KC
 			auto Play(DWORD timeToWaitInBetweenNotes = 0) const -> void;
 		};
 }
-#endif // KCMUSIC_H

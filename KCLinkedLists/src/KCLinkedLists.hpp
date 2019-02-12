@@ -1,5 +1,4 @@
-#ifndef KCLINKEDLISTS_H
-#define KCLINKEDLISTS_H
+#pragma once
 
 #include <iostream>
 
@@ -194,4 +193,3 @@ auto KC::LinkedList<T>::operator<<(std::initializer_list<T> data) -> LinkedList<
 	Append(data);
 	return *this;
 }
-#endif // !KCLINKEDLISTS_H

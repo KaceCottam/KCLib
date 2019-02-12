@@ -1,5 +1,5 @@
-#ifndef KC_CONTROLLER_H
-#define KC_CONTROLLER_H
+#pragma once
+
 #include <ctime>
 #include <conio.h>
 
@@ -48,5 +48,3 @@ namespace KC
 		auto GetKey(InputFlag& flag, time_t delay = 0) -> int;
 	}
 }
-
-#endif // !KC_CONTROLLER_H
