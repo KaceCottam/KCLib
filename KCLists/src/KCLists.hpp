@@ -485,6 +485,7 @@ namespace KC
 			}
 			return *this;
 		}
+
 		~CircleList()
 		{
 			while (this->Header != nullptr)
