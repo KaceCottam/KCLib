@@ -10,10 +10,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCController", "KCController\KCController.vcxproj", "{DF077480-4446-4A9B-B6C9-770349B3C707}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCCircleLists", "KCCircleLists\KCCircleLists.vcxproj", "{D73CFD39-B134-4876-8635-FDFEB6BC2442}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C93B5B8-0B94-4029-957B-096A42F69186} = {1C93B5B8-0B94-4029-957B-096A42F69186}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCLists", "KCLists\KCLists.vcxproj", "{1C93B5B8-0B94-4029-957B-096A42F69186}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCLinkedLists", "KCLinkedLists\KCLinkedLists.vcxproj", "{1213E735-7EF8-4033-81BE-BC3223C069ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C93B5B8-0B94-4029-957B-096A42F69186} = {1C93B5B8-0B94-4029-957B-096A42F69186}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCMusic", "KCMusic\KCMusic.vcxproj", "{37B24415-D408-401A-8299-C0707933CFD7}"
 EndProject

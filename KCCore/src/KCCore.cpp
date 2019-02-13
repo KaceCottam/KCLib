@@ -1,4 +1,4 @@
-#include "KCCore.h"
+#include "KCCore.hpp"
 #include <Windows.h>
 #include <ctime>
 

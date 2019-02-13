@@ -1,4 +1,4 @@
-#include "KCColors.h"
+#include "KCColors.hpp"
 #include <iostream>
 
 auto KC::Colors::Colorize(char* color, const std::function<void()>& function) -> void

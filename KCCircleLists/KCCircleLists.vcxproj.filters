@@ -18,5 +18,8 @@
     <ClInclude Include="src\KCCircleLists.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\KCLists.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

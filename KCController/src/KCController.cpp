@@ -1,4 +1,4 @@
-#include "KCController.h"
+#include "KCController.hpp"
 
 auto KC::Controller::Ctrl(const int key) -> int
 {

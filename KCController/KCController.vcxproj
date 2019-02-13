@@ -22,7 +22,7 @@
     <ClCompile Include="src\KCController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\KCController.h" />
+    <ClInclude Include="src\KCController.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{df077480-4446-4a9b-b6c9-770349b3c707}</ProjectGuid>
@@ -80,24 +80,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)build\</IntDir>
-    <TargetName>$(ProjectName)-$(Version)-$(Platform)-$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)-$(Version)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)build\</IntDir>
-    <TargetName>$(ProjectName)-$(Version)-$(Platform)-$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)-$(Version)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)build\</IntDir>
-    <TargetName>$(ProjectName)-$(Version)-$(Platform)-$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)-$(Version)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)build\</IntDir>
-    <TargetName>$(ProjectName)-$(Version)-$(Platform)-$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)-$(Version)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

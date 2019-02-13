@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\KCController.h">
+    <ClInclude Include="src\KCController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

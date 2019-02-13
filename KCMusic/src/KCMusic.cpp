@@ -1,4 +1,4 @@
-#include "KCMusic.h"
+#include "KCMusic.hpp"
 #include <fstream>
 #include <sstream>
 #include <locale>
