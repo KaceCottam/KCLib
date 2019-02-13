@@ -32,8 +32,6 @@ namespace KC
 		{
 		}
 
-		~ListNode() = default;
-
 		auto operator=(T const& data) -> ListNode<T>&
 		{
 			this->Data = data;
