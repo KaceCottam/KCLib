@@ -10,13 +10,14 @@ namespace KC
 	class StateMachine
 	{
 		bool FlagStop = false;
+		int CurrentStateIndex = 0;
 		std::tuple<DataTypes> Data;
 	public:
 		std::vector<std::function<void(StateMachine&)>> States;
 		std::function<void(StateMachine&)> NextState;
 
-		explicit StateMachine(DataTypes& data) 
-		: Data(data)
+		explicit StateMachine(DataTypes& data)
+			: Data(data)
 		{
 		}
 		explicit StateMachine(std::vector<std::function<void(StateMachine&)>> states)
@@ -39,17 +40,31 @@ namespace KC
 
 		bool Stop()
 		{
-			if (IsStopped())
-			{
-				return true;
-			}
+			const auto stopped = !this->IsStopped();
 			FlagStop = true;
-			return false;
+			return stopped;
 		}
 
 		bool IsStopped() const
 		{
 			return FlagStop;
 		}
+
+		StateMachine<DataTypes>& operator++()
+		{
+			CurrentStateIndex++;
+			NextState = States[CurrentStateIndex];
+			return *this;
+		}
+
+		StateMachine<DataTypes>& operator--()
+		{
+			CurrentStateIndex--;
+			while (CurrentStateIndex < 0) CurrentStateIndex++;
+			NextState = States[CurrentStateIndex];
+			return *this;
+		}
+
+		explicit operator bool() const { return IsStopped(); }
 	};
 }
