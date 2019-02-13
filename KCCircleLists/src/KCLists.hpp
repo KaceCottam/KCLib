@@ -273,7 +273,7 @@ auto KC::List<T>::operator<<(T const& data) -> List<T>&
 }
 
 template <class T>
-auto KC::List<T>::operator >> (T& data) -> List<T>&
+auto KC::List<T>::operator>>(T& data) -> List<T>&
 {
 	data = Pull();
 	return *this;
