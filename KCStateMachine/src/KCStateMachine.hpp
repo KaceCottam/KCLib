@@ -7,7 +7,7 @@
 namespace KC
 {
 	template<class... DataTypes>
-	class StateMachine
+	class StateMachine final
 	{
 		bool FlagStop = false;
 		int CurrentStateIndex = 0;
