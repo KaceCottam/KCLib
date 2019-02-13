@@ -1,6 +1,6 @@
 Name: KCLib
 Author: Kace Cottam
-Version: 1.1.0
+Version: 1.1.1
 
 /////////////////////////////////////////////////////////////////////////////
 Contents:
@@ -16,8 +16,9 @@ When cloning, make sure to get the submodules with `git submodule update` and `g
 
 /////////////////////////////////////////////////////////////////////////////
 CHANGELOG 1.1.1
-	Added KCStageMachine Module. Allows for easily making State Machines.
-	
+	Added module: KCStateMachine
+	It contains a class for a state machine.
+
 CHANGELOG 1.1.0
 	Moved repository to KaceCottam/KCLib.
 	This allows for submodules in github, so more organization.

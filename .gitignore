@@ -1,9 +1,7 @@
-*.log
-*.sln
-
-KC*/
-*.vs
-
 build/
 bin/
 releases/
+*.log
+*.suo
+*.user
+*.ncb
