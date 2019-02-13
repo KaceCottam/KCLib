@@ -18,6 +18,8 @@ When cloning, make sure to get the submodules with `git submodule update` and `g
 CHANGELOG 1.1.1
 	Added module: KCStateMachine
 	It contains a class for a state machine.
+	Moved all lists into KCLists.hpp
+	Changed all .h file extensions into .hpp for ease of use
 
 CHANGELOG 1.1.0
 	Moved repository to KaceCottam/KCLib.
