@@ -135,7 +135,7 @@ namespace KC
 		{
 			return Current != nullptr;
 		}
-		operator ListNode<T>() const
+		explicit operator TraversalNode<T>() const
 		{
 			return *Current;
 		}
@@ -310,10 +310,6 @@ namespace KC
 	template<typename T>
 	class LinkedList final : public List<T>
 	{
-	private:
-		TraversalNode<T> EndNode;
-		bool FlagChangedLastNode = false;
-		bool FlagIsCirlce = false;
 	public:
 		TraversalNode<T> Begin()
 		{
@@ -321,22 +317,14 @@ namespace KC
 		}
 		TraversalNode<T> End()
 		{
-			if (!FlagChangedLastNode)
-			{
-				return EndNode;
-			}
-			FlagChangedLastNode = false;
 			TraversalNode<T> traversalNode = Begin();
-			traversalNode += this->Length - 1;
-			EndNode = traversalNode;
-			return traversalNode;
+			while (traversalNode) traversalNode++;
 		}
 		void Append(T const& data)
 		{
-			auto node = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ End(), node });
+			TraversalNode<T> traversalNode = *this->Header;
 		}
-		
+
 		// TODO: Append fxns (4)
 		// TODO: Begin/End fxns
 		// TODO: Overload operator<< fxns
