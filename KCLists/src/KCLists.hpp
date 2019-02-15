@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <utility>
+#include <exception>
 
 namespace KC
 {
@@ -308,16 +309,27 @@ namespace KC
 	};
 
 	template<typename T>
-	class LinkedList final : public List<T>
+	class LinkedList : List<T>
 	{
 	private:
 		TraversalNode<T> EndNode;
 		bool FlagChangedLastNode = false;
-		bool FlagIsCirlce = false;
+		using List<T>::Header;
+		using List<T>::Length;
 	public:
+		using List<T>::GetHeader;
+		using List<T>::GetLength;
+		using List<T>::GetIndex;
+		using List<T>::Delete;
+		using List<T>::Push;
+		using List<T>::Pull;
+		using List<T>::operator=;
+		using List<T>::operator[];
+		using List<T>::operator bool;
+
 		TraversalNode<T> Begin()
 		{
-			return TraversalNode<T>(*this->Header);
+			return TraversalNode<T>(*Header);
 		}
 		TraversalNode<T> End()
 		{
@@ -327,20 +339,61 @@ namespace KC
 			}
 			FlagChangedLastNode = false;
 			TraversalNode<T> traversalNode = Begin();
-			traversalNode += this->Length - 1;
+			traversalNode += Length - 1;
 			EndNode = traversalNode;
 			return traversalNode;
 		}
 		void Append(T const& data)
 		{
-			auto node = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ End(), node });
+			ListNode<T>* previousHeader = End();
+			Header = new ListNode<T>(data);
+			ListNode<T>::LinkNodes({ Header,previousHeader });
+			++Length;
+			FlagChangedLastNode = true;
 		}
-		
-		// TODO: Append fxns (4)
-		// TODO: Begin/End fxns
-		// TODO: Overload operator<< fxns
+		void Append(const int length, T const* data)
+		{
+			Append(List<T>(length, data));
+		}
+		void Append(std::initializer_list<T> data)
+		{
+			Append(List<T>(data));
+		}
+		void Append(List<T> const& other)
+		{
+			auto length = other.Length;
+			for (auto i = length; i > 0; --i)
+			{
+				Push(other.GetIndex(i));
+			}
+		}
+
+		LinkedList<T>& operator<<(T const& data)
+		{
+			Append(data);
+			return *this;
+		}
+		LinkedList<T>& operator<<(std::initializer_list<T> data)
+		{
+			Append(data);
+			return *this;
+		}
+		LinkedList<T>& operator<<(List<T> const& other)
+		{
+			Append(other);
+			return *this;
+		}
+
+		LinkedList<T>& operator >> (T& data)
+		{
+			data = Pull();
+			return *this;
+		}
 	};
+
+
+
+
 }
 
 template <typename T>
