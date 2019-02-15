@@ -34,19 +34,19 @@ namespace KC
 
 		auto operator=(T const& data) -> ListNode<T>&
 		{
-			this->Data = data;
+			Data = data;
 			return *this;
 		}
 		auto operator=(ListNode<T> const& other) -> ListNode<T>&
 		{
-			this->Data = other.Data;
+			Data = other.Data;
 			return *this;
 		}
 		auto operator=(ListNode<T>&& other) noexcept -> ListNode<T>&
 		{
 			if (this != &other)
 			{
-				this->Data = other.Data;
+				Data = other.Data;
 				other.Data = 0;
 			}
 			return *this;
@@ -258,8 +258,8 @@ namespace KC
 				return;
 			}
 			auto newNode = new ListNode<T>(data);
-			newNode->Previous = &this->End();
-			this->End().Next = newNode;
+			newNode->Previous = &End();
+			End().Next = newNode;
 			++this->Length;
 		}
 		auto Append(const int length, T const* data) -> void
@@ -309,7 +309,7 @@ namespace KC
 
 		auto Pop() -> T
 		{
-			auto endNode = &this->End();
+			auto endNode = &End();
 			auto beforeEndNode = endNode->Previous;
 			T data = endNode->Data;
 			delete endNode;
@@ -509,7 +509,7 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		const auto& index = list.GetIndex(i);
+		const KC::ListNode<T>& index = list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
