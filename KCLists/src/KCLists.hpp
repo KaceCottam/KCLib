@@ -46,7 +46,7 @@ namespace KC
 		{
 			if (this != &other)
 			{
-				Data = other.Data;
+				this->Data = other.Data;
 				other.Data = 0;
 			}
 			return *this;
@@ -77,7 +77,7 @@ namespace KC
 			auto length = other.GetLength();
 			for (auto i = 1; i < length; i++)
 			{
-				this->Push(other.GetIndex(i));
+				Push(other.GetIndex(i));
 			}
 		}
 		explicit List(T const& data) : Header{ new ListNode<T>(data) }, Length(1)
@@ -86,7 +86,7 @@ namespace KC
 		List(std::initializer_list<T> data) : Header(new ListNode<T>(*(data.end() - 1))), Length(1)
 		{
 			auto length = data.size() - 1;
-			this->Push(length, data.begin());
+			Push(length, data.begin());
 		}
 		List(const int length, T const* data) : Header{ new ListNode<T>{ data[0] } }, Length(1)
 		{
@@ -104,6 +104,19 @@ namespace KC
 		auto GetLength() const -> int
 		{
 			return Length;
+		}
+		auto GetIndex(const int index) const -> T&
+		{
+			ListNode<T>* traversalNode = Header;
+			for (auto i = 0; i < index && traversalNode; i++)
+			{
+				traversalNode = traversalNode->Next;
+			}
+			if (traversalNode == nullptr)
+			{
+				return nullptr;
+			}
+			return traversalNode->Data;
 		}
 
 		auto Push(T const& data) -> void
@@ -124,7 +137,6 @@ namespace KC
 				Push(data[i]);
 			}
 		}
-
 		auto Push(std::initializer_list<T> data) -> void
 		{
 			auto length = data.size();
@@ -143,20 +155,6 @@ namespace KC
 			return data;
 		}
 
-		auto GetIndex(const int index) const -> T&
-		{
-			ListNode<T>* traversalNode = Header;
-			for (auto i = 0; i < index && traversalNode; i++)
-			{
-				traversalNode = traversalNode->Next;
-			}
-			if (traversalNode == nullptr)
-			{
-				return nullptr;
-			}
-			return traversalNode->Data;
-		}
-
 		auto operator=(List<T> const& other) -> List<T>&
 		{
 			while (Header)
@@ -167,7 +165,7 @@ namespace KC
 			auto length = other.Length;
 			for (auto i = length; i > 1; --i)
 			{
-				this->Push(other.GetIndex(i));
+				Push(other.GetIndex(i));
 			}
 			return *this;
 		}
@@ -511,7 +509,7 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		auto& index = list.GetIndex(i);
+		const auto& index = list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
