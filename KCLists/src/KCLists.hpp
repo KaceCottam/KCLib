@@ -51,6 +51,8 @@ namespace KC
 			}
 			return *this;
 		}
+
+		~ListNode() = default;
 	};
 
 	template <class T>
@@ -509,7 +511,8 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		std::cout << "[" << i << ":$" << &list.GetIndex(i) << "] " << list.GetIndex(i) << std::endl;
+		auto& index = list.GetIndex(i);
+		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
 }
