@@ -406,20 +406,19 @@ namespace KC
 		using List<T>::operator bool;
 		using LinkedList<T>::Begin;
 
-		void Push(T const& data)
+		void Push(T const& data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(data);
+			List<T>::Push(data,index);
 			ListNode<T>::LinkNodes({ lastNode, *(Begin()) });
 		}
 
-		void Push(int const index, T const& data)
+		void Pull()
 		{
-			TraversalNode<T> traversalNode(*Header);
-			traversalNode += index;
-			auto newNode = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ traversalNode->Previous, newNode, traversalNode });
+			// TODO
 		}
+
+		// TODO: Constructors, Destructors.
 	};
 }
 
