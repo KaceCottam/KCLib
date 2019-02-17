@@ -341,6 +341,7 @@ namespace KC
 		using List<T>::operator=;
 		using List<T>::operator[];
 		using List<T>::operator bool;
+		using List<T>::operator >> ;
 
 		TraversalNode<T> Begin()
 		{
@@ -359,7 +360,6 @@ namespace KC
 			return traversalNode;
 		}
 
-
 		void Append(T const& data)
 		{
 			ListNode<T>* previousHeader = End();
@@ -371,9 +371,9 @@ namespace KC
 		void Append(List<T> const& other)
 		{
 			auto length = other.Length;
-			for (auto i = length; i > 0; --i)
+			for (auto i = 0; i > length; ++i)
 			{
-				Push(other.GetIndex(i));
+				Append(other.GetIndex(i));
 			}
 		}
 		void Append(int const& length, T const* data)
@@ -401,10 +401,21 @@ namespace KC
 			return *this;
 		}
 
-		LinkedList<T>& operator >> (T& data)
+		// Used specifically for when circleLinkedLists are converted to LinkedLists
+		bool DetectCircle() const
 		{
-			data = Pull();
-			return *this;
+			TraversalNode<T> trav1 = Header;
+			TraversalNode<T> trav2 = Header;
+			while (trav1.Current && trav2.Current && trav2->Next)
+			{
+				++trav1;
+				trav2 += 2;
+				if (trav1.Current == trav2.Current)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	};
 
@@ -413,15 +424,54 @@ namespace KC
 	{
 		using List<T>::Header;
 		using List<T>::Length;
+		using LinkedList<T>::DetectCircle; // For constructors only
+		using LinkedList<T>::End; // For constructors only
 	public:
 		using List<T>::GetHeader;
 		using List<T>::GetLength;
 		using List<T>::GetIndex;
-		using List<T>::Delete;
 		using List<T>::operator=;
 		using List<T>::operator[];
 		using List<T>::operator bool;
 		using LinkedList<T>::Begin;
+
+		CircleLinkedList() = default;
+		CircleLinkedList(List<T>&& other) noexcept : LinkedList<T>(other)
+		{
+			if (!DetectCircle())
+			{
+				ListNode<T>::LinkNodes(End(), Begin());
+			}
+		}
+		CircleLinkedList(List<T> const& other) : LinkedList<T>(other)
+		{
+			if (!DetectCircle())
+			{
+				ListNode<T>::LinkNodes(End(), Begin());
+			}
+		}
+		CircleLinkedList(std::initializer_list<T> data) : LinkedList<T>(data)
+		{
+			if (!DetectCircle())
+			{
+				ListNode<T>::LinkNodes(End(), Begin());
+			}
+		}
+		CircleLinkedList(const int length, T const* data) : LinkedList<T>(length, data)
+		{
+			if (!DetectCircle())
+			{
+				ListNode<T>::LinkNodes(End(), Begin());
+			}
+		}
+
+		void Delete()
+		{
+			while (Header)
+			{
+				Pull();
+			}
+		}
 
 		void Push(T const& data, int const& index = 0)
 		{
@@ -454,14 +504,37 @@ namespace KC
 
 		T Pull(int const& index = 0)
 		{
-			auto lastNode = Begin()->Previous;
-			T data = List<T>::Pull(data, index);
 			if (index == 0)
-				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+				ListNode<T>::LinkNodes({ Begin()->Previous, Begin()->Next });
+			T data = List<T>::Pull(data, index);
 			return data;
 		}
 
-		// TODO: Constructors, Destructors.
+		CircleLinkedList<T>& operator<<(T const& data)
+		{
+			Push(data);
+			return *this;
+		}
+		CircleLinkedList<T>& operator<<(std::initializer_list<T> data)
+		{
+			Push(data);
+			return *this;
+		}
+		CircleLinkedList<T>& operator<<(List<T> const& other)
+		{
+			Push(other);
+			return *this;
+		}
+		CircleLinkedList<T>& operator >> (T& data)
+		{
+			data = Pull();
+			return *this;
+		}
+
+		~CircleLinkedList()
+		{
+			Delete();
+		}
 	};
 }
 
