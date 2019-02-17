@@ -15,7 +15,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCMusic", "KCMusic\KCMusic.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCStateMachine", "KCStateMachine\KCStateMachine.vcxproj", "{83D169F2-ABB0-460D-8844-397E1AFA6F7F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCLists", "TestKCLists\TestKCLists.vcxproj", "{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{448C9FE9-1656-4B58-A2D1-592923AF3274}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCLists", "tests\TestKCLists\TestKCLists.vcxproj", "{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,5 +86,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3} = {448C9FE9-1656-4B58-A2D1-592923AF3274}
 	EndGlobalSection
 EndGlobal

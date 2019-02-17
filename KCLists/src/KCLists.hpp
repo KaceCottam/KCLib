@@ -201,9 +201,8 @@ namespace KC
 		ListNode<T>* Header = nullptr;
 		int Length = 0;
 	public:
-		List()
-		{
-		}
+		List() = default;
+
 		List(List<T>&& other) noexcept
 		{
 			Header = other.Header;
