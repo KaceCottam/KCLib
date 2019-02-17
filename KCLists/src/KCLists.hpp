@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <utility>
-#include <exception>
 
 namespace KC
 {
@@ -75,7 +74,9 @@ namespace KC
 		}
 		static void LinkNodes(std::initializer_list<ListNode<T>> nodes)
 		{
-			LinkNodes(nodes.size(), nodes.begin());
+			auto nodeList = new ListNode<T>[nodes.size()];
+			memcpy(nodeList, nodes.begin(), nodes.size());
+			LinkNodes(nodes.size(), nodeList);
 		}
 
 		~ListNode() = default;
@@ -116,7 +117,7 @@ namespace KC
 		{
 			for (auto i = 0; i < num; i++)
 			{
-				*this++;
+				operator++();
 			}
 			return *this;
 		}
@@ -124,13 +125,13 @@ namespace KC
 		{
 			for (auto i = 0; i < num; i++)
 			{
-				*this--;
+				operator--();
 			}
 			return *this;
 		}
-		ListNode<T>& operator*()
+		ListNode<T>* operator*()
 		{
-			return *Current;
+			return Current;
 		}
 		ListNode<T>* operator->()
 		{
@@ -161,7 +162,9 @@ namespace KC
 		ListNode<T>* Header;
 		int Length;
 	public:
-		List() = default;
+		List() : Header(nullptr), Length(0)
+		{
+		}
 		List(List<T>&& other) noexcept
 		{
 			Header = other.Header;
@@ -190,7 +193,7 @@ namespace KC
 		{
 			return Length;
 		}
-		T const& GetIndex(const int index) const
+		T& GetIndex(const int index) const
 		{
 			if (Length - 1 < index)
 			{
@@ -214,10 +217,10 @@ namespace KC
 
 		void Push(T const& data, int const& index = 0)
 		{
-			TraversalNode<T> traversalNode(*Header);
+			TraversalNode<T> traversalNode(Header);
 			traversalNode += index;
 			auto newNode = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ traversalNode->Previous, newNode, traversalNode });
+			ListNode<T>::LinkNodes({ *traversalNode->Previous, *newNode, **traversalNode });
 
 			Length++;
 		}
@@ -264,12 +267,12 @@ namespace KC
 			}
 			else
 			{
-				TraversalNode<T> traversalNode(*Header);
+				TraversalNode<T> traversalNode(Header);
 				traversalNode += index;
 
 				data = traversalNode->Data;
 
-				ListNode<T>::LinkNodes({ traversalNode->Previous, traversalNode->Next });
+				ListNode<T>::LinkNodes({ *traversalNode->Previous, *traversalNode->Next });
 
 				delete *traversalNode;
 			}
@@ -339,10 +342,10 @@ namespace KC
 	template<typename T>
 	class LinkedList : List<T>
 	{
-		TraversalNode<T> EndNode;
-		bool FlagChangedLastNode = false;
 		using List<T>::Header;
 		using List<T>::Length;
+		TraversalNode<T> EndNode;
+		bool FlagChangedLastNode = false;
 	public:
 		using List<T>::GetHeader;
 		using List<T>::GetLength;
@@ -355,9 +358,25 @@ namespace KC
 		using List<T>::operator bool;
 		using List<T>::operator >> ;
 
+		LinkedList() : List<T>(), EndNode(nullptr)
+		{
+		}
+		LinkedList(List<T>&& other) noexcept : List<T>(other)
+		{
+		}
+		LinkedList(List<T> const& other) : List<T>(other)
+		{
+		}
+		LinkedList(std::initializer_list<T> data) : List<T>(data)
+		{
+		}
+		LinkedList(const int length, T const* data) : List<T>(length,data)
+		{
+		}
+
 		TraversalNode<T> Begin()
 		{
-			return TraversalNode<T>(*Header);
+			return TraversalNode<T>(Header);
 		}
 		TraversalNode<T> End()
 		{
@@ -374,15 +393,15 @@ namespace KC
 
 		void Append(T const& data)
 		{
-			ListNode<T>* previousHeader = End();
+			ListNode<T> previousHeader = End();
 			Header = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ Header,previousHeader });
+			ListNode<T>::LinkNodes({ *Header,previousHeader });
 			++Length;
 			FlagChangedLastNode = true;
 		}
 		void Append(List<T> const& other)
 		{
-			auto length = other.Length;
+			auto length = other.GetLength();
 			for (auto i = 0; i > length; ++i)
 			{
 				Append(other.GetIndex(i));
@@ -418,11 +437,11 @@ namespace KC
 		{
 			TraversalNode<T> trav1 = Header;
 			TraversalNode<T> trav2 = Header;
-			while (trav1.Current && trav2.Current && trav2->Next)
+			while (*trav1 && *trav2 && trav2->Next)
 			{
 				++trav1;
 				trav2 += 2;
-				if (trav1.Current == trav2.Current)
+				if (*trav1 == *trav2)
 				{
 					return true;
 				}
@@ -434,10 +453,10 @@ namespace KC
 	template<typename T>
 	class CircleLinkedList : LinkedList<T>
 	{
-		using List<T>::Header;
-		using List<T>::Length;
-		using LinkedList<T>::EndNode; // For constructors only
-		using LinkedList<T>::FlagChangedLastNode; // For constructors only
+		//using List<T>::Header;
+		//using List<T>::Length;
+		//using LinkedList<T>::EndNode; // For constructors only
+		//using LinkedList<T>::FlagChangedLastNode; // For constructors only
 		using LinkedList<T>::DetectCircle; // For constructors only
 		using LinkedList<T>::End; // For constructors only
 	public:
