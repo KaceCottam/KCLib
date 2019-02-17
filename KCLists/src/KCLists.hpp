@@ -95,10 +95,22 @@ namespace KC
 			Current = Current->Next;
 			return *this;
 		}
+		TraversalNode<T> operator++(int)
+		{
+			TraversalNode<T> result(*this);
+			++*this;
+			return result;
+		}
 		TraversalNode<T>& operator--()
 		{
 			Current = Current->Previous;
 			return *this;
+		}
+		TraversalNode<T> operator--(int)
+		{
+			TraversalNode<T> result(*this);
+			--*this;
+			return result;
 		}
 		TraversalNode<T>& operator+=(int const num)
 		{
