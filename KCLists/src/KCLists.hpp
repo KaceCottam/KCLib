@@ -427,25 +427,29 @@ namespace KC
 		{
 			auto lastNode = Begin()->Previous;
 			List<T>::Push(data, index);
-			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (index == 0)
+				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(List<T> const& other, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
 			List<T>::Push(other, index);
-			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (index == 0)
+				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
 			List<T>::Push(length, data, index);
-			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (index == 0)
+				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
 			List<T>::Push(data, index);
-			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (index == 0)
+				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 
 		T Pull(int const& index = 0)
@@ -453,9 +457,7 @@ namespace KC
 			auto lastNode = Begin()->Previous;
 			T data = List<T>::Pull(data, index);
 			if (index == 0)
-			{
 				ListNode<T>::LinkNodes({ lastNode, *Begin() });
-			}
 			return data;
 		}
 
