@@ -226,25 +226,42 @@ namespace KC
 			Push(data.size(), data.begin(), index);
 		}
 
-		T Pull()
+		T Pull(int const& index = 0)
 		{
 			if (!Header)
 			{
 				return 0;
 			}
 
-			T data = Header->Data;
-			ListNode<T>* oldHeader = Header;
-			Header = Header->Next;
+			T data;
 
-			/*
-			 *  Header can be equal to nullptr after this because
-			 *  the Push() functions have the beginning node and
-			 *  next node's previous and next pointers
-			 *  respectively = nullptr.
-			 */
+			if (index == 0)
+			{
+				data = Header->Data;
+				ListNode<T>* oldHeader = Header;
+				Header = Header->Next;
 
-			delete oldHeader;
+				/*
+				 *  Header can be equal to nullptr after this because
+				 *  the Push() functions have the beginning node and
+				 *  next node's previous and next pointers
+				 *  respectively = nullptr.
+				 */
+
+				delete oldHeader;
+			}
+			else
+			{
+				TraversalNode<T> traversalNode(*Header);
+				traversalNode += index;
+
+				data = traversalNode->Data;
+
+				ListNode<T>::LinkNodes({ traversalNode->Previous, traversalNode->Next });
+
+				delete *traversalNode;
+			}
+
 			Length--;
 
 			return data;
@@ -409,13 +426,37 @@ namespace KC
 		void Push(T const& data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(data,index);
-			ListNode<T>::LinkNodes({ lastNode, *(Begin()) });
+			List<T>::Push(data, index);
+			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+		}
+		void Push(List<T> const& other, int const& index = 0)
+		{
+			auto lastNode = Begin()->Previous;
+			List<T>::Push(other, index);
+			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+		}
+		void Push(const int length, T const* data, int const& index = 0)
+		{
+			auto lastNode = Begin()->Previous;
+			List<T>::Push(length, data, index);
+			ListNode<T>::LinkNodes({ lastNode, *Begin() });
+		}
+		void Push(std::initializer_list<T> data, int const& index = 0)
+		{
+			auto lastNode = Begin()->Previous;
+			List<T>::Push(data, index);
+			ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 
-		void Pull()
+		T Pull(int const& index = 0)
 		{
-			// TODO
+			auto lastNode = Begin()->Previous;
+			T data = List<T>::Pull(data, index);
+			if (index == 0)
+			{
+				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			}
+			return data;
 		}
 
 		// TODO: Constructors, Destructors.
