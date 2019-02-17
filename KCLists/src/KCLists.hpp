@@ -401,7 +401,7 @@ namespace KC
 			return *this;
 		}
 
-		// Used specifically for when circleLinkedLists are converted to LinkedLists
+		// Used specifically for when CircleLinkedLists are converted to LinkedLists
 		bool DetectCircle() const
 		{
 			TraversalNode<T> trav1 = Header;
@@ -424,13 +424,14 @@ namespace KC
 	{
 		using List<T>::Header;
 		using List<T>::Length;
+		using LinkedList<T>::EndNode; // For constructors only
+		using LinkedList<T>::FlagChangedLastNode; // For constructors only
 		using LinkedList<T>::DetectCircle; // For constructors only
 		using LinkedList<T>::End; // For constructors only
 	public:
 		using List<T>::GetHeader;
 		using List<T>::GetLength;
 		using List<T>::GetIndex;
-		using List<T>::operator=;
 		using List<T>::operator[];
 		using List<T>::operator bool;
 		using LinkedList<T>::Begin;
@@ -510,6 +511,33 @@ namespace KC
 			return data;
 		}
 
+		CircleLinkedList<T>& operator=(List<T> const& other)
+		{
+			Delete();
+
+			Push(other);
+
+			return *this;
+		}
+		CircleLinkedList<T>& operator=(List<T>&& other) noexcept
+		{
+			Delete();
+
+			if (this != &other)
+			{
+				Header = other.Header;
+				Length = other.Length;
+				other.Header = nullptr;
+				other.Length = 0;
+
+				if (!DetectCircle())
+				{
+					ListNode<T>::LinkNodes(End(), Begin());
+				}
+			}
+
+			return *this;
+		}
 		CircleLinkedList<T>& operator<<(T const& data)
 		{
 			Push(data);
