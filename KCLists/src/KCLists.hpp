@@ -58,12 +58,29 @@ namespace KC
 			return Data;
 		}
 
+		static void LinkNodes(int const length, ListNode<T>** nodes)
+		{
+			ListNode<T>* trail = nodes[0];
+			for (auto i = 1; i < length; i++)
+			{
+				ListNode<T>* head = nodes[i];
+				if (trail)
+				{
+					trail->Next = head;
+				}
+				if (head)
+				{
+					head->Previous = trail;
+				}
+				trail = head;
+			}
+		}
 		static void LinkNodes(int const length, ListNode<T>* nodes)
 		{
-			ListNode<T>* trail = nodes;
+			ListNode<T> trail = nodes;
 			for (auto i = 0; i < length; i++)
 			{
-				ListNode<T>* head = nodes + i;
+				ListNode<T> head = nodes + i;
 				if (trail != head && head && trail)
 				{
 					trail->Next = head;
@@ -71,6 +88,24 @@ namespace KC
 					trail = head;
 				}
 			}
+		}
+		static void LinkNodes(std::initializer_list<ListNode<T>*> nodes)
+		{
+			auto nodeList = new ListNode<T>*[nodes.size()];
+			auto index = 0;
+			for (auto i : nodes)
+			{
+				if (i != nullptr)
+				{
+					nodeList[index++] = i;
+				}
+				else
+				{
+					nodeList[index++] = nullptr;
+				}
+			}
+			LinkNodes(nodes.size(), nodeList);
+			delete[] nodeList;
 		}
 		static void LinkNodes(std::initializer_list<ListNode<T>> nodes)
 		{
@@ -87,6 +122,10 @@ namespace KC
 	{
 	public:
 		ListNode<T>* Current;
+
+		TraversalNode() : Current(nullptr)
+		{
+		}
 
 		TraversalNode(ListNode<T>* node) : Current(node)
 		{
@@ -159,10 +198,10 @@ namespace KC
 	class List
 	{
 	protected:
-		ListNode<T>* Header;
-		int Length;
+		ListNode<T>* Header = nullptr;
+		int Length = 0;
 	public:
-		List() : Header(nullptr), Length(0)
+		List()
 		{
 		}
 		List(List<T>&& other) noexcept
@@ -193,7 +232,7 @@ namespace KC
 		{
 			return Length;
 		}
-		T& GetIndex(const int index) const
+		ListNode<T>& GetIndex(const int index) const
 		{
 			if (Length - 1 < index)
 			{
@@ -204,7 +243,7 @@ namespace KC
 
 			traversalNode += index;
 
-			return traversalNode->Data;
+			return **traversalNode;
 		}
 
 		void Delete()
@@ -217,24 +256,35 @@ namespace KC
 
 		void Push(T const& data, int const& index = 0)
 		{
-			TraversalNode<T> traversalNode(Header);
-			traversalNode += index;
-			auto newNode = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ *traversalNode->Previous, *newNode, **traversalNode });
+			auto newNode = new ListNode<T>(data, Header);
+			if (Header && index != 0)
+			{
+				TraversalNode<T> traversalNode(Header);
+				traversalNode += index;
+				ListNode<T>::LinkNodes({ traversalNode->Previous, newNode, *traversalNode });
+			}
+			else
+			{
+				ListNode<T>::LinkNodes({ newNode, Header });
+				Header = newNode;
+			}
 
 			Length++;
 		}
 		void Push(List<T> const& other, int const& index = 0)
 		{
 			auto length = other.Length;
-			for (auto i = length; i > 0; --i)
+			for (auto i = length - 1; i >= 0; --i)
 			{
-				Push(other.GetIndex(i), index + i);
+				Push(other[i], index);
 			}
 		}
 		void Push(const int length, T const* data, int const& index = 0)
 		{
-			Push(List<T>(length, data), index);
+			for (auto i = length - 1; i >= 0; --i)
+			{
+				Push(data[i], index);
+			}
 		}
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
@@ -254,7 +304,14 @@ namespace KC
 			{
 				data = Header->Data;
 				ListNode<T>* oldHeader = Header;
-				Header = Header->Next;
+				if (oldHeader != Header->Next)
+				{
+					Header = Header->Next;
+				}
+				else
+				{
+					Header = nullptr;
+				}
 
 				/*
 				 *  Header can be equal to nullptr after this because
@@ -272,7 +329,7 @@ namespace KC
 
 				data = traversalNode->Data;
 
-				ListNode<T>::LinkNodes({ *traversalNode->Previous, *traversalNode->Next });
+				ListNode<T>::LinkNodes({ traversalNode->Previous, traversalNode->Next });
 
 				delete *traversalNode;
 			}
@@ -281,6 +338,21 @@ namespace KC
 
 			return data;
 		}
+
+		T Pull(TraversalNode<T>& traversalNode, int const& index = 0)
+		{
+			if(traversalNode->Next == *traversalNode)
+			{
+				traversalNode.Current = nullptr;
+			}
+			else if(&GetIndex(index) == *traversalNode)
+			{
+				++traversalNode;
+			}
+			return Pull(index);
+
+		}
+
 
 		List<T>& operator=(List<T> const& other)
 		{
@@ -326,7 +398,7 @@ namespace KC
 		}
 		T& operator[](const int index) const
 		{
-			return GetIndex(index);
+			return GetIndex(index).Data;
 		}
 		operator bool() const
 		{
@@ -340,8 +412,9 @@ namespace KC
 	};
 
 	template<typename T>
-	class LinkedList : List<T>
+	class LinkedList : public List<T>
 	{
+	protected:
 		using List<T>::Header;
 		using List<T>::Length;
 		TraversalNode<T> EndNode;
@@ -351,7 +424,6 @@ namespace KC
 		using List<T>::GetLength;
 		using List<T>::GetIndex;
 		using List<T>::Delete;
-		using List<T>::Push;
 		using List<T>::Pull;
 		using List<T>::operator=;
 		using List<T>::operator[];
@@ -364,14 +436,17 @@ namespace KC
 		LinkedList(List<T>&& other) noexcept : List<T>(other)
 		{
 		}
-		LinkedList(List<T> const& other) : List<T>(other)
+		LinkedList(List<T> const& other)// : List<T>(other)
 		{
+			Push(other);
 		}
-		LinkedList(std::initializer_list<T> data) : List<T>(data)
+		LinkedList(std::initializer_list<T> data)// : List<T>(data)
 		{
+			Push(data);
 		}
-		LinkedList(const int length, T const* data) : List<T>(length,data)
+		LinkedList(const int length, T const* data)// : List<T>(length, data)
 		{
+			Push(length, data);
 		}
 
 		TraversalNode<T> Begin()
@@ -389,6 +464,34 @@ namespace KC
 			traversalNode += Length - 1;
 			EndNode = traversalNode;
 			return traversalNode;
+		}
+
+		void Push(T const& data, int const& index = 0)
+		{
+			if (!Header)
+			{
+				FlagChangedLastNode = true;
+			}
+			List<T>::Push(data, index);
+		}
+		void Push(List<T> const& other, int const& index = 0)
+		{
+			auto length = other.Length;
+			for (auto i = length - 1; i >= 0; --i)
+			{
+				Push(other[i], index);
+			}
+		}
+		void Push(const int length, T const* data, int const& index = 0)
+		{
+			for (auto i = length - 1; i >= 0; --i)
+			{
+				Push(data[i], index);
+			}
+		}
+		void Push(std::initializer_list<T> data, int const& index = 0)
+		{
+			Push(data.size(), data.begin(), index);
 		}
 
 		void Append(T const& data)
@@ -451,20 +554,17 @@ namespace KC
 	};
 
 	template<typename T>
-	class CircleLinkedList : LinkedList<T>
+	class CircleLinkedList : public LinkedList<T>
 	{
-		//using List<T>::Header;
-		//using List<T>::Length;
-		//using LinkedList<T>::EndNode; // For constructors only
-		//using LinkedList<T>::FlagChangedLastNode; // For constructors only
+	protected:
 		using LinkedList<T>::DetectCircle; // For constructors only
 		using LinkedList<T>::End; // For constructors only
 	public:
-		using List<T>::GetHeader;
-		using List<T>::GetLength;
-		using List<T>::GetIndex;
-		using List<T>::operator[];
-		using List<T>::operator bool;
+		using LinkedList<T>::GetHeader;
+		using LinkedList<T>::GetLength;
+		using LinkedList<T>::GetIndex;
+		using LinkedList<T>::operator[];
+		using LinkedList<T>::operator bool;
 		using LinkedList<T>::Begin;
 
 		CircleLinkedList() = default;
@@ -472,28 +572,28 @@ namespace KC
 		{
 			if (!DetectCircle())
 			{
-				ListNode<T>::LinkNodes(End(), Begin());
+				ListNode<T>::LinkNodes({ *End(), *Begin() });
 			}
 		}
 		CircleLinkedList(List<T> const& other) : LinkedList<T>(other)
 		{
 			if (!DetectCircle())
 			{
-				ListNode<T>::LinkNodes(End(), Begin());
+				ListNode<T>::LinkNodes({ *End(), *Begin() });
 			}
 		}
 		CircleLinkedList(std::initializer_list<T> data) : LinkedList<T>(data)
 		{
 			if (!DetectCircle())
 			{
-				ListNode<T>::LinkNodes(End(), Begin());
+				ListNode<T>::LinkNodes({ *End(), *Begin() });
 			}
 		}
 		CircleLinkedList(const int length, T const* data) : LinkedList<T>(length, data)
 		{
 			if (!DetectCircle())
 			{
-				ListNode<T>::LinkNodes(End(), Begin());
+				ListNode<T>::LinkNodes({ *End(), *Begin() });
 			}
 		}
 
@@ -508,28 +608,28 @@ namespace KC
 		void Push(T const& data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(data, index);
+			LinkedList<T>::Push(data, index);
 			if (index == 0)
 				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(List<T> const& other, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(other, index);
+			LinkedList<T>::Push(other, index);
 			if (index == 0)
 				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(length, data, index);
+			LinkedList<T>::Push(length, data, index);
 			if (index == 0)
 				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			auto lastNode = Begin()->Previous;
-			List<T>::Push(data, index);
+			LinkedList<T>::Push(data, index);
 			if (index == 0)
 				ListNode<T>::LinkNodes({ lastNode, *Begin() });
 		}
@@ -538,7 +638,15 @@ namespace KC
 		{
 			if (index == 0)
 				ListNode<T>::LinkNodes({ Begin()->Previous, Begin()->Next });
-			T data = List<T>::Pull(data, index);
+			T data = LinkedList<T>::Pull(index);
+			return data;
+		}
+
+		T Pull(TraversalNode<T>& traversalNode, int const& index = 0)
+		{
+			if (index == 0)
+				ListNode<T>::LinkNodes({ Begin()->Previous, Begin()->Next });
+			T data = LinkedList<T>::Pull(traversalNode,index);
 			return data;
 		}
 
@@ -610,8 +718,34 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		const KC::ListNode<T>& index = list.GetIndex(i);
+		KC::ListNode<T>& index = list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
 }
+
+template <typename T>
+auto operator<<(std::ostream& stream, const KC::LinkedList<T>& list) -> std::ostream&
+{
+	auto length = list.GetLength();
+	for (auto i = 0; i < length; i++)
+	{
+		KC::ListNode<T>& index = list.GetIndex(i);
+		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
+	}
+	return stream;
+}
+
+template <typename T>
+auto operator<<(std::ostream& stream, const KC::CircleLinkedList<T>& list) -> std::ostream&
+{
+	auto length = list.GetLength();
+	for (auto i = 0; i < length; i++)
+	{
+		KC::ListNode<T>& index = list.GetIndex(i);
+		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
+	}
+	return stream;
+}
+
+
