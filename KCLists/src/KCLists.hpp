@@ -224,9 +224,9 @@ namespace KC
 			Push(length, data);
 		}
 
-		ListNode<T>& GetHeader() const
+		TraversalNode<T> GetHeader() const
 		{
-			return *Header;
+			return TraversalNode<T>(Header);
 		}
 		int GetLength() const
 		{
@@ -557,6 +557,8 @@ namespace KC
 	class CircleLinkedList : public LinkedList<T>
 	{
 	protected:
+		using LinkedList<T>::Header;
+		using LinkedList<T>::Length;
 		using LinkedList<T>::DetectCircle; // For constructors only
 		using LinkedList<T>::End; // For constructors only
 	public:
