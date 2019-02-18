@@ -93,16 +93,9 @@ namespace KC
 		{
 			auto nodeList = new ListNode<T>*[nodes.size()];
 			auto index = 0;
-			for (auto i : nodes)
+			for (auto& i : nodes)
 			{
-				if (i != nullptr)
-				{
-					nodeList[index++] = i;
-				}
-				else
-				{
-					nodeList[index++] = nullptr;
-				}
+				nodeList[index++] = i;
 			}
 			LinkNodes(nodes.size(), nodeList);
 			delete[] nodeList;
@@ -192,7 +185,21 @@ namespace KC
 		{
 			return *Current;
 		}
+
+		TraversalNode<T> operator+(int const& right)
+		{
+			auto temp = *this;
+			temp += right;
+			return temp;
+		}
+		TraversalNode<T> operator-(int const& right)
+		{
+			auto temp = *this;
+			temp -= right;
+			return temp;
+		}
 	};
+
 
 	template <class T>
 	class List
@@ -233,9 +240,13 @@ namespace KC
 		}
 		ListNode<T>& GetIndex(const int index) const
 		{
-			if (Length - 1 < index)
+			if (index > Length - 1)
 			{
 				throw std::out_of_range("Index is greater than the length of list!");
+			}
+			if (index < 0)
+			{
+				throw std::out_of_range("Index is less than 0!");
 			}
 
 			TraversalNode<T> traversalNode = Header;
@@ -340,11 +351,11 @@ namespace KC
 
 		T Pull(TraversalNode<T>& traversalNode, int const& index = 0)
 		{
-			if(traversalNode->Next == *traversalNode)
+			if (traversalNode->Next == *traversalNode)
 			{
 				traversalNode.Current = nullptr;
 			}
-			else if(&GetIndex(index) == *traversalNode)
+			else if (&GetIndex(index) == *traversalNode)
 			{
 				++traversalNode;
 			}
@@ -647,7 +658,7 @@ namespace KC
 		{
 			if (index == 0)
 				ListNode<T>::LinkNodes({ Begin()->Previous, Begin()->Next });
-			T data = LinkedList<T>::Pull(traversalNode,index);
+			T data = LinkedList<T>::Pull(traversalNode, index);
 			return data;
 		}
 
@@ -748,5 +759,3 @@ auto operator<<(std::ostream& stream, const KC::CircleLinkedList<T>& list) -> st
 	}
 	return stream;
 }
-
-
