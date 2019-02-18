@@ -1416,3 +1416,303 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 		}
 	}
 }
+SCENARIO("KC::CircleLinkedList<int> is an circular KC:::LinkedList<int>", "[CircleLinkedList][int][CircleLinkedList<int>][LinkedList][LinkedList<int>][Data Structure][Derived]")
+{
+	GIVEN("A list that is initialized with nothing ")
+	{
+		KC::CircleLinkedList<int> list;
+		WHEN("nothing is added to the list")
+		{
+			THEN("the list has nothing inside of it")
+			{
+				REQUIRE(list.GetLength() == 0);
+			}
+			AND_THEN("the list's header is pointing to nothing")
+			{
+				REQUIRE(*list.GetHeader() == nullptr);
+			}
+		}
+
+		KC::TraversalNode<int> currentHeader;
+
+		AND_WHEN("one thing is pushed")
+		{
+			list.Push(1);
+			currentHeader = list.GetHeader();
+
+			THEN("the size changes")
+			{
+				REQUIRE(list.GetLength() == 1);
+			}
+			AND_THEN("the header is no longer null")
+			{
+				REQUIRE(*currentHeader != nullptr);
+			}
+			AND_WHEN("two things are pushed by array")
+			{
+				int arr[2] = { 2,3 };
+				list.Push(2, arr);
+
+				THEN("the size changes")
+				{
+					REQUIRE(list.GetLength() == 3);
+				}
+				AND_THEN("the header is not the old header")
+				{
+					REQUIRE(*list.GetHeader() != *currentHeader);
+				}
+				AND_THEN("the header points to the old header when increased by two")
+				{
+					REQUIRE(*(list.GetHeader() += 2) == *currentHeader);
+				}
+
+				currentHeader = list.GetHeader();
+
+				AND_WHEN("three things are pushed by initializer list")
+				{
+					list.Push({ 4,5,6 });
+
+					THEN("the size changes again")
+					{
+						REQUIRE(list.GetLength() == 6);
+					}
+					AND_THEN("the header is no longer the previous header")
+					{
+						REQUIRE(*list.GetHeader() != *currentHeader);
+					}
+					AND_THEN("the header points to the old header when increased by three")
+					{
+						REQUIRE(*(list.GetHeader() += 3) == *currentHeader);
+					}
+
+					currentHeader = list.GetHeader();
+
+					AND_WHEN("a copy of the list is pushed to itself")
+					{
+						auto listCpy = list;
+						list.Push(listCpy);
+
+						THEN("the size doubles")
+						{
+							REQUIRE(list.GetLength() == 12);
+						}
+						AND_THEN("the header is no longer the previous header")
+						{
+							REQUIRE(*list.GetHeader() != *currentHeader);
+						}
+						AND_THEN("the header points to the old header when increased by six")
+						{
+							REQUIRE(*(list.GetHeader() += 6) == *currentHeader);
+						}
+						AND_THEN("the list is correct")
+						{
+							REQUIRE(list[0] == 4);
+							REQUIRE(list[1] == 5);
+							REQUIRE(list[2] == 6);
+							REQUIRE(list[3] == 2);
+							REQUIRE(list[4] == 3);
+							REQUIRE(list[5] == 1);
+							REQUIRE(list[6] == 4);
+							REQUIRE(list[7] == 5);
+							REQUIRE(list[8] == 6);
+							REQUIRE(list[9] == 2);
+							REQUIRE(list[10] == 3);
+							REQUIRE(list[11] == 1);
+						}
+					}
+					AND_WHEN("the list is pushed to itself")
+					{
+						list.Push(list);
+						THEN("the size doubles")
+						{
+							REQUIRE(list.GetLength() == 12);
+						}
+						AND_THEN("the header is no longer the previous header")
+						{
+							REQUIRE(*list.GetHeader() != *currentHeader);
+						}
+						AND_THEN("the header points to the old header when increased by six")
+						{
+							REQUIRE(*(list.GetHeader() += 6) == *currentHeader);
+						}
+						AND_THEN("the list is correct")
+						{
+							REQUIRE(list[0] == 5);
+							REQUIRE(list[1] == 5);
+							REQUIRE(list[2] == 1);
+							REQUIRE(list[3] == 5);
+							REQUIRE(list[4] == 2);
+							REQUIRE(list[5] == 1);
+							REQUIRE(list[6] == 4);
+							REQUIRE(list[7] == 5);
+							REQUIRE(list[8] == 6);
+							REQUIRE(list[9] == 2);
+							REQUIRE(list[10] == 3);
+							REQUIRE(list[11] == 1);
+						}
+					}
+					AND_WHEN("one thing is pushed at a position greater than the length of the list")
+					{
+						THEN("throw an exception")
+						{
+							REQUIRE_THROWS([&]()
+							{
+								list.Push(100, 20);
+							}());
+						}
+					}
+					AND_WHEN("one thing is pushed at a position < 0")
+					{
+						THEN("throw an exception")
+						{
+							REQUIRE_THROWS([&]()
+							{
+								list.Push(100, -1);
+							}());
+						}
+					}
+					AND_WHEN("one thing is pushed at a valid position")
+					{
+						THEN("success")
+						{
+							list.Push(100, 3);
+							REQUIRE(list[3] == 100);
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+	GIVEN("A list that is initialized with an array of 2 integers")
+	{
+		int arr[2] = { 10,9 };
+		KC::CircleLinkedList<int> list(2, arr);
+		WHEN("nothing is done to it")
+		{
+			THEN("the length is correct")
+			{
+				REQUIRE(list.GetLength() == 2);
+			}
+			AND_THEN("the header points to nothing")
+			{
+				REQUIRE(*list.GetHeader() != nullptr);
+			}
+		}
+
+		AND_WHEN("pulled from using a function")
+		{
+			auto headNode = list.GetHeader();
+			auto a = list.Pull();
+
+			THEN("the data is correctly pulled")
+			{
+				REQUIRE(a == 10);
+			}
+			AND_THEN("the list is resized acccordingly")
+			{
+				REQUIRE(list.GetLength() == 1);
+			}
+		}
+
+		AND_WHEN("pulled from using operators")
+		{
+			auto headNode = list.GetHeader();
+			int a;
+			list >> a;
+
+			THEN("the data is correctly pulled")
+			{
+				REQUIRE(a == 10);
+			}
+			AND_THEN("the list is resized acccordingly")
+			{
+				REQUIRE(list.GetLength() == 1);
+			}
+		}
+		AND_WHEN("pulled from multiple times using operators")
+		{
+			auto headNode = list.GetHeader();
+			int a, b;
+			list >> a >> b;
+
+			THEN("the data is correctly pulled")
+			{
+				REQUIRE(a == 10);
+				REQUIRE(b == 9);
+			}
+			AND_THEN("the list is resized acccordingly")
+			{
+				REQUIRE(list.GetLength() == 0);
+			}
+			AND_THEN("the list's header is now a nullptr")
+			{
+				REQUIRE(*list.GetHeader() == nullptr);
+			}
+		}
+		AND_WHEN("accessing an index larger than the length of the list")
+		{
+			THEN("throws an exception")
+			{
+				REQUIRE_THROWS([&]()
+				{
+					auto a = list[2];
+				}());
+			}
+		}
+		AND_WHEN("accessing a negative index")
+		{
+			THEN("throws an exception")
+			{
+				REQUIRE_THROWS([&]()
+				{
+					auto a = list[-1];
+				}());
+			}
+		}
+	}
+	GIVEN("A list is initialized with an initializer_list of 3 integers")
+	{
+		KC::CircleLinkedList<int> list({ 100,10,1 });
+		WHEN("nothing is done")
+		{
+			THEN("the list has the correct length")
+			{
+				REQUIRE(list.GetLength() == 3);
+			}
+			AND_THEN("the list's header exists")
+			{
+				REQUIRE(*list.GetHeader() != nullptr);
+			}
+			AND_THEN("the list is correct")
+			{
+				REQUIRE(list[0] == 100);
+				REQUIRE(list[1] == 10);
+				REQUIRE(list[2] == 1);
+			}
+			AND_THEN("the list is a circle")
+			{
+				REQUIRE(list.GetHeader()->Previous != nullptr);
+			}
+		}
+		AND_WHEN("an integer is added with an operator")
+		{
+			auto header = list.GetHeader();
+			list << 5;
+			THEN("the list has the correct length")
+			{
+				REQUIRE(list.GetLength() == 4);
+			}
+			AND_THEN("the list's header does not equal the previous header")
+			{
+				REQUIRE(*list.GetHeader() != *header);
+			}
+			AND_THEN("the list's header + 1 is equal to the previous header")
+			{
+				REQUIRE(*(list.GetHeader() + 1) == *header);
+			}
+		}
+	}
+	// TODO: see if list is a circle.
+}

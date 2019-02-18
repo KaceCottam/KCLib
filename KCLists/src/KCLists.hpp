@@ -249,11 +249,11 @@ namespace KC
 			auto newNode = new ListNode<T>(data, Header);
 			if (Header && index != 0)
 			{
-				if(index > Length-1)
+				if (index > Length - 1)
 				{
 					throw std::out_of_range("Index greater than length of the list!");
 				}
-				if(index < 0)
+				if (index < 0)
 				{
 					throw std::out_of_range("Index less than 0!");
 				}
@@ -494,7 +494,7 @@ namespace KC
 
 		void Append(T const& data)
 		{
-			if(!Header)
+			if (!Header)
 			{
 				Push(data);
 				return;
@@ -615,31 +615,71 @@ namespace KC
 
 		void Push(T const& data, int const& index = 0)
 		{
-			auto lastNode = Begin()->Previous;
-			LinkedList<T>::Push(data, index);
-			if (index == 0)
-				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (*Begin() == nullptr)
+			{
+				List<T>::Push(data, index);
+				ListNode<T>::LinkNodes({ *End(),Header });
+			}
+			else
+			{
+				auto lastNode = Begin()->Previous;
+				List<T>::Push(data, index);
+				if (index == 0)
+				{
+					ListNode<T>::LinkNodes({ lastNode,Header });
+				}
+			}
 		}
 		void Push(List<T> const& other, int const& index = 0)
 		{
-			auto lastNode = Begin()->Previous;
-			LinkedList<T>::Push(other, index);
-			if (index == 0)
-				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (*Begin() == nullptr)
+			{
+				List<T>::Push(other, index);
+				ListNode<T>::LinkNodes({ *End(),Header });
+			}
+			else
+			{
+				auto lastNode = Begin()->Previous;
+				List<T>::Push(other, index);
+				if (index == 0)
+				{
+					ListNode<T>::LinkNodes({ lastNode,Header });
+				}
+			}
 		}
 		void Push(const int length, T const* data, int const& index = 0)
 		{
-			auto lastNode = Begin()->Previous;
-			LinkedList<T>::Push(length, data, index);
-			if (index == 0)
-				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (*Begin() == nullptr)
+			{
+				List<T>::Push(length, data, index);
+				ListNode<T>::LinkNodes({ *End(),Header });
+			}
+			else
+			{
+				auto lastNode = Begin()->Previous;
+				List<T>::Push(length, data, index);
+				if (index == 0)
+				{
+					ListNode<T>::LinkNodes({ lastNode,Header });
+				}
+			}
 		}
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
-			auto lastNode = Begin()->Previous;
-			LinkedList<T>::Push(data, index);
-			if (index == 0)
-				ListNode<T>::LinkNodes({ lastNode, *Begin() });
+			if (*Begin() == nullptr)
+			{
+				List<T>::Push(data, index);
+				ListNode<T>::LinkNodes({ *End(),Header });
+			}
+			else
+			{
+				auto lastNode = Begin()->Previous;
+				List<T>::Push(data, index);
+				if (index == 0)
+				{
+					ListNode<T>::LinkNodes({ lastNode,Header });
+				}
+			}
 		}
 
 		T Pull(int const& index = 0)
