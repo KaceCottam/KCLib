@@ -75,20 +75,6 @@ namespace KC
 				trail = head;
 			}
 		}
-		static void LinkNodes(int const length, ListNode<T>* nodes)
-		{
-			ListNode<T> trail = nodes;
-			for (auto i = 0; i < length; i++)
-			{
-				ListNode<T> head = nodes + i;
-				if (trail != head && head && trail)
-				{
-					trail->Next = head;
-					head->Previous = trail;
-					trail = head;
-				}
-			}
-		}
 		static void LinkNodes(std::initializer_list<ListNode<T>*> nodes)
 		{
 			auto nodeList = new ListNode<T>*[nodes.size()];
@@ -99,12 +85,6 @@ namespace KC
 			}
 			LinkNodes(nodes.size(), nodeList);
 			delete[] nodeList;
-		}
-		static void LinkNodes(std::initializer_list<ListNode<T>> nodes)
-		{
-			auto nodeList = new ListNode<T>[nodes.size()];
-			memcpy(nodeList, nodes.begin(), nodes.size());
-			LinkNodes(nodes.size(), nodeList);
 		}
 
 		~ListNode() = default;
@@ -238,7 +218,7 @@ namespace KC
 		{
 			return Length;
 		}
-		ListNode<T>& GetIndex(const int index) const
+		TraversalNode<T> GetIndex(const int index) const
 		{
 			if (index > Length - 1)
 			{
@@ -253,7 +233,7 @@ namespace KC
 
 			traversalNode += index;
 
-			return **traversalNode;
+			return traversalNode;
 		}
 
 		void Delete()
@@ -269,6 +249,14 @@ namespace KC
 			auto newNode = new ListNode<T>(data, Header);
 			if (Header && index != 0)
 			{
+				if(index > Length-1)
+				{
+					throw std::out_of_range("Index greater than length of the list!");
+				}
+				if(index < 0)
+				{
+					throw std::out_of_range("Index less than 0!");
+				}
 				TraversalNode<T> traversalNode(Header);
 				traversalNode += index;
 				ListNode<T>::LinkNodes({ traversalNode->Previous, newNode, *traversalNode });
@@ -355,7 +343,7 @@ namespace KC
 			{
 				traversalNode.Current = nullptr;
 			}
-			else if (&GetIndex(index) == *traversalNode)
+			else if (*GetIndex(index) == *traversalNode)
 			{
 				++traversalNode;
 			}
@@ -408,7 +396,7 @@ namespace KC
 		}
 		T& operator[](const int index) const
 		{
-			return GetIndex(index).Data;
+			return GetIndex(index)->Data;
 		}
 		operator bool() const
 		{
@@ -486,7 +474,7 @@ namespace KC
 		}
 		void Push(List<T> const& other, int const& index = 0)
 		{
-			auto length = other.Length;
+			auto length = other.GetLength();
 			for (auto i = length - 1; i >= 0; --i)
 			{
 				Push(other[i], index);
@@ -506,27 +494,35 @@ namespace KC
 
 		void Append(T const& data)
 		{
-			ListNode<T> previousHeader = End();
-			Header = new ListNode<T>(data);
-			ListNode<T>::LinkNodes({ *Header,previousHeader });
+			if(!Header)
+			{
+				Push(data);
+				return;
+			}
+			auto previousHeader = End();
+			auto newNode = new ListNode<T>(data);
+			ListNode<T>::LinkNodes({ *previousHeader,newNode });
 			++Length;
 			FlagChangedLastNode = true;
 		}
 		void Append(List<T> const& other)
 		{
 			auto length = other.GetLength();
-			for (auto i = 0; i > length; ++i)
+			for (auto i = 0; i < length; ++i)
 			{
-				Append(other.GetIndex(i));
+				Append(other.GetIndex(i)->Data);
 			}
 		}
 		void Append(int const& length, T const* data)
 		{
-			Append(List<T>(length, data));
+			for (auto i = 0; i < length; ++i)
+			{
+				Append(data[i]);
+			}
 		}
 		void Append(std::initializer_list<T> data)
 		{
-			Append(List<T>(data));
+			Append(data.size(), data.begin());
 		}
 
 		LinkedList<T>& operator<<(T const& data)
@@ -730,7 +726,7 @@ auto operator<<(std::ostream& stream, const KC::List<T>& list) -> std::ostream&
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		KC::ListNode<T>& index = list.GetIndex(i);
+		KC::ListNode<T>& index = **list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
@@ -742,7 +738,7 @@ auto operator<<(std::ostream& stream, const KC::LinkedList<T>& list) -> std::ost
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		KC::ListNode<T>& index = list.GetIndex(i);
+		KC::ListNode<T>& index = **list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
@@ -754,7 +750,7 @@ auto operator<<(std::ostream& stream, const KC::CircleLinkedList<T>& list) -> st
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
 	{
-		KC::ListNode<T>& index = list.GetIndex(i);
+		KC::ListNode<T>& index = **list.GetIndex(i);
 		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
 	}
 	return stream;
