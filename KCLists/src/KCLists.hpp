@@ -8,7 +8,7 @@ namespace KC
 	template <bool = true, typename T = int>
 	class ListNode;
 
-	template <typename T = int >
+	template <typename T>
 	class ListNode<true, T> final
 	{
 	public:
@@ -93,7 +93,7 @@ namespace KC
 		~ListNode() = default;
 	};
 
-	template <typename T = int >
+	template <typename T>
 	class ListNode<false, T> final
 	{
 	public:
@@ -174,7 +174,7 @@ namespace KC
 	template <bool = true, typename T = int>
 	class TraversalNode;
 
-	template <typename T = int>
+	template <typename T>
 	class TraversalNode<true, T> final
 	{
 	public:
@@ -262,7 +262,7 @@ namespace KC
 		}
 	};
 
-	template <typename T = int>
+	template <typename T>
 	class TraversalNode<false, T> final
 	{
 	public:
@@ -328,7 +328,7 @@ namespace KC
 	template <bool = true, typename T = int>
 	class List;
 
-	template <typename T = int>
+	template <typename T>
 	class List<true, T>
 	{
 	protected:
@@ -556,7 +556,7 @@ namespace KC
 		}
 	};
 
-	template <typename T = int>
+	template <typename T>
 	class List<false, T>
 	{
 	protected:
@@ -787,7 +787,7 @@ namespace KC
 	template<bool = true, typename T = int>
 	class LinkedList;
 
-	template<typename T = int>
+	template<typename T>
 	class LinkedList<true, T> : public List<true, T>
 	{
 	protected:
@@ -937,7 +937,7 @@ namespace KC
 		}
 	};
 
-	template<typename T = int>
+	template<typename T>
 	class LinkedList<false, T> : public List<false, T>
 	{
 	protected:
@@ -1091,8 +1091,8 @@ namespace KC
 	template<bool = true, typename T = int>
 	class CircleLinkedList;
 
-	template<typename T = int>
-	class CircleLinkedList<true, T> : public LinkedList<T>
+	template<typename T>
+	class CircleLinkedList<true, T> : public LinkedList<true,T>
 	{
 	protected:
 		using LinkedList<true, T>::Header;
@@ -1284,8 +1284,8 @@ namespace KC
 		}
 	};
 
-	template<typename T = int>
-	class CircleLinkedList<false, T> : public LinkedList<T>
+	template<typename T>
+	class CircleLinkedList<false, T> : public LinkedList<false,T>
 	{
 	protected:
 		using LinkedList<false, T>::Header;
@@ -1476,7 +1476,6 @@ namespace KC
 			Delete();
 		}
 	};
-
 }
 
 template <bool Double = true, typename T=int>

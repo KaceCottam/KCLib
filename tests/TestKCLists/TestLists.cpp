@@ -592,7 +592,7 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::LinkedList<int> list;
+		KC::LinkedList<true,int> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -605,7 +605,7 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 			}
 		}
 
-		KC::TraversalNode<int> currentHeader;
+		KC::TraversalNode<true,int> currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
