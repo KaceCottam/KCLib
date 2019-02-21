@@ -5,7 +5,7 @@
 
 namespace KC
 {
-	template <typename T = int, bool = true>
+	template <typename T, bool DoublyLinked= true>
 	class List;
 
 	template <typename T>
@@ -772,7 +772,7 @@ namespace KC
 		}
 	};
 
-	template<typename T = int, bool = true>
+	template<typename T = int, bool DoublyLinked = true>
 	class LinkedList;
 
 	template<typename T>
@@ -1075,7 +1075,7 @@ namespace KC
 		}
 	};
 
-	template<typename T = int, bool = true>
+	template<typename T = int, bool DoublyLinked = true>
 	class CircleLinkedList;
 
 	template<typename T>

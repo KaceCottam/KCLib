@@ -1,4 +1,3 @@
-#pragma once
 #include <Test.h>
 #include <KCLists.hpp>
 
@@ -312,7 +311,7 @@ SCENARIO("KC::List<char> can be expanded and pulled from", "[List][char][List<ch
 			}
 		}
 
-		KC::TraversalNode<char> currentHeader;
+		KC::List<char>::TraversalNode currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -605,7 +604,7 @@ SCENARIO("KC::LinkedList<int> is an expanded version of KC::List<int>", "[Linked
 			}
 		}
 
-		KC::TraversalNode<int> currentHeader;
+		KC::LinkedList<int>::TraversalNode currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -1019,7 +1018,7 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 			}
 		}
 
-		KC::TraversalNode<char> currentHeader;
+		KC::LinkedList<char>::TraversalNode currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -1416,7 +1415,7 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 		}
 	}
 }
-SCENARIO("KC::CircleLinkedList<int> is an circular KC:::LinkedList<int>", "[CircleLinkedList][int][CircleLinkedList<int>][LinkedList][LinkedList<int>][Data Structure][Derived]")
+SCENARIO("KC::CircleLinkedList<int> is a circular KC:::LinkedList<int>", "[CircleLinkedList][int][CircleLinkedList<int>][LinkedList][LinkedList<int>][Data Structure][Derived]")
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
@@ -1432,8 +1431,7 @@ SCENARIO("KC::CircleLinkedList<int> is an circular KC:::LinkedList<int>", "[Circ
 				REQUIRE(*list.GetHeader() == nullptr);
 			}
 		}
-
-		KC::TraversalNode<int> currentHeader;
+		KC::CircleLinkedList<int>::TraversalNode currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -1713,6 +1711,13 @@ SCENARIO("KC::CircleLinkedList<int> is an circular KC:::LinkedList<int>", "[Circ
 				REQUIRE(*(list.GetHeader() + 1) == *header);
 			}
 		}
+		AND_WHEN("testing to see if the list is a circle")
+		{
+			auto header = list.GetHeader();
+			THEN("the list is a circle.")
+			{
+				REQUIRE(header->Previous != nullptr);
+			}
+		}
 	}
-	// TODO: see if list is a circle.
 }
