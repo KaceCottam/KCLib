@@ -6,7 +6,7 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::List<true,int> list;
+		KC::List<int> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -19,7 +19,7 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 			}
 		}
 
-		KC::TraversalNode<true,int> currentHeader;
+		KC::List<int>::TraversalNode currentHeader;
 
 		AND_WHEN("one thing is added")
 		{
@@ -172,7 +172,7 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 	GIVEN("A list that is initialized with an array of 2 integers")
 	{
 		int arr[2] = { 10,9 };
-		KC::List<true,int> list(2, arr);
+		KC::List<int> list(2, arr);
 		WHEN("nothing is done to it")
 		{
 			THEN("the length is correct")
@@ -258,7 +258,7 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 	}
 	GIVEN("A list is initialized with an initializer_list of 3 integers")
 	{
-		KC::List<true,int> list({ 100,10,1 });
+		KC::List<int> list({ 100,10,1 });
 		WHEN("nothing is done")
 		{
 			THEN("the list has the correct length")
@@ -295,11 +295,11 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 		}
 	}
 }
-SCENARIO("KC::List<true,char> can be expanded and pulled from", "[List][char][List<true,char>][Data Structure]")
+SCENARIO("KC::List<char> can be expanded and pulled from", "[List][char][List<char>][Data Structure]")
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::List<true,char> list;
+		KC::List<char> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -312,7 +312,7 @@ SCENARIO("KC::List<true,char> can be expanded and pulled from", "[List][char][Li
 			}
 		}
 
-		KC::TraversalNode<true,char> currentHeader;
+		KC::TraversalNode<char> currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -465,7 +465,7 @@ SCENARIO("KC::List<true,char> can be expanded and pulled from", "[List][char][Li
 	GIVEN("A list that is initialized with an array of 2 characters")
 	{
 		char arr[2] = { 'a','b' };
-		KC::List<true,char> list(2, arr);
+		KC::List<char> list(2, arr);
 		WHEN("nothing is done to it")
 		{
 			THEN("the length is correct")
@@ -551,7 +551,7 @@ SCENARIO("KC::List<true,char> can be expanded and pulled from", "[List][char][Li
 	}
 	GIVEN("A list is initialized with an initializer_list of 3 characters")
 	{
-		KC::List<true,char> list({ 'x','y','z' });
+		KC::List<char> list({ 'x','y','z' });
 		WHEN("nothing is done")
 		{
 			THEN("the list has the correct length")
@@ -588,11 +588,11 @@ SCENARIO("KC::List<true,char> can be expanded and pulled from", "[List][char][Li
 		}
 	}
 }
-SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>", "[LinkedList][int][LinkedList<true,int>][List][List<true,int>][Data Structure][Derived]")
+SCENARIO("KC::LinkedList<int> is an expanded version of KC::List<int>", "[LinkedList][int][LinkedList<int>][List][List<int>][Data Structure][Derived]")
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::LinkedList<true,int> list;
+		KC::LinkedList<int> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -605,7 +605,7 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 			}
 		}
 
-		KC::TraversalNode<true,int> currentHeader;
+		KC::TraversalNode<int> currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -875,7 +875,7 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 	GIVEN("A list that is initialized with an array of 2 integers")
 	{
 		int arr[2] = { 10,9 };
-		KC::LinkedList<true,int> list(2, arr);
+		KC::LinkedList<int> list(2, arr);
 		WHEN("nothing is done to it")
 		{
 			THEN("the length is correct")
@@ -961,7 +961,7 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 	}
 	GIVEN("A list is initialized with an initializer_list of 3 integers")
 	{
-		KC::LinkedList<true,int> list({ 100,10,1 });
+		KC::LinkedList<int> list({ 100,10,1 });
 		WHEN("nothing is done")
 		{
 			THEN("the list has the correct length")
@@ -1002,11 +1002,11 @@ SCENARIO("KC::LinkedList<true,int> is an expanded version of KC::List<true,int>"
 		}
 	}
 }
-SCENARIO("KC::LinkedList<true,char> is an expanded version of KC::List<true,char>", "[LinkedList][char][LinkedList<true,char>][List][List<true,char>][Data Structure][Derived]")
+SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[LinkedList][char][LinkedList<char>][List][List<char>][Data Structure][Derived]")
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::LinkedList<true,char> list;
+		KC::LinkedList<char> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -1019,7 +1019,7 @@ SCENARIO("KC::LinkedList<true,char> is an expanded version of KC::List<true,char
 			}
 		}
 
-		KC::TraversalNode<true,char> currentHeader;
+		KC::TraversalNode<char> currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -1289,7 +1289,7 @@ SCENARIO("KC::LinkedList<true,char> is an expanded version of KC::List<true,char
 	GIVEN("A list that is initialized with an array of 2 integers")
 	{
 		char arr[2] = { 'a','b' };
-		KC::LinkedList<true,char> list(2, arr);
+		KC::LinkedList<char> list(2, arr);
 		WHEN("nothing is done to it")
 		{
 			THEN("the length is correct")
@@ -1375,7 +1375,7 @@ SCENARIO("KC::LinkedList<true,char> is an expanded version of KC::List<true,char
 	}
 	GIVEN("A list is initialized with an initializer_list of 3 integers")
 	{
-		KC::LinkedList<true,char> list({ 'x','y','z' });
+		KC::LinkedList<char> list({ 'x','y','z' });
 		WHEN("nothing is done")
 		{
 			THEN("the list has the correct length")
@@ -1416,11 +1416,11 @@ SCENARIO("KC::LinkedList<true,char> is an expanded version of KC::List<true,char
 		}
 	}
 }
-SCENARIO("KC::CircleLinkedList<true,int> is an circular KC:::LinkedList<true,int>", "[CircleLinkedList][int][CircleLinkedList<true,int>][LinkedList][LinkedList<true,int>][Data Structure][Derived]")
+SCENARIO("KC::CircleLinkedList<int> is an circular KC:::LinkedList<int>", "[CircleLinkedList][int][CircleLinkedList<int>][LinkedList][LinkedList<int>][Data Structure][Derived]")
 {
 	GIVEN("A list that is initialized with nothing ")
 	{
-		KC::CircleLinkedList<true,int> list;
+		KC::CircleLinkedList<int> list;
 		WHEN("nothing is added to the list")
 		{
 			THEN("the list has nothing inside of it")
@@ -1433,7 +1433,7 @@ SCENARIO("KC::CircleLinkedList<true,int> is an circular KC:::LinkedList<true,int
 			}
 		}
 
-		KC::TraversalNode<true,int> currentHeader;
+		KC::TraversalNode<int> currentHeader;
 
 		AND_WHEN("one thing is pushed")
 		{
@@ -1588,7 +1588,7 @@ SCENARIO("KC::CircleLinkedList<true,int> is an circular KC:::LinkedList<true,int
 	GIVEN("A list that is initialized with an array of 2 integers")
 	{
 		int arr[2] = { 10,9 };
-		KC::CircleLinkedList<true,int> list(2, arr);
+		KC::CircleLinkedList<int> list(2, arr);
 		WHEN("nothing is done to it")
 		{
 			THEN("the length is correct")
@@ -1674,7 +1674,7 @@ SCENARIO("KC::CircleLinkedList<true,int> is an circular KC:::LinkedList<true,int
 	}
 	GIVEN("A list is initialized with an initializer_list of 3 integers")
 	{
-		KC::CircleLinkedList<true,int> list({ 100,10,1 });
+		KC::CircleLinkedList<int> list({ 100,10,1 });
 		WHEN("nothing is done")
 		{
 			THEN("the list has the correct length")
