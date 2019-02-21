@@ -20,6 +20,7 @@ CHANGELOG 1.1.1
 	It contains a class for a state machine.
 	Moved all lists into KCLists.hpp
 	Changed all .h file extensions into .hpp for ease of use
+	Updated KCLists to allow single-linked lists
 
 CHANGELOG 1.1.0
 	Moved repository to KaceCottam/KCLib.
