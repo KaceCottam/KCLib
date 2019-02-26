@@ -5,3 +5,5 @@ releases/
 *.suo
 *.user
 *.ncb
+*.db
+*.ipch
