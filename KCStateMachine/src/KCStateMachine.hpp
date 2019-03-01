@@ -59,7 +59,19 @@ namespace KC
 
 	public:
 #define REGISTER_VARIABLES \
-		void Start() \
+		void AsyncStep() override \
+		{ \
+			if (NextState != "end") \
+			{ \
+				auto from = NextState; \
+				NextState = StateFunctions[from](); \
+				try \
+				{ \
+					StateTransitions.at({from, NextState})(); \
+				} catch (std::out_of_range&) { } \
+			} \
+		} \
+		void Start() override \
 		{ \
 			while (NextState != "end") \
 			{ \
@@ -74,6 +86,29 @@ namespace KC
 				} \
 			} \
 		}
-		virtual REGISTER_VARIABLES;
+		virtual void Start()
+		{
+			while (NextState != "end")
+			{
+				auto from = NextState;
+				NextState = StateFunctions[from]();
+				try
+				{
+					StateTransitions.at({from, NextState})();
+				} catch (std::out_of_range&) { }
+			}
+		}
+		virtual void AsyncStep()
+		{
+			if (NextState != "end")
+			{
+				auto from = NextState;
+				NextState = StateFunctions[from]();
+				try
+				{
+					StateTransitions.at({from, NextState})();
+				} catch (std::out_of_range&) { }
+			}
+		}
 	};
 }
