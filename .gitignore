@@ -7,3 +7,4 @@ releases/
 *.ncb
 *.db
 *.ipch
+/.vs

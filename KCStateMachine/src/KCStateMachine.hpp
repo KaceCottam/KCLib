@@ -1,87 +1,114 @@
 #pragma once
 
+#include <map>
+#include <string>
 #include <functional>
-#include <vector>
 #include <utility>
+#include <vector>
+
+using std::map;
+using std::string;
+using std::function;
+using std::initializer_list;
+using std::pair;
+using std::vector;
+
+using NextState = string;
+using FunctionInitializerList = initializer_list<pair<string, function<NextState()>>>;
+using StateIdentifier = string;
+using State = function<NextState()>;
+using TransitionInitializerList = initializer_list<pair<pair<StateIdentifier, StateIdentifier>, function<void()>>>;
 
 namespace KC
 {
-	template<class... DataTypes>
-	class StateMachine final
+	class StateMachine
 	{
-		bool FlagStop = false;
-		int CurrentStateIndex = 0;
-	public:
-		std::tuple<DataTypes...> Data;
-		std::vector<std::function<void(StateMachine&)>> States;
-		std::function<void(StateMachine&)> NextState;
-
-		explicit StateMachine(DataTypes& ...data)
-			: Data(data)
+	protected:
+		map<StateIdentifier, State> StateFunctions;
+		map<pair<StateIdentifier, StateIdentifier>, function<void()>> StateTransitions;
+		StateIdentifier NextState = "end";
+		void RegisterState(StateIdentifier const& id, State const& func)
 		{
-		}
-		explicit StateMachine(std::vector<std::function<void(StateMachine&)>> states)
-			: Data(), States(states), NextState(states.front())
-		{
-		}
-		explicit StateMachine(std::initializer_list<std::function<void(StateMachine&)>> states)
-			: Data(), States(states), NextState(States[0])
-		{
+			StateFunctions[id] = func;
 		}
 
-		void Start()
+		void RegisterStates(FunctionInitializerList const& funcList)
 		{
-			while (NextState != nullptr || !FlagStop)
+			for (auto const& i : funcList)
 			{
-				NextState(*this);
+				RegisterState(i.first, i.second);
 			}
-			FlagStop = false;
 		}
 
-		bool Stop()
+		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to, function<void()> const& func)
 		{
-			const auto stopped = !this->IsStopped();
-			FlagStop = true;
-			return stopped;
+			StateTransitions[{from, to}] = func;
 		}
 
-		bool IsStopped() const
+		void RegisterTransitions(TransitionInitializerList const& funcList)
 		{
-			return FlagStop;
+			for (auto const& i : funcList)
+			{
+				RegisterTransition(i.first.first, i.first.second, i.second);
+			}
 		}
 
-		StateMachine<DataTypes...>& operator++()
+		StateMachine(StateIdentifier initialState) : NextState(std::move(initialState))
 		{
-			CurrentStateIndex++;
-			NextState = States[CurrentStateIndex];
-			return *this;
-		}
-		StateMachine<DataTypes...>& operator++(int)
-		{
-			auto temp(*this);
-			++*this;
-			return temp;
 		}
 
-		StateMachine<DataTypes...>& operator--()
-		{
-			CurrentStateIndex--;
-			while (CurrentStateIndex < 0) CurrentStateIndex++;
-			NextState = States[CurrentStateIndex];
-			return *this;
+	public:
+#define REGISTER_VARIABLES \
+		void AsyncStep() override \
+		{ \
+			if (NextState != "end") \
+			{ \
+				auto from = NextState; \
+				NextState = StateFunctions[from](); \
+				try \
+				{ \
+					StateTransitions.at({from, NextState})(); \
+				} catch (std::out_of_range&) { } \
+			} \
+		} \
+		void Start() override \
+		{ \
+			while (NextState != "end") \
+			{ \
+				auto from = NextState; \
+				NextState = StateFunctions[from](); \
+				try \
+				{ \
+					StateTransitions.at({from, NextState})(); \
+				} \
+				catch (std::out_of_range&) \
+				{ \
+				} \
+			} \
 		}
-		StateMachine<DataTypes...>& operator--(int)
+		virtual void Start()
 		{
-			auto temp(*this);
-			--*this;
-			return temp;
+			while (NextState != "end")
+			{
+				auto from = NextState;
+				NextState = StateFunctions[from]();
+				try
+				{
+					StateTransitions.at({from, NextState})();
+				} catch (std::out_of_range&) { }
+			}
 		}
-
-		std::function<void(StateMachine&)>& operator[](int const index)
+		virtual void AsyncStep()
 		{
-			return States[index];
+			if (NextState != "end")
+			{
+				auto from = NextState;
+				NextState = StateFunctions[from]();
+				try
+				{
+					StateTransitions.at({from, NextState})();
+				} catch (std::out_of_range&) { }
+			}
 		}
-
-		explicit operator bool() const { return IsStopped(); }
 	};
 }
