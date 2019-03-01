@@ -1,87 +1,60 @@
 #pragma once
 
+#include <map>
+#include <string>
 #include <functional>
-#include <vector>
-#include <utility>
+
+using std::map;
+using std::string;
+using std::function;
+using std::initializer_list;
+using std::pair;
+
+using FunctionInitializerList = initializer_list<pair<int, function<void()>>>;
 
 namespace KC
 {
-	template<class... DataTypes>
-	class StateMachine final
+	class StateMachine
 	{
-		bool FlagStop = false;
-		int CurrentStateIndex = 0;
-	public:
-		std::tuple<DataTypes...> Data;
-		std::vector<std::function<void(StateMachine&)>> States;
-		std::function<void(StateMachine&)> NextState;
+		struct StateMachineEvent {};
 
-		explicit StateMachine(DataTypes& ...data)
-			: Data(data)
+		map<int, function<void()>> StateFunctions;
+
+		int CurrentState = 0;
+
+		int const MaxStates = 0;
+	protected:
+		void RegisterState(int const id, function<void()> const& func)
 		{
-		}
-		explicit StateMachine(std::vector<std::function<void(StateMachine&)>> states)
-			: Data(), States(states), NextState(states.front())
-		{
-		}
-		explicit StateMachine(std::initializer_list<std::function<void(StateMachine&)>> states)
-			: Data(), States(states), NextState(States[0])
-		{
+			StateFunctions[id] = func;
 		}
 
-		void Start()
+		void RegisterStates(FunctionInitializerList const& funcList)
 		{
-			while (NextState != nullptr || !FlagStop)
+			for (auto const& i : funcList)
 			{
-				NextState(*this);
+				RegisterState(i.first, i.second);
 			}
-			FlagStop = false;
 		}
 
-		bool Stop()
+		enum StateStatus
 		{
-			const auto stopped = !this->IsStopped();
-			FlagStop = true;
-			return stopped;
+			Failed = -1,
+			Initial = 0,
+		};
+
+		void SetInitialState()
+		{
+			CurrentState = 0;
 		}
 
-		bool IsStopped() const
+		StateMachine(int const maxStates, FunctionInitializerList const& funcList = {}) : MaxStates(maxStates)
 		{
-			return FlagStop;
+			RegisterStates(funcList);
 		}
 
-		StateMachine<DataTypes...>& operator++()
-		{
-			CurrentStateIndex++;
-			NextState = States[CurrentStateIndex];
-			return *this;
-		}
-		StateMachine<DataTypes...>& operator++(int)
-		{
-			auto temp(*this);
-			++*this;
-			return temp;
-		}
 
-		StateMachine<DataTypes...>& operator--()
-		{
-			CurrentStateIndex--;
-			while (CurrentStateIndex < 0) CurrentStateIndex++;
-			NextState = States[CurrentStateIndex];
-			return *this;
-		}
-		StateMachine<DataTypes...>& operator--(int)
-		{
-			auto temp(*this);
-			--*this;
-			return temp;
-		}
-
-		std::function<void(StateMachine&)>& operator[](int const index)
-		{
-			return States[index];
-		}
-
-		explicit operator bool() const { return IsStopped(); }
 	};
 }
+
+
