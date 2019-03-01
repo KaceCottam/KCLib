@@ -3,28 +3,31 @@
 #include <map>
 #include <string>
 #include <functional>
+#include <utility>
+#include <vector>
 
 using std::map;
 using std::string;
 using std::function;
 using std::initializer_list;
 using std::pair;
+using std::vector;
 
-using FunctionInitializerList = initializer_list<pair<int, function<void()>>>;
+using NextState = string;
+using FunctionInitializerList = initializer_list<pair<string, function<NextState()>>>;
+using StateIdentifier = string;
+using State = function<NextState()>;
+using TransitionInitializerList = initializer_list<pair<pair<StateIdentifier, StateIdentifier>, function<void()>>>;
 
 namespace KC
 {
 	class StateMachine
 	{
-		struct StateMachineEvent {};
-
-		map<int, function<void()>> StateFunctions;
-
-		int CurrentState = 0;
-
-		int const MaxStates = 0;
 	protected:
-		void RegisterState(int const id, function<void()> const& func)
+		map<StateIdentifier, State> StateFunctions;
+		map<pair<StateIdentifier, StateIdentifier>, function<void()>> StateTransitions;
+		StateIdentifier NextState = "end";
+		void RegisterState(StateIdentifier const& id, State const& func)
 		{
 			StateFunctions[id] = func;
 		}
@@ -37,24 +40,40 @@ namespace KC
 			}
 		}
 
-		enum StateStatus
+		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to, function<void()> const& func)
 		{
-			Failed = -1,
-			Initial = 0,
-		};
-
-		void SetInitialState()
-		{
-			CurrentState = 0;
+			StateTransitions[{from, to}] = func;
 		}
 
-		StateMachine(int const maxStates, FunctionInitializerList const& funcList = {}) : MaxStates(maxStates)
+		void RegisterTransitions(TransitionInitializerList const& funcList)
 		{
-			RegisterStates(funcList);
+			for (auto const& i : funcList)
+			{
+				RegisterTransition(i.first.first, i.first.second, i.second);
+			}
 		}
 
+		StateMachine(StateIdentifier initialState) : NextState(std::move(initialState))
+		{
+		}
 
+	public:
+#define REGISTER_VARIABLES \
+		void Start() \
+		{ \
+			while (NextState != "end") \
+			{ \
+				auto from = NextState; \
+				NextState = StateFunctions[from](); \
+				try \
+				{ \
+					StateTransitions.at({from, NextState})(); \
+				} \
+				catch (std::out_of_range&) \
+				{ \
+				} \
+			} \
+		}
+		virtual REGISTER_VARIABLES;
 	};
 }
-
-
