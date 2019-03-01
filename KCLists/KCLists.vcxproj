@@ -127,7 +127,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <CustomBuildStep>
-      <Command>copy $(ProjectDir)src\*.hpp $(OutputPath)</Command>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
@@ -148,7 +148,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <CustomBuildStep>
-      <Command>copy $(ProjectDir)src\*.hpp $(OutputPath)</Command>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
@@ -173,7 +173,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>copy $(ProjectDir)src\*.hpp $(OutputPath)</Command>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
@@ -198,7 +198,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>copy $(ProjectDir)src\*.hpp $(OutputPath)</Command>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
