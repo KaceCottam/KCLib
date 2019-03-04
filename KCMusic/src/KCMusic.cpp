@@ -114,14 +114,12 @@ void KC::MusicFile::PlayString(std::string& buffer, const int timeInBetweenNotes
 	remove("temp.music");
 }
 
-KC::MusicFile::MusicFile(const std::string& filename): Buffer(""), WholeNoteDuration(0), HalfNoteDuration(0),
-                                                       QuarterNoteDuration(0), EighthNoteDuration(0)
+KC::MusicFile::MusicFile(const std::string& filename): Buffer("")
 {
 	ParseMusicFile(filename);
 }
 
-KC::MusicFile::MusicFile(std::string&& filename): Buffer(""), WholeNoteDuration(0), HalfNoteDuration(0),
-                                                  QuarterNoteDuration(0), EighthNoteDuration(0)
+KC::MusicFile::MusicFile(std::string&& filename): Buffer("")
 {
 	ParseMusicFile(filename);
 }
