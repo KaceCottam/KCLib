@@ -3,11 +3,15 @@
 #include <sstream>
 #include <locale>
 
-int KC::FetchTone(const int row, const int column, const int noteOffset)
+using KC::Music::FetchTone;
+using KC::Music::TONE_VALUE;
+using KC::Music::NoteLength;
+
+int KC::Music::FetchTone(const int row, const int column, const int noteOffset)
 {
 	if (!noteOffset)
 	{
-		return Value[(row + (column < 'C')) * 7 + column - 'A' - 2];
+		return TONE_VALUE[(row + (column < 'C')) * 7 + column - 'A' - 2];
 	}
 	return FetchTone(row, column) + (FetchTone(row, column + noteOffset) - FetchTone(row, column)) / 2;
 }
@@ -37,17 +41,17 @@ auto KC::MusicFile::TestFileParsing(const bool& fileStart, const bool& fileEnd, 
 	}
 }
 
-auto KC::MusicFile::ConvertNoteToIndex(const Note& n) -> int
+auto KC::MusicFile::ConvertNoteToIndex(const NoteLength& n) -> int
 {
 	switch (n)
 	{
-	case Note::Whole:
+	case NoteLength::Whole:
 		return 0;
-	case Note::Half:
+	case NoteLength::Half:
 		return 1;
-	case Note::Quarter:
+	case NoteLength::Quarter:
 		return 2;
-	case Note::Eighth:
+	case NoteLength::Eighth:
 		return 3;
 	}
 	return -1;
@@ -65,34 +69,34 @@ auto KC::MusicFile::PlayNote(const int noteTone, const DWORD duration, const DWO
 auto KC::MusicFile::SetLocals(const std::stringstream& buffer, const int& bpm, const int& baseNote) -> void
 {
 	Buffer = buffer.str();
-	switch (static_cast<Note>(baseNote))
+	switch (static_cast<NoteLength>(baseNote))
 	{
-	case Note::Whole:
+	case NoteLength::Whole:
 		WholeNoteDuration = 60 * 1000 / bpm;
 		HalfNoteDuration = 60 * 1000 / 2 / bpm;
 		QuarterNoteDuration = 60 * 1000 / 4 / bpm;
 		EighthNoteDuration = 60 * 1000 / 8 / bpm;
 		break;
-	case Note::Half:
+	case NoteLength::Half:
 		WholeNoteDuration = 60 * 1000 * 2 / bpm;
 		HalfNoteDuration = 60 * 1000 / bpm;
 		QuarterNoteDuration = 60 * 1000 / 2 / bpm;
 		EighthNoteDuration = 60 * 1000 / 4 / bpm;
 		break;
-	case Note::Quarter:
+	case NoteLength::Quarter:
 		WholeNoteDuration = 60 * 1000 * 4 / bpm;
 		HalfNoteDuration = 60 * 1000 * 2 / bpm;
 		QuarterNoteDuration = 60 * 1000 / bpm;
 		EighthNoteDuration = 60 * 1000 / 2 / bpm;
 		break;
-	case Note::Eighth:
+	case NoteLength::Eighth:
 		WholeNoteDuration = 60 * 1000 * 8 / bpm;
 		HalfNoteDuration = 60 * 1000 * 4 / bpm;
 		QuarterNoteDuration = 60 * 1000 * 2 / bpm;
 		EighthNoteDuration = 60 * 1000 / bpm;
 		break;
 	default:
-		throw std::exception("Base Note is invalid!");
+		throw std::exception("Base NoteLength is invalid!");
 	}
 	if (Buffer.length() == 0)
 	{
@@ -265,15 +269,14 @@ auto KC::MusicFile::Play(const DWORD timeToWaitInBetweenNotes) const -> void
 			if (note[indexOffset] == '0')
 			{
 				Sleep(static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(
-						static_cast<Note>(note[indexOffset + 1]))) +
+						static_cast<NoteLength>(note[indexOffset + 1]))) +
 					noteTime * sleepOffset));
 			}
 			else
 			{
 				PlayNote(FetchTone(std::stoi(&note[indexOffset + 1]), note[indexOffset], noteOffset),
 				         static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(
-						         static_cast<Note>(note[indexOffset + 2]))
-				         )),
+					         static_cast<NoteLength>(note[indexOffset + 2])))),
 				         static_cast<DWORD>(noteTime * sleepOffset));
 			}
 			noteTime = timeToWaitInBetweenNotes;
