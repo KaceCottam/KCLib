@@ -3,7 +3,7 @@
 #include <sstream>
 #include <locale>
 
-int KC::Tone::FetchTone(const int row, const int column, const int noteOffset) const
+int KC::FetchTone(const int row, const int column, const int noteOffset)
 {
 	if (!noteOffset)
 	{
@@ -13,7 +13,7 @@ int KC::Tone::FetchTone(const int row, const int column, const int noteOffset) c
 }
 
 auto KC::MusicFile::TestFileParsing(const bool& fileStart, const bool& fileEnd, const bool& musicStart,
-										   const int& bpm, const int& baseNote) -> void
+                                    const int& bpm, const int& baseNote) -> void
 {
 	if (!fileStart)
 	{
@@ -111,13 +111,13 @@ void KC::MusicFile::PlayString(std::string& buffer, const int timeInBetweenNotes
 }
 
 KC::MusicFile::MusicFile(const std::string& filename): Buffer(""), WholeNoteDuration(0), HalfNoteDuration(0),
-															QuarterNoteDuration(0), EighthNoteDuration(0)
+                                                       QuarterNoteDuration(0), EighthNoteDuration(0)
 {
 	ParseMusicFile(filename);
 }
 
 KC::MusicFile::MusicFile(std::string&& filename): Buffer(""), WholeNoteDuration(0), HalfNoteDuration(0),
-													   QuarterNoteDuration(0), EighthNoteDuration(0)
+                                                  QuarterNoteDuration(0), EighthNoteDuration(0)
 {
 	ParseMusicFile(filename);
 }
@@ -264,13 +264,15 @@ auto KC::MusicFile::Play(const DWORD timeToWaitInBetweenNotes) const -> void
 				sleepOffset == 1.25 ? 1 : 0);
 			if (note[indexOffset] == '0')
 			{
-				Sleep(static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(static_cast<Note>(note[indexOffset + 1]))) +
+				Sleep(static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(
+						static_cast<Note>(note[indexOffset + 1]))) +
 					noteTime * sleepOffset));
 			}
 			else
 			{
-				PlayNote(tone.FetchTone(std::stoi(&note[indexOffset + 1]), note[indexOffset], noteOffset),
-				         static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(static_cast<Note>(note[indexOffset + 2]))
+				PlayNote(FetchTone(std::stoi(&note[indexOffset + 1]), note[indexOffset], noteOffset),
+				         static_cast<DWORD>(durationOffset * *(&WholeNoteDuration + ConvertNoteToIndex(
+						         static_cast<Note>(note[indexOffset + 2]))
 				         )),
 				         static_cast<DWORD>(noteTime * sleepOffset));
 			}
