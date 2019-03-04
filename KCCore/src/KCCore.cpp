@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <ctime>
 
-HANDLE kcStdout;
+static HANDLE kcStdout;
 
 auto KC::Core::EnableConsoleColor() -> void
 {
@@ -15,7 +15,7 @@ auto KC::Core::EnableConsoleColor() -> void
 auto KC::Core::ResizeCursor(const unsigned int visible) -> void
 {
 	CONSOLE_CURSOR_INFO info;
-	info.dwSize = visible ? visible : 10;
+	info.dwSize = visible ? visible : 20;
 	info.bVisible = visible ? 1 : 0;
 	SetConsoleCursorInfo(kcStdout, &info);
 }

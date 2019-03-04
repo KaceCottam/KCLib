@@ -10,7 +10,7 @@ namespace KC
 	{
 		static unsigned int randomizationSeed;
 		auto EnableConsoleColor() -> void;
-		auto ResizeCursor(unsigned int visible) -> void;
+		auto ResizeCursor(unsigned int visible = 0) -> void;
 		auto SetupKCLib() -> void;
 	}
 }
