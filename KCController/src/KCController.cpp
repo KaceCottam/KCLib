@@ -15,42 +15,6 @@ auto KC::Controller::CtrlKeyF(const int key) -> int
 	return key + 93;
 }
 
-auto KC::Controller::ToUpper(const char key) -> char
-{
-	if (key > 'a' && key < 'z')
-	{
-		return key + ('A' - 'a');
-	}
-	return key;
-}
-
-auto KC::Controller::ToUpper(char* string) -> char*
-{
-	for (auto i = 0; string[i] != '\0'; i++)
-	{
-		ToUpper(string[i]);
-	}
-	return string;
-}
-
-auto KC::Controller::ToLower(const char key) -> char
-{
-	if (key > 'A' && key < 'Z')
-	{
-		return key + ('a' - 'A');
-	}
-	return key;
-}
-
-auto KC::Controller::ToLower(char* string) -> char*
-{
-	for (auto i = 0; string[i] != '\0'; i++)
-	{
-		ToLower(string[i]);
-	}
-	return string;
-}
-
 auto operator==(const int& key, const KC::Controller::InputFlag& rhs) -> bool
 {
 	return static_cast<int>(rhs) == key;
@@ -81,25 +45,25 @@ auto KC::Controller::GetKey(InputFlag& flag, const time_t delay) -> int
 		switch (key)
 		{
 		case 'H':
-			return KeyUpArrow;
+			return VK_UP;
 		case 'P':
-			return KeyDownArrow;
+			return VK_DOWN;
 		case 'K':
-			return KeyLeftArrow;
+			return VK_LEFT;
 		case 'M':
-			return KeyRightArrow;
+			return VK_RIGHT;
 		case 'G':
-			return KeyHome;
+			return VK_HOME;
 		case 'I':
-			return KeyPgUp;
+			return VK_PRIOR;
 		case 'O':
-			return KeyEnd;
+			return VK_END;
 		case 'Q':
-			return KeyPgDown;
+			return VK_NEXT;
 		case 'R':
-			return KeyIns;
+			return VK_INSERT;
 		case 'S':
-			return KeyDel;
+			return VK_DELETE;
 		default:
 			return key;
 		}
