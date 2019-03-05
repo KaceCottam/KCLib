@@ -186,7 +186,6 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 
 		AND_WHEN("pulled from using a function")
 		{
-			auto headNode = list.GetHeader();
 			auto a = list.Pull();
 
 			THEN("the data is correctly pulled")
@@ -201,7 +200,6 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 
 		AND_WHEN("pulled from using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a;
 			list >> a;
 
@@ -216,7 +214,6 @@ SCENARIO("KC::List<int> can be expanded and pulled from", "[List][int][List<int>
 		}
 		AND_WHEN("pulled from multiple times using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a, b;
 			list >> a >> b;
 
@@ -479,7 +476,6 @@ SCENARIO("KC::List<char> can be expanded and pulled from", "[List][char][List<ch
 
 		AND_WHEN("pulled from using a function")
 		{
-			auto headNode = list.GetHeader();
 			auto a = list.Pull();
 
 			THEN("the data is correctly pulled")
@@ -494,7 +490,6 @@ SCENARIO("KC::List<char> can be expanded and pulled from", "[List][char][List<ch
 
 		AND_WHEN("pulled from using operators")
 		{
-			auto headNode = list.GetHeader();
 			char a;
 			list >> a;
 
@@ -509,7 +504,6 @@ SCENARIO("KC::List<char> can be expanded and pulled from", "[List][char][List<ch
 		}
 		AND_WHEN("pulled from multiple times using operators")
 		{
-			auto headNode = list.GetHeader();
 			char a, b;
 			list >> a >> b;
 
@@ -889,7 +883,6 @@ SCENARIO("KC::LinkedList<int> is an expanded version of KC::List<int>", "[Linked
 
 		AND_WHEN("pulled from using a function")
 		{
-			auto headNode = list.GetHeader();
 			auto a = list.Pull();
 
 			THEN("the data is correctly pulled")
@@ -904,7 +897,6 @@ SCENARIO("KC::LinkedList<int> is an expanded version of KC::List<int>", "[Linked
 
 		AND_WHEN("pulled from using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a;
 			list >> a;
 
@@ -919,7 +911,6 @@ SCENARIO("KC::LinkedList<int> is an expanded version of KC::List<int>", "[Linked
 		}
 		AND_WHEN("pulled from multiple times using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a, b;
 			list >> a >> b;
 
@@ -1303,7 +1294,6 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 
 		AND_WHEN("pulled from using a function")
 		{
-			auto headNode = list.GetHeader();
 			auto a = list.Pull();
 
 			THEN("the data is correctly pulled")
@@ -1318,7 +1308,6 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 
 		AND_WHEN("pulled from using operators")
 		{
-			auto headNode = list.GetHeader();
 			char a;
 			list >> a;
 
@@ -1333,7 +1322,6 @@ SCENARIO("KC::LinkedList<char> is an expanded version of KC::List<char>", "[Link
 		}
 		AND_WHEN("pulled from multiple times using operators")
 		{
-			auto headNode = list.GetHeader();
 			char a, b;
 			list >> a >> b;
 
@@ -1601,7 +1589,6 @@ SCENARIO("KC::CircleLinkedList<int> is a circular KC:::LinkedList<int>", "[Circl
 
 		AND_WHEN("pulled from using a function")
 		{
-			auto headNode = list.GetHeader();
 			auto a = list.Pull();
 
 			THEN("the data is correctly pulled")
@@ -1616,7 +1603,6 @@ SCENARIO("KC::CircleLinkedList<int> is a circular KC:::LinkedList<int>", "[Circl
 
 		AND_WHEN("pulled from using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a;
 			list >> a;
 
@@ -1631,7 +1617,6 @@ SCENARIO("KC::CircleLinkedList<int> is a circular KC:::LinkedList<int>", "[Circl
 		}
 		AND_WHEN("pulled from multiple times using operators")
 		{
-			auto headNode = list.GetHeader();
 			int a, b;
 			list >> a >> b;
 
