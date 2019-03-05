@@ -45,25 +45,25 @@ auto KC::Controller::GetKey(InputFlag& flag, const time_t delay) -> int
 		switch (key)
 		{
 		case 'H':
-			return VK_UP;
+			return Up;
 		case 'P':
-			return VK_DOWN;
+			return Down;
 		case 'K':
-			return VK_LEFT;
+			return Left;
 		case 'M':
-			return VK_RIGHT;
+			return Right;
 		case 'G':
-			return VK_HOME;
+			return Home;
 		case 'I':
-			return VK_PRIOR;
+			return Prior;
 		case 'O':
-			return VK_END;
+			return End;
 		case 'Q':
-			return VK_NEXT;
+			return Next;
 		case 'R':
-			return VK_INSERT;
+			return Insert;
 		case 'S':
-			return VK_DELETE;
+			return Delete;
 		default:
 			return key;
 		}

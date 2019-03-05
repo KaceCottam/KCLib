@@ -5,7 +5,7 @@
 
 namespace KC
 {
-	template <typename T, bool DoublyLinked= true>
+	template <typename T, bool DoublyLinked = true>
 	class List;
 
 	template <typename T>
@@ -20,9 +20,11 @@ namespace KC
 			Node* Previous = nullptr;
 
 			Node() = default;
+
 			Node(Node const& other) : Data(other.Data)
 			{
 			}
+
 			Node(Node&& other) noexcept
 			{
 				Data = other.Data;
@@ -32,7 +34,9 @@ namespace KC
 				other.Next = nullptr;
 				other.Previous = nullptr;
 			}
-			explicit Node(T const& data, Node* next = nullptr, Node* previous = nullptr) : Data{ data }, Next(next), Previous(previous)
+
+			explicit Node(T const& data, Node* next = nullptr, Node* previous = nullptr) : Data{data}, Next(next),
+			                                                                               Previous(previous)
 			{
 			}
 
@@ -51,14 +55,17 @@ namespace KC
 				}
 				return *this;
 			}
+
 			explicit operator T() const
 			{
 				return Data;
 			}
+
 			T& operator*()
 			{
 				return Data;
 			}
+
 			T& operator->()
 			{
 				return Data;
@@ -81,6 +88,7 @@ namespace KC
 					trail = head;
 				}
 			}
+
 			static void LinkNodes(std::initializer_list<Node*> nodes)
 			{
 				auto nodeList = new Node*[nodes.size()];
@@ -95,6 +103,7 @@ namespace KC
 
 			~Node() = default;
 		};
+
 		class TraversalNode final
 		{
 		public:
@@ -105,28 +114,33 @@ namespace KC
 			TraversalNode(Node* node) : Current(node)
 			{
 			}
+
 			TraversalNode& operator++()
 			{
 				Current = Current->Next;
 				return *this;
 			}
+
 			TraversalNode operator++(int)
 			{
 				TraversalNode result(*this);
 				++*this;
 				return result;
 			}
+
 			TraversalNode& operator--()
 			{
 				Current = Current->Previous;
 				return *this;
 			}
+
 			TraversalNode operator--(int)
 			{
 				TraversalNode result(*this);
 				--*this;
 				return result;
 			}
+
 			TraversalNode& operator+=(int const num)
 			{
 				for (auto i = 0; i < num; i++)
@@ -135,6 +149,7 @@ namespace KC
 				}
 				return *this;
 			}
+
 			TraversalNode& operator-=(const int num)
 			{
 				for (auto i = 0; i < num; i++)
@@ -143,26 +158,32 @@ namespace KC
 				}
 				return *this;
 			}
+
 			Node* operator*()
 			{
 				return Current;
 			}
+
 			Node* operator->()
 			{
 				return Current;
 			}
-			bool operator== (TraversalNode& other) const
+
+			bool operator==(TraversalNode& other) const
 			{
 				return Current == other.Current;
 			}
-			bool operator== (Node& other) const
+
+			bool operator==(Node& other) const
 			{
 				return Current == &other;
 			}
+
 			operator bool() const
 			{
 				return Current != nullptr;
 			}
+
 			operator Node() const
 			{
 				return *Current;
@@ -174,6 +195,7 @@ namespace KC
 				temp += right;
 				return temp;
 			}
+
 			TraversalNode operator-(int const& right)
 			{
 				auto temp = *this;
@@ -181,6 +203,7 @@ namespace KC
 				return temp;
 			}
 		};
+
 	protected:
 		Node* Header = nullptr;
 		int Length = 0;
@@ -194,14 +217,17 @@ namespace KC
 			other.Header = nullptr;
 			other.Length = 0;
 		}
+
 		List(List<T, true> const& other)
 		{
 			Push(other);
 		}
+
 		List(std::initializer_list<T> data)
 		{
 			Push(data);
 		}
+
 		List(const int length, T const* data)
 		{
 			Push(length, data);
@@ -211,10 +237,12 @@ namespace KC
 		{
 			return TraversalNode(Header);
 		}
+
 		int GetLength() const
 		{
 			return Length;
 		}
+
 		TraversalNode GetIndex(const int index) const
 		{
 			if (index > Length - 1)
@@ -256,16 +284,17 @@ namespace KC
 				}
 				TraversalNode traversalNode(Header);
 				traversalNode += index;
-				Node::LinkNodes({ traversalNode->Previous, newNode, *traversalNode });
+				Node::LinkNodes({traversalNode->Previous, newNode, *traversalNode});
 			}
 			else
 			{
-				Node::LinkNodes({ newNode, Header });
+				Node::LinkNodes({newNode, Header});
 				Header = newNode;
 			}
 
 			Length++;
 		}
+
 		void Push(List<T, true> const& other, int const& index = 0)
 		{
 			auto length = other.Length;
@@ -274,6 +303,7 @@ namespace KC
 				Push(other[i], index);
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			for (auto i = length - 1; i >= 0; --i)
@@ -281,6 +311,7 @@ namespace KC
 				Push(data[i], index);
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			Push(data.size(), data.begin(), index);
@@ -324,7 +355,7 @@ namespace KC
 
 				data = traversalNode->Data;
 
-				Node::LinkNodes({ traversalNode->Previous, traversalNode->Next });
+				Node::LinkNodes({traversalNode->Previous, traversalNode->Next});
 
 				delete *traversalNode;
 			}
@@ -345,7 +376,6 @@ namespace KC
 				++traversalNode;
 			}
 			return Pull(index);
-
 		}
 
 
@@ -357,6 +387,7 @@ namespace KC
 
 			return *this;
 		}
+
 		List<T, true>& operator=(List<T, true>&& other) noexcept
 		{
 			Delete();
@@ -371,30 +402,36 @@ namespace KC
 
 			return *this;
 		}
+
 		List<T, true>& operator<<(T const& data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		List<T, true>& operator<<(std::initializer_list<T> data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		List<T, true>& operator<<(List<T, true> const& other)
 		{
 			Push(other);
 			return *this;
 		}
-		List<T, true>& operator >> (T& data)
+
+		List<T, true>& operator >>(T& data)
 		{
 			data = Pull();
 			return *this;
 		}
+
 		T& operator[](const int index) const
 		{
 			return GetIndex(index)->Data;
 		}
+
 		operator bool() const
 		{
 			return Header != nullptr;
@@ -417,9 +454,11 @@ namespace KC
 			Node* Next = nullptr;
 
 			Node() = default;
+
 			Node(Node const& other) : Data(other.Data)
 			{
 			}
+
 			Node(Node&& other) noexcept
 			{
 				Data = other.Data;
@@ -427,7 +466,8 @@ namespace KC
 				other.Data = 0;
 				other.Next = nullptr;
 			}
-			explicit Node(T const& data, Node* next = nullptr, Node* previous = nullptr) : Data{ data }, Next(next)
+
+			explicit Node(T const& data, Node* next = nullptr, Node* previous = nullptr) : Data{data}, Next(next)
 			{
 			}
 
@@ -446,14 +486,17 @@ namespace KC
 				}
 				return *this;
 			}
+
 			explicit operator T() const
 			{
 				return Data;
 			}
+
 			T& operator*()
 			{
 				return Data;
 			}
+
 			T& operator->()
 			{
 				return Data;
@@ -472,6 +515,7 @@ namespace KC
 					trail = head;
 				}
 			}
+
 			static void LinkNodes(std::initializer_list<Node*> nodes)
 			{
 				auto nodeList = new Node*[nodes.size()];
@@ -486,6 +530,7 @@ namespace KC
 
 			~Node() = default;
 		};
+
 		class TraversalNode final
 		{
 		public:
@@ -496,17 +541,20 @@ namespace KC
 			TraversalNode(Node* node) : Current(node)
 			{
 			}
+
 			TraversalNode& operator++()
 			{
 				Current = Current->Next;
 				return *this;
 			}
+
 			TraversalNode operator++(int)
 			{
 				TraversalNode result(*this);
 				++*this;
 				return result;
 			}
+
 			TraversalNode& operator+=(int const num)
 			{
 				for (auto i = 0; i < num; i++)
@@ -515,26 +563,32 @@ namespace KC
 				}
 				return *this;
 			}
+
 			Node* operator*()
 			{
 				return Current;
 			}
+
 			Node* operator->()
 			{
 				return Current;
 			}
-			bool operator== (TraversalNode& other) const
+
+			bool operator==(TraversalNode& other) const
 			{
 				return Current == other.Current;
 			}
-			bool operator== (Node& other) const
+
+			bool operator==(Node& other) const
 			{
 				return Current == &other;
 			}
+
 			operator bool() const
 			{
 				return Current != nullptr;
 			}
+
 			operator Node() const
 			{
 				return *Current;
@@ -547,6 +601,7 @@ namespace KC
 				return temp;
 			}
 		};
+
 	protected:
 		Node* Header = nullptr;
 		int Length = 0;
@@ -560,14 +615,17 @@ namespace KC
 			other.Header = nullptr;
 			other.Length = 0;
 		}
+
 		List(List<T, false> const& other)
 		{
 			Push(other);
 		}
+
 		List(std::initializer_list<T> data)
 		{
 			Push(data);
 		}
+
 		List(const int length, T const* data)
 		{
 			Push(length, data);
@@ -577,10 +635,12 @@ namespace KC
 		{
 			return TraversalNode(Header);
 		}
+
 		int GetLength() const
 		{
 			return Length;
 		}
+
 		TraversalNode GetIndex(const int index) const
 		{
 			if (index > Length - 1)
@@ -622,16 +682,17 @@ namespace KC
 				}
 				TraversalNode traversalNode(Header);
 				traversalNode += index;
-				Node::LinkNodes({ traversalNode->Previous, newNode, *traversalNode });
+				Node::LinkNodes({traversalNode->Previous, newNode, *traversalNode});
 			}
 			else
 			{
-				Node::LinkNodes({ newNode, Header });
+				Node::LinkNodes({newNode, Header});
 				Header = newNode;
 			}
 
 			Length++;
 		}
+
 		void Push(List<T, false> const& other, int const& index = 0)
 		{
 			auto length = other.Length;
@@ -640,6 +701,7 @@ namespace KC
 				Push(other[i], index);
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			for (auto i = length - 1; i >= 0; --i)
@@ -647,6 +709,7 @@ namespace KC
 				Push(data[i], index);
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			Push(data.size(), data.begin(), index);
@@ -690,7 +753,7 @@ namespace KC
 
 				data = traversalNode->Data;
 
-				Node::LinkNodes({ traversalNode->Previous, traversalNode->Next });
+				Node::LinkNodes({traversalNode->Previous, traversalNode->Next});
 
 				delete *traversalNode;
 			}
@@ -711,7 +774,6 @@ namespace KC
 				++traversalNode;
 			}
 			return Pull(index);
-
 		}
 
 
@@ -723,6 +785,7 @@ namespace KC
 
 			return *this;
 		}
+
 		List<T, false>& operator=(List<T, false>&& other) noexcept
 		{
 			Delete();
@@ -737,30 +800,36 @@ namespace KC
 
 			return *this;
 		}
+
 		List<T, false>& operator<<(T const& data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		List<T, false>& operator<<(std::initializer_list<T> data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		List<T, false>& operator<<(List<T, false> const& other)
 		{
 			Push(other);
 			return *this;
 		}
-		List<T, false>& operator >> (T& data)
+
+		List<T, false>& operator >>(T& data)
 		{
 			data = Pull();
 			return *this;
 		}
+
 		T& operator[](const int index) const
 		{
 			return GetIndex(index)->Data;
 		}
+
 		operator bool() const
 		{
 			return Header != nullptr;
@@ -772,10 +841,15 @@ namespace KC
 		}
 	};
 
-	template<typename T = int, bool DoublyLinked = true>
+	template <typename T = int, bool DoublyLinked = true>
 	class LinkedList;
 
-	template<typename T>
+	template <class T>
+	using SinglyLinkedList = LinkedList<T, false>;
+	template <class T>
+	using DoublyLinkedList = LinkedList<T, true>;
+
+	template <typename T>
 	class LinkedList<T, true> : public List<T, true>
 	{
 	protected:
@@ -797,17 +871,21 @@ namespace KC
 		LinkedList() : List<T, true>(), EndNode(nullptr)
 		{
 		}
+
 		LinkedList(List<T, true>&& other) noexcept : List<T, true>(other)
 		{
 		}
+
 		LinkedList(List<T, true> const& other)
 		{
 			Push(other);
 		}
+
 		LinkedList(std::initializer_list<T> data)
 		{
 			Push(data);
 		}
+
 		LinkedList(const int length, T const* data)
 		{
 			Push(length, data);
@@ -817,6 +895,7 @@ namespace KC
 		{
 			return TraversalNode(Header);
 		}
+
 		TraversalNode End()
 		{
 			if (!FlagChangedLastNode)
@@ -838,6 +917,7 @@ namespace KC
 			}
 			List<T, true>::Push(data, index);
 		}
+
 		void Push(List<T, true> const& other, int const& index = 0)
 		{
 			auto length = other.GetLength();
@@ -846,6 +926,7 @@ namespace KC
 				Push(other[i], index);
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			for (auto i = length - 1; i >= 0; --i)
@@ -853,6 +934,7 @@ namespace KC
 				Push(data[i], index);
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			Push(data.size(), data.begin(), index);
@@ -867,10 +949,11 @@ namespace KC
 			}
 			auto previousHeader = End();
 			auto newNode = new Node(data);
-			Node::LinkNodes({ *previousHeader,newNode });
+			Node::LinkNodes({*previousHeader, newNode});
 			++Length;
 			FlagChangedLastNode = true;
 		}
+
 		void Append(List<T, true> const& other)
 		{
 			auto length = other.GetLength();
@@ -879,6 +962,7 @@ namespace KC
 				Append(other.GetIndex(i)->Data);
 			}
 		}
+
 		void Append(int const& length, T const* data)
 		{
 			for (auto i = 0; i < length; ++i)
@@ -886,6 +970,7 @@ namespace KC
 				Append(data[i]);
 			}
 		}
+
 		void Append(std::initializer_list<T> data)
 		{
 			Append(data.size(), data.begin());
@@ -896,11 +981,13 @@ namespace KC
 			Append(data);
 			return *this;
 		}
+
 		LinkedList<T, true>& operator<<(std::initializer_list<T> data)
 		{
 			Append(data);
 			return *this;
 		}
+
 		LinkedList<T, true>& operator<<(List<T, true> const& other)
 		{
 			Append(other);
@@ -925,7 +1012,7 @@ namespace KC
 		}
 	};
 
-	template<typename T>
+	template <typename T>
 	class LinkedList<T, false> : public List<T, false>
 	{
 	protected:
@@ -947,17 +1034,21 @@ namespace KC
 		LinkedList() : List<T, false>(), EndNode(nullptr)
 		{
 		}
+
 		LinkedList(List<T, false>&& other) noexcept : List<T, false>(other)
 		{
 		}
+
 		LinkedList(List<T, false> const& other)
 		{
 			Push(other);
 		}
+
 		LinkedList(std::initializer_list<T> data)
 		{
 			Push(data);
 		}
+
 		LinkedList(const int length, T const* data)
 		{
 			Push(length, data);
@@ -967,6 +1058,7 @@ namespace KC
 		{
 			return TraversalNode(Header);
 		}
+
 		TraversalNode End()
 		{
 			if (!FlagChangedLastNode)
@@ -988,6 +1080,7 @@ namespace KC
 			}
 			List<T, false>::Push(data, index);
 		}
+
 		void Push(List<T, false> const& other, int const& index = 0)
 		{
 			auto length = other.GetLength();
@@ -996,6 +1089,7 @@ namespace KC
 				Push(other[i], index);
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			for (auto i = length - 1; i >= 0; --i)
@@ -1003,6 +1097,7 @@ namespace KC
 				Push(data[i], index);
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			Push(data.size(), data.begin(), index);
@@ -1017,10 +1112,11 @@ namespace KC
 			}
 			auto previousHeader = End();
 			auto newNode = new Node(data);
-			Node::LinkNodes({ *previousHeader,newNode });
+			Node::LinkNodes({*previousHeader, newNode});
 			++Length;
 			FlagChangedLastNode = true;
 		}
+
 		void Append(List<T, false> const& other)
 		{
 			auto length = other.GetLength();
@@ -1029,6 +1125,7 @@ namespace KC
 				Append(other.GetIndex(i)->Data);
 			}
 		}
+
 		void Append(int const& length, T const* data)
 		{
 			for (auto i = 0; i < length; ++i)
@@ -1036,6 +1133,7 @@ namespace KC
 				Append(data[i]);
 			}
 		}
+
 		void Append(std::initializer_list<T> data)
 		{
 			Append(data.size(), data.begin());
@@ -1046,11 +1144,13 @@ namespace KC
 			Append(data);
 			return *this;
 		}
+
 		LinkedList<T, false>& operator<<(std::initializer_list<T> data)
 		{
 			Append(data);
 			return *this;
 		}
+
 		LinkedList<T, false>& operator<<(List<T, false> const& other)
 		{
 			Append(other);
@@ -1075,10 +1175,15 @@ namespace KC
 		}
 	};
 
-	template<typename T = int, bool DoublyLinked = true>
+	template <typename T = int, bool DoublyLinked = true>
 	class CircleLinkedList;
 
-	template<typename T>
+	template <class T>
+	using SinglyCircleLinkedList = CircleLinkedList<T, false>;
+	template <class T>
+	using DoublyCircleLinkedList = CircleLinkedList<T, true>;
+
+	template <typename T>
 	class CircleLinkedList<T, true> : public LinkedList<T, true>
 	{
 	protected:
@@ -1095,32 +1200,36 @@ namespace KC
 		using LinkedList<T, true>::Begin;
 
 		CircleLinkedList() = default;
+
 		CircleLinkedList(List<T, true>&& other) noexcept : LinkedList<T, true>(other)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(List<T, true> const& other) : LinkedList<T, true>(other)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(std::initializer_list<T> data) : LinkedList<T, true>(data)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(const int length, T const* data) : LinkedList<T, true>(length, data)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
 
@@ -1137,7 +1246,7 @@ namespace KC
 			if (*Begin() == nullptr)
 			{
 				List<T, true>::Push(data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1145,16 +1254,17 @@ namespace KC
 				List<T, true>::Push(data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(List<T, true> const& other, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, true>::Push(other, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1162,16 +1272,17 @@ namespace KC
 				List<T, true>::Push(other, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, true>::Push(length, data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1179,16 +1290,17 @@ namespace KC
 				List<T, true>::Push(length, data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, true>::Push(data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1196,7 +1308,7 @@ namespace KC
 				List<T, true>::Push(data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
@@ -1204,7 +1316,7 @@ namespace KC
 		T Pull(int const& index = 0)
 		{
 			if (index == 0)
-				Node::LinkNodes({ Begin()->Previous, Begin()->Next });
+				Node::LinkNodes({Begin()->Previous, Begin()->Next});
 			T data = LinkedList<T, true>::Pull(index);
 			return data;
 		}
@@ -1212,7 +1324,7 @@ namespace KC
 		T Pull(TraversalNode& traversalNode, int const& index = 0)
 		{
 			if (index == 0)
-				Node::LinkNodes({ Begin()->Previous, Begin()->Next });
+				Node::LinkNodes({Begin()->Previous, Begin()->Next});
 			T data = LinkedList<T, true>::Pull(traversalNode, index);
 			return data;
 		}
@@ -1225,6 +1337,7 @@ namespace KC
 
 			return *this;
 		}
+
 		CircleLinkedList<T, true>& operator=(List<T, true>&& other) noexcept
 		{
 			Delete();
@@ -1244,22 +1357,26 @@ namespace KC
 
 			return *this;
 		}
+
 		CircleLinkedList<T, true>& operator<<(T const& data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		CircleLinkedList<T, true>& operator<<(std::initializer_list<T> data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		CircleLinkedList<T, true>& operator<<(List<T, true> const& other)
 		{
 			Push(other);
 			return *this;
 		}
-		CircleLinkedList<T, true>& operator >> (T& data)
+
+		CircleLinkedList<T, true>& operator >>(T& data)
 		{
 			data = Pull();
 			return *this;
@@ -1271,7 +1388,7 @@ namespace KC
 		}
 	};
 
-	template<typename T>
+	template <typename T>
 	class CircleLinkedList<T, false> : public LinkedList<T, false>
 	{
 	protected:
@@ -1288,32 +1405,36 @@ namespace KC
 		using LinkedList<T, false>::Begin;
 
 		CircleLinkedList() = default;
+
 		CircleLinkedList(List<T, false>&& other) noexcept : LinkedList<T, true>(other)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(List<T, false> const& other) : LinkedList<T, false>(other)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(std::initializer_list<T> data) : LinkedList<T, false>(data)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
+
 		CircleLinkedList(const int length, T const* data) : LinkedList<T, false>(length, data)
 		{
 			if (!DetectCircle())
 			{
-				Node::LinkNodes({ *End(), *Begin() });
+				Node::LinkNodes({*End(), *Begin()});
 			}
 		}
 
@@ -1330,7 +1451,7 @@ namespace KC
 			if (*Begin() == nullptr)
 			{
 				List<T, false>::Push(data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1338,16 +1459,17 @@ namespace KC
 				List<T, false>::Push(data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(List<T, false> const& other, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, false>::Push(other, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1355,16 +1477,17 @@ namespace KC
 				List<T, false>::Push(other, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(const int length, T const* data, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, false>::Push(length, data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1372,16 +1495,17 @@ namespace KC
 				List<T, false>::Push(length, data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
+
 		void Push(std::initializer_list<T> data, int const& index = 0)
 		{
 			if (*Begin() == nullptr)
 			{
 				List<T, false>::Push(data, index);
-				Node::LinkNodes({ *End(),Header });
+				Node::LinkNodes({*End(), Header});
 			}
 			else
 			{
@@ -1389,7 +1513,7 @@ namespace KC
 				List<T, false>::Push(data, index);
 				if (index == 0)
 				{
-					Node::LinkNodes({ lastNode,Header });
+					Node::LinkNodes({lastNode, Header});
 				}
 			}
 		}
@@ -1397,7 +1521,7 @@ namespace KC
 		T Pull(int const& index = 0)
 		{
 			if (index == 0)
-				Node::LinkNodes({ Begin()->Previous, Begin()->Next });
+				Node::LinkNodes({Begin()->Previous, Begin()->Next});
 			T data = LinkedList<T, false>::Pull(index);
 			return data;
 		}
@@ -1405,7 +1529,7 @@ namespace KC
 		T Pull(TraversalNode& traversalNode, int const& index = 0)
 		{
 			if (index == 0)
-				Node::LinkNodes({ Begin()->Previous, Begin()->Next });
+				Node::LinkNodes({Begin()->Previous, Begin()->Next});
 			T data = LinkedList<T, false>::Pull(traversalNode, index);
 			return data;
 		}
@@ -1418,6 +1542,7 @@ namespace KC
 
 			return *this;
 		}
+
 		CircleLinkedList<T, false>& operator=(List<T, false>&& other) noexcept
 		{
 			Delete();
@@ -1437,22 +1562,26 @@ namespace KC
 
 			return *this;
 		}
+
 		CircleLinkedList<T, false>& operator<<(T const& data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		CircleLinkedList<T, false>& operator<<(std::initializer_list<T> data)
 		{
 			Push(data);
 			return *this;
 		}
+
 		CircleLinkedList<T, false>& operator<<(List<T, false> const& other)
 		{
 			Push(other);
 			return *this;
 		}
-		CircleLinkedList<T, false>& operator >> (T& data)
+
+		CircleLinkedList<T, false>& operator >>(T& data)
 		{
 			data = Pull();
 			return *this;
@@ -1472,7 +1601,7 @@ auto operator<<(std::ostream& stream, const typename KC::List<T, Double>::Node& 
 	return stream;
 }
 
-template < typename T = int, bool Double = true>
+template <typename T = int, bool Double = true>
 auto operator<<(std::ostream& stream, const KC::List<T, Double>& list) -> std::ostream&
 {
 	auto length = list.GetLength();
@@ -1496,7 +1625,7 @@ auto operator<<(std::ostream& stream, const KC::LinkedList<T, Double>& list) -> 
 	return stream;
 }
 
-template < typename T = int, bool Double = true>
+template <typename T = int, bool Double = true>
 auto operator<<(std::ostream& stream, const KC::CircleLinkedList<T, Double>& list) -> std::ostream&
 {
 	auto length = list.GetLength();

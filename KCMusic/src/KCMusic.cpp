@@ -7,15 +7,6 @@ using KC::Music::FetchTone;
 using KC::Music::TONE_VALUE;
 using KC::Music::NoteLength;
 
-int KC::Music::FetchTone(const int row, const int column, const int noteOffset)
-{
-	if (!noteOffset)
-	{
-		return TONE_VALUE[(row + (column < 'C')) * 7 + column - 'A' - 2];
-	}
-	return FetchTone(row, column) + (FetchTone(row, column + noteOffset) - FetchTone(row, column)) / 2;
-}
-
 auto KC::MusicFile::TestFileParsing(const bool& fileStart, const bool& fileEnd, const bool& musicStart,
                                     const int& bpm, const int& baseNote) -> void
 {
