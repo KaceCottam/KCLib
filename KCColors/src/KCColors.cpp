@@ -1,7 +1,7 @@
 #include "KCColors.hpp"
 #include <iostream>
 
-auto KC::Colors::Colorize(char* color, const std::function<void()>& function) -> void
+void KC::Colors::Colorize(char* color, const std::function<void()>& function)
 {
 	std::cout << color;
 	function();
