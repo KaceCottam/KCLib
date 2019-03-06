@@ -9,8 +9,8 @@ namespace KC
 	namespace Core
 	{
 		static unsigned int randomizationSeed;
-		auto EnableConsoleColor() -> void;
-		auto ResizeCursor(unsigned int visible = 0) -> void;
-		auto SetupKCLib() -> void;
+		void EnableConsoleColor();
+		void ResizeCursor(unsigned int visible = 0);
+		void SetupKCLib();
 	}
 }
