@@ -59,12 +59,12 @@ namespace KC
 			RWin =0x5C,
 		};
 
-		inline auto Ctrl(int key) -> int;
+		inline int Ctrl(int key);
 
-		inline auto KeyF(int key) -> int;
+		inline int KeyF(int key);
 
-		inline auto CtrlKeyF(int key) -> int;
+		inline int CtrlKeyF(int key);
 
-		auto GetKey(InputFlag& flag, time_t delay = 0) -> int;
+		int GetKey(InputFlag& flag, time_t delay = 0);
 	}
 }

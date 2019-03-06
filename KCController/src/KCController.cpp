@@ -1,26 +1,26 @@
 #include "KCController.hpp"
 
-auto KC::Controller::Ctrl(const int key) -> int
+int KC::Controller::Ctrl(const int key)
 {
 	return key - 96;
 }
 
-auto KC::Controller::KeyF(const int key) -> int
+int KC::Controller::KeyF(const int key)
 {
 	return key + 58;
 }
 
-auto KC::Controller::CtrlKeyF(const int key) -> int
+int KC::Controller::CtrlKeyF(const int key)
 {
 	return key + 93;
 }
 
-auto operator==(const int& key, const KC::Controller::InputFlag& rhs) -> bool
+bool operator==(const int& key, const KC::Controller::InputFlag& rhs)
 {
 	return static_cast<int>(rhs) == key;
 }
 
-auto KC::Controller::GetKey(InputFlag& flag, const time_t delay) -> int
+int KC::Controller::GetKey(InputFlag& flag, const time_t delay)
 {
 	if (delay)
 	{
