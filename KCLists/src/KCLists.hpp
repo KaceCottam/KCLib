@@ -437,6 +437,11 @@ namespace KC
 			return Header != nullptr;
 		}
 
+		bool IsEmpty() const
+		{
+			return Header == nullptr;
+		}
+
 		~List()
 		{
 			Delete();
@@ -833,6 +838,11 @@ namespace KC
 		operator bool() const
 		{
 			return Header != nullptr;
+		}
+
+		bool IsEmpty() const
+		{
+			return Header == nullptr;
 		}
 
 		~List()
