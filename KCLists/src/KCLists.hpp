@@ -18,19 +18,9 @@ namespace KC
 
 			Node() = default;
 
-			Node(Node const& other) : Data(other.Data)
-			{
-			}
+			Node(Node const& other) = default;
 
-			Node(Node&& other) noexcept
-			{
-				Data = other.Data;
-				Next = other.Next;
-				Previous = other.Previous;
-				other.Data = 0;
-				other.Next = nullptr;
-				other.Previous = nullptr;
-			}
+			Node(Node&& other) noexcept = default;
 
 			explicit Node(T const& data, Node* next = nullptr, Node* previous = nullptr) : Data{data}, Next(next),
 			                                                                               Previous(previous)
@@ -388,7 +378,7 @@ namespace KC
 		}
 
 
-		List<T, true>& operator=(List<T, true> const& other)
+		List<T, DoublyLinked>& operator=(List<T, DoublyLinked> const& other)
 		{
 			Delete();
 
@@ -397,7 +387,7 @@ namespace KC
 			return *this;
 		}
 
-		List<T, true>& operator=(List<T, true>&& other) noexcept
+		List<T, DoublyLinked>& operator=(List<T, DoublyLinked>&& other) noexcept
 		{
 			Delete();
 
@@ -412,25 +402,25 @@ namespace KC
 			return *this;
 		}
 
-		List<T, true>& operator<<(T const& data)
+		List<T, DoublyLinked>& operator<<(T const& data)
 		{
 			Push(data);
 			return *this;
 		}
 
-		List<T, true>& operator<<(std::initializer_list<T> data)
+		List<T, DoublyLinked>& operator<<(std::initializer_list<T> data)
 		{
 			Push(data);
 			return *this;
 		}
 
-		List<T, true>& operator<<(List<T, true> const& other)
+		List<T, DoublyLinked>& operator<<(List<T, DoublyLinked> const& other)
 		{
 			Push(other);
 			return *this;
 		}
 
-		List<T, true>& operator >>(T& data)
+		List<T, DoublyLinked>& operator >>(T& data)
 		{
 			data = Pull();
 			return *this;
@@ -463,7 +453,7 @@ namespace KC
 	protected:
 		using List<T, DoublyLinked>::Header;
 		using List<T, DoublyLinked>::Length;
-		typename List<T,DoublyLinked>::TraversalNode EndNode = nullptr;
+		typename List<T, DoublyLinked>::TraversalNode EndNode = nullptr;
 		bool FlagChangedLastNode = false;
 	public:
 		using List<T, DoublyLinked>::GetHeader;
@@ -499,19 +489,19 @@ namespace KC
 			Push(length, data);
 		}
 
-		typename List<T,DoublyLinked>::TraversalNode Begin()
+		typename List<T, DoublyLinked>::TraversalNode Begin()
 		{
 			return TraversalNode(Header);
 		}
 
-		typename List<T,DoublyLinked>::TraversalNode End()
+		typename List<T, DoublyLinked>::TraversalNode End()
 		{
 			if (!FlagChangedLastNode)
 			{
 				return EndNode;
 			}
 			FlagChangedLastNode = false;
-			typename List<T,DoublyLinked>::TraversalNode traversalNode = Begin();
+			typename List<T, DoublyLinked>::TraversalNode traversalNode = Begin();
 			traversalNode += Length - 1;
 			EndNode = traversalNode;
 			return traversalNode;
@@ -605,8 +595,8 @@ namespace KC
 		// Used specifically for when CircleLinkedLists are converted to LinkedLists
 		bool DetectCircle() const
 		{
-			typename List<T,DoublyLinked>::TraversalNode trav1 = Header;
-			typename List<T,DoublyLinked>::TraversalNode trav2 = Header;
+			typename List<T, DoublyLinked>::TraversalNode trav1 = Header;
+			typename List<T, DoublyLinked>::TraversalNode trav2 = Header;
 			while (*trav1 && *trav2 && trav2->Next)
 			{
 				++trav1;
@@ -793,7 +783,7 @@ namespace KC
 
 				if (!DetectCircle())
 				{
-					List<T,DoublyLinked>::Node::LinkNodes(End(), Begin());
+					List<T, DoublyLinked>::Node::LinkNodes(End(), Begin());
 				}
 			}
 
@@ -837,38 +827,14 @@ namespace KC
 }
 
 template <typename T = int, bool Double = true>
-auto operator<<(std::ostream& stream, const typename KC::List<T, Double>::Node& node) -> std::ostream&
+std::ostream& operator<<(std::ostream& stream, const typename KC::List<T, Double>::Node& node)
 {
 	std::cout << node.Data;
 	return stream;
 }
 
 template <typename T = int, bool Double = true>
-auto operator<<(std::ostream& stream, const KC::List<T, Double>& list) -> std::ostream&
-{
-	auto length = list.GetLength();
-	for (auto i = 0; i < length; i++)
-	{
-		typename KC::List<T, Double>::Node& index = **list.GetIndex(i);
-		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
-	}
-	return stream;
-}
-
-template <typename T = int, bool Double = true>
-auto operator<<(std::ostream& stream, const KC::LinkedList<T, Double>& list) -> std::ostream&
-{
-	auto length = list.GetLength();
-	for (auto i = 0; i < length; i++)
-	{
-		typename KC::List<T, Double>::Node& index = **list.GetIndex(i);
-		std::cout << "[" << i << ":$" << &index << "] " << index << std::endl;
-	}
-	return stream;
-}
-
-template <typename T = int, bool Double = true>
-auto operator<<(std::ostream& stream, const KC::CircleLinkedList<T, Double>& list) -> std::ostream&
+std::ostream& operator<<(std::ostream& stream, const KC::List<T, Double>& list)
 {
 	auto length = list.GetLength();
 	for (auto i = 0; i < length; i++)
