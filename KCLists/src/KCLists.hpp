@@ -5,7 +5,7 @@
 
 namespace KC
 {
-	template <typename T, bool DoublyLinked = true>
+	template <class T, bool DoublyLinked = true>
 	class List
 	{
 	public:
@@ -14,7 +14,7 @@ namespace KC
 		public:
 			T Data;
 			Node* Next = nullptr;
-			typename std::enable_if<DoublyLinked, Node*>::type Previous = nullptr;
+			std::enable_if_t<DoublyLinked, Node*> Previous = nullptr;
 
 			Node() = default;
 
@@ -447,7 +447,7 @@ namespace KC
 		}
 	};
 
-	template <typename T, bool DoublyLinked = true>
+	template <class T, bool DoublyLinked = true>
 	class LinkedList : public List<T, DoublyLinked>
 	{
 	protected:
@@ -615,7 +615,7 @@ namespace KC
 	template <class T>
 	using DoublyLinkedList = LinkedList<T, true>;
 
-	template <typename T = int, bool DoublyLinked = true>
+	template <class T = int, bool DoublyLinked = true>
 	class CircleLinkedList : public LinkedList<T, DoublyLinked>
 	{
 	protected:
@@ -826,14 +826,14 @@ namespace KC
 	using DoublyCircleLinkedList = CircleLinkedList<T, true>;
 }
 
-template <typename T = int, bool Double = true>
+template <class T = int, bool Double = true>
 std::ostream& operator<<(std::ostream& stream, const typename KC::List<T, Double>::Node& node)
 {
 	std::cout << node.Data;
 	return stream;
 }
 
-template <typename T = int, bool Double = true>
+template <class T = int, bool Double = true>
 std::ostream& operator<<(std::ostream& stream, const KC::List<T, Double>& list)
 {
 	auto length = list.GetLength();

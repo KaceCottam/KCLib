@@ -1706,3 +1706,9 @@ SCENARIO("KC::CircleLinkedList<int> is a circular KC:::LinkedList<int>", "[Circl
 		}
 	}
 }
+SCENARIO("Singly linked list")
+{
+	KC::SinglyLinkedList<int> list;
+	list << 1 << 2 << 3;
+	list.Push({4,5,6});
+}
