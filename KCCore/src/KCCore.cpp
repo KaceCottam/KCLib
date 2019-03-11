@@ -23,7 +23,7 @@ void KC::Core::ResizeCursor(const unsigned int visible)
 void KC::Core::SetupKCLib()
 {
 	kcStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	randomizationSeed = static_cast<unsigned int>(time(nullptr));
-	srand(randomizationSeed);
+	RandomizationSeed = static_cast<unsigned int>(time(nullptr));
+	srand(RandomizationSeed);
 	EnableConsoleColor();
 }
