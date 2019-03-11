@@ -1,5 +1,5 @@
 #include <Test.h>
-#include <kcstatemachine.hpp>
+#include <KCStateMachine/src/KCStateMachine.hpp>
 
 SCENARIO("A basic state machine with one data type")
 {
