@@ -1,4 +1,6 @@
 #include "KCController.hpp"
+#include <conio.h>
+#include <ctime>
 
 int KC::Controller::Ctrl(const int key)
 {
@@ -20,7 +22,7 @@ bool operator==(const int& key, const KC::Controller::InputFlag& rhs)
 	return static_cast<int>(rhs) == key;
 }
 
-int KC::Controller::GetKey(InputFlag& flag, const time_t delay)
+int KC::Controller::GetKey(InputFlag& flag, const int delay)
 {
 	if (delay)
 	{

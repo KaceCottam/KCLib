@@ -1,12 +1,11 @@
 #pragma once
 
-#include <ctime>
-#include <conio.h>
 
 namespace KC
 {
-	namespace Controller
+	class Controller final
 	{
+	public:
 		enum class InputFlag : int
 		{
 			FlagReturn,
@@ -59,12 +58,12 @@ namespace KC
 			RWin =0x5C,
 		};
 
-		inline int Ctrl(int key);
+		static int Ctrl(int key);
 
-		inline int KeyF(int key);
+		static int KeyF(int key);
 
-		inline int CtrlKeyF(int key);
+		static int CtrlKeyF(int key);
 
-		int GetKey(InputFlag& flag, time_t delay = 0);
-	}
+		static int GetKey(InputFlag& flag, int delay = 0);
+	};
 }

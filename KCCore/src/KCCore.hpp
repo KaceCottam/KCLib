@@ -6,11 +6,12 @@
 
 namespace KC
 {
-	namespace Core
+	class Core final
 	{
-		static unsigned int randomizationSeed;
-		void EnableConsoleColor();
-		void ResizeCursor(unsigned int visible = 0);
-		void SetupKCLib();
-	}
+	public:
+		static unsigned int RandomizationSeed;
+		static void EnableConsoleColor();
+		static void ResizeCursor(unsigned int visible = 0);
+		static void SetupKCLib();
+	};
 }
