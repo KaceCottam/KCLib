@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCCore", "KCCore\KCCore.vcxproj", "{0568A6C7-4F55-4BDB-929C-51F017D93EE8}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCController", "KCController\KCController.vcxproj", "{DF077480-4446-4A9B-B6C9-770349B3C707}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCLists", "KCLists\KCLists.vcxproj", "{1C93B5B8-0B94-4029-957B-096A42F69186}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2} = {02E51FBF-8DE1-4349-B17F-A464E5CF87F2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCMusic", "KCMusic\KCMusic.vcxproj", "{37B24415-D408-401A-8299-C0707933CFD7}"
 EndProject
@@ -22,10 +25,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCLists", "tests\TestKC
 		{1C93B5B8-0B94-4029-957B-096A42F69186} = {1C93B5B8-0B94-4029-957B-096A42F69186}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCStateMachine", "TestKCStateMachine\TestKCStateMachine.vcxproj", "{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{83D169F2-ABB0-460D-8844-397E1AFA6F7F} = {83D169F2-ABB0-460D-8844-397E1AFA6F7F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCStateMachine", "tests\TestKCStateMachine\TestKCStateMachine.vcxproj", "{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCNodes", "KCNodes\KCNodes.vcxproj", "{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KCQueues", "KCQueues\KCQueues.vcxproj", "{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestKCQueue", "tests\TestKCQueue\TestKCQueue.vcxproj", "{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +105,30 @@ Global
 		{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E}.Release|x64.Build.0 = Release|x64
 		{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E}.Release|x86.ActiveCfg = Release|Win32
 		{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E}.Release|x86.Build.0 = Release|Win32
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Debug|x64.ActiveCfg = Debug|x64
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Debug|x64.Build.0 = Debug|x64
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Debug|x86.ActiveCfg = Debug|Win32
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Debug|x86.Build.0 = Debug|Win32
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Release|x64.ActiveCfg = Release|x64
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Release|x64.Build.0 = Release|x64
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Release|x86.ActiveCfg = Release|Win32
+		{02E51FBF-8DE1-4349-B17F-A464E5CF87F2}.Release|x86.Build.0 = Release|Win32
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Debug|x64.ActiveCfg = Debug|x64
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Debug|x64.Build.0 = Debug|x64
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Debug|x86.ActiveCfg = Debug|Win32
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Debug|x86.Build.0 = Debug|Win32
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Release|x64.ActiveCfg = Release|x64
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Release|x64.Build.0 = Release|x64
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Release|x86.ActiveCfg = Release|Win32
+		{BC24D10B-4689-4F4D-A6AE-DA421A24C30F}.Release|x86.Build.0 = Release|Win32
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Debug|x64.ActiveCfg = Debug|x64
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Debug|x64.Build.0 = Debug|x64
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Debug|x86.ActiveCfg = Debug|Win32
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Debug|x86.Build.0 = Debug|Win32
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Release|x64.ActiveCfg = Release|x64
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Release|x64.Build.0 = Release|x64
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Release|x86.ActiveCfg = Release|Win32
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +136,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3} = {448C9FE9-1656-4B58-A2D1-592923AF3274}
 		{DD0569CA-2D82-4E7B-8BCF-A697507CAD4E} = {448C9FE9-1656-4B58-A2D1-592923AF3274}
+		{AF29A484-8BEF-4000-A45C-E93AE5B72ED1} = {448C9FE9-1656-4B58-A2D1-592923AF3274}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9738B99-08BE-46AB-B6ED-DEBE97A80AF1}
 	EndGlobalSection
 EndGlobal

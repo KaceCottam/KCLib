@@ -18,38 +18,50 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\KCQueues.hpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+    </ClInclude>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3}</ProjectGuid>
+    <ProjectGuid>{bc24d10b-4689-4f4d-a6ae-da421a24c30f}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestKCLists</RootNamespace>
+    <RootNamespace>KCQueues</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -58,40 +70,52 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Version.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Version.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Version.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Version.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
-    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
-    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);%(SolutionDir)KCNodes/src/;$(SolutionDir)KCNodes\src\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
-    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);%(SolutionDir)KCNodes/src/;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);%(SolutionDir)KCNodes/src/;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
-    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);%(SolutionDir)KCNodes/src/;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,14 +123,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)tests\;$(SolutionDir)bin\$(Configuration)-$(Platform)\</AdditionalIncludeDirectories>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
+    <CustomBuildStep>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
+      <Outputs>$(ProjectDir)src\*.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -114,14 +144,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)tests\;$(SolutionDir)bin\$(Configuration)-$(Platform)\</AdditionalIncludeDirectories>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
+    <CustomBuildStep>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
+      <Outputs>$(ProjectDir)src\*.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -131,16 +167,22 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)tests\;$(SolutionDir)bin\$(Configuration)-$(Platform)\</AdditionalIncludeDirectories>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
+      <Outputs>$(ProjectDir)src\*.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -150,25 +192,24 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)tests\;$(SolutionDir)bin\$(Configuration)-$(Platform)\</AdditionalIncludeDirectories>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy "$(ProjectDir)src\*.hpp" "$(OutputPath)"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>copy $(ProjectDir)src\*.hpp $(OutputPath)</Message>
+      <Outputs>$(ProjectDir)src\*.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="TestLists.cpp" />
-  </ItemGroup>
-  <PropertyGroup>
-    <LocalDebuggerEnvironment>PATH=$(ICRedistPaths)%PATH%
-$(LocalDebuggerEnvironment)
-    </LocalDebuggerEnvironment>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

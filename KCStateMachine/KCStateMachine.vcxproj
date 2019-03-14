@@ -82,6 +82,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
@@ -89,6 +90,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
@@ -96,6 +98,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
@@ -103,6 +106,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

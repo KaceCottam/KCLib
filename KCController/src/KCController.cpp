@@ -1,62 +1,28 @@
 #include "KCController.hpp"
+#include <conio.h>
+#include <ctime>
 
-auto KC::Controller::Ctrl(const int key) -> int
+int KC::Controller::Ctrl(const int key)
 {
 	return key - 96;
 }
 
-auto KC::Controller::KeyF(const int key) -> int
+int KC::Controller::KeyF(const int key)
 {
 	return key + 58;
 }
 
-auto KC::Controller::CtrlKeyF(const int key) -> int
+int KC::Controller::CtrlKeyF(const int key)
 {
 	return key + 93;
 }
 
-auto KC::Controller::ToUpper(const char key) -> char
-{
-	if (key > 'a' && key < 'z')
-	{
-		return key + ('A' - 'a');
-	}
-	return key;
-}
-
-auto KC::Controller::ToUpper(char* string) -> char*
-{
-	for (auto i = 0; string[i] != '\0'; i++)
-	{
-		ToUpper(string[i]);
-	}
-	return string;
-}
-
-auto KC::Controller::ToLower(const char key) -> char
-{
-	if (key > 'A' && key < 'Z')
-	{
-		return key + ('a' - 'A');
-	}
-	return key;
-}
-
-auto KC::Controller::ToLower(char* string) -> char*
-{
-	for (auto i = 0; string[i] != '\0'; i++)
-	{
-		ToLower(string[i]);
-	}
-	return string;
-}
-
-auto operator==(const int& key, const KC::Controller::InputFlag& rhs) -> bool
+bool operator==(const int& key, const KC::Controller::InputFlag& rhs)
 {
 	return static_cast<int>(rhs) == key;
 }
 
-auto KC::Controller::GetKey(InputFlag& flag, const time_t delay) -> int
+int KC::Controller::GetKey(InputFlag& flag, const int delay)
 {
 	if (delay)
 	{
@@ -81,25 +47,25 @@ auto KC::Controller::GetKey(InputFlag& flag, const time_t delay) -> int
 		switch (key)
 		{
 		case 'H':
-			return KeyUpArrow;
+			return Up;
 		case 'P':
-			return KeyDownArrow;
+			return Down;
 		case 'K':
-			return KeyLeftArrow;
+			return Left;
 		case 'M':
-			return KeyRightArrow;
+			return Right;
 		case 'G':
-			return KeyHome;
+			return Home;
 		case 'I':
-			return KeyPgUp;
+			return Prior;
 		case 'O':
-			return KeyEnd;
+			return End;
 		case 'Q':
-			return KeyPgDown;
+			return Next;
 		case 'R':
-			return KeyIns;
+			return Insert;
 		case 'S':
-			return KeyDel;
+			return Delete;
 		default:
 			return key;
 		}

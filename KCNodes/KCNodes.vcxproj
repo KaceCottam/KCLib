@@ -18,34 +18,37 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\KCNodes.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{92774AAF-A8A7-41B3-868A-E1C2A5EE04B3}</ProjectGuid>
+    <ProjectGuid>{02e51fbf-8de1-4349-b17f-a464e5cf87f2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestKCLists</RootNamespace>
+    <RootNamespace>KCNodes</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,26 +74,30 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.lib</TargetExt>
     <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.lib</TargetExt>
     <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.lib</TargetExt>
     <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Tests\</OutDir>
-    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\Tests\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.lib</TargetExt>
     <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -107,6 +114,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)src\KCNodes.hpp $(OutputPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>KCNodes.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -122,6 +135,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)src\KCNodes.hpp $(OutputPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>KCNodes.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -141,6 +160,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)src\KCNodes.hpp $(OutputPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>KCNodes.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -160,15 +185,14 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)src\KCNodes.hpp $(OutputPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>KCNodes.hpp</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="TestLists.cpp" />
-  </ItemGroup>
-  <PropertyGroup>
-    <LocalDebuggerEnvironment>PATH=$(ICRedistPaths)%PATH%
-$(LocalDebuggerEnvironment)
-    </LocalDebuggerEnvironment>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

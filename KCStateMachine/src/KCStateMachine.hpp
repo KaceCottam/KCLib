@@ -26,7 +26,12 @@ namespace KC
 	protected:
 		map<StateIdentifier, State> StateFunctions;
 		map<pair<StateIdentifier, StateIdentifier>, function<void()>> StateTransitions;
-		StateIdentifier NextState = "end";
+		virtual StateIdentifier GetEndString()
+		{
+			return "end";
+		}
+		StateIdentifier NextState = GetEndString();
+
 		void RegisterState(StateIdentifier const& id, State const& func)
 		{
 			StateFunctions[id] = func;
@@ -58,57 +63,38 @@ namespace KC
 		}
 
 	public:
-#define REGISTER_VARIABLES \
-		void AsyncStep() override \
-		{ \
-			if (NextState != "end") \
-			{ \
-				auto from = NextState; \
-				NextState = StateFunctions[from](); \
-				try \
-				{ \
-					StateTransitions.at({from, NextState})(); \
-				} catch (std::out_of_range&) { } \
-			} \
-		} \
-		void Start() override \
-		{ \
-			while (NextState != "end") \
-			{ \
-				auto from = NextState; \
-				NextState = StateFunctions[from](); \
-				try \
-				{ \
-					StateTransitions.at({from, NextState})(); \
-				} \
-				catch (std::out_of_range&) \
-				{ \
-				} \
-			} \
+		void AsyncStep() 
+		{ 
+			if (NextState != "end") 
+			{ 
+				auto from = NextState; 
+				try 
+				{ 
+					NextState = StateFunctions[from](); 
+				} 
+				catch (std::exception&) 
+				{ 
+					NextState = from; 
+				} 
+				try 
+				{ 
+					StateTransitions.at({from, NextState})(); 
+				} 
+				catch (std::out_of_range&) 
+				{ 
+				} 
+			} 
+		} 
+		void Start() 
+		{ 
+			while (NextState != GetEndString()) 
+			{ 
+				AsyncStep(); 
+			} 
 		}
-		virtual void Start()
+		virtual StateIdentifier DoSingleRun(StateIdentifier const& step)
 		{
-			while (NextState != "end")
-			{
-				auto from = NextState;
-				NextState = StateFunctions[from]();
-				try
-				{
-					StateTransitions.at({from, NextState})();
-				} catch (std::out_of_range&) { }
-			}
-		}
-		virtual void AsyncStep()
-		{
-			if (NextState != "end")
-			{
-				auto from = NextState;
-				NextState = StateFunctions[from]();
-				try
-				{
-					StateTransitions.at({from, NextState})();
-				} catch (std::out_of_range&) { }
-			}
+			return StateFunctions[step]();
 		}
 	};
 }
