@@ -113,7 +113,7 @@ namespace KC
 	template <class T, bool DoublyLinked>
 	auto LinkedList<T, DoublyLinked>::Push(const int length, T const* data, int const& index) -> LinkedListT&
 	{
-		for (auto i = length - 1; i >= 0; --i)
+		for (auto i = 0; i < length; ++i)
 		{
 			Push(data[i], index);
 		}

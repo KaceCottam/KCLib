@@ -26,7 +26,11 @@ namespace KC
 	protected:
 		map<StateIdentifier, State> StateFunctions;
 		map<pair<StateIdentifier, StateIdentifier>, function<void()>> StateTransitions;
-		StateIdentifier NextState = "end";
+		virtual StateIdentifier GetEndString()
+		{
+			return "end";
+		}
+		StateIdentifier NextState = GetEndString();
 
 		void RegisterState(StateIdentifier const& id, State const& func)
 		{
@@ -59,66 +63,38 @@ namespace KC
 		}
 
 	public:
-#define REGISTER_VARIABLES \
-		void AsyncStep() \
-		{ \
-			if (NextState != "end") \
-			{ \
-				auto from = NextState; \
-				try \
-				{ \
-					NextState = StateFunctions[from](); \
-				} \
-				catch (std::exception&) \
-				{ \
-					NextState = from; \
-				} \
-				try \
-				{ \
-					StateTransitions.at({from, NextState})(); \
-				} \
-				catch (std::out_of_range&) \
-				{ \
-				} \
-			} \
-		} \
-		void Start() \
-		{ \
-			while (NextState != "end") \
-			{ \
-				AsyncStep(); \
-			} \
+		void AsyncStep() 
+		{ 
+			if (NextState != "end") 
+			{ 
+				auto from = NextState; 
+				try 
+				{ 
+					NextState = StateFunctions[from](); 
+				} 
+				catch (std::exception&) 
+				{ 
+					NextState = from; 
+				} 
+				try 
+				{ 
+					StateTransitions.at({from, NextState})(); 
+				} 
+				catch (std::out_of_range&) 
+				{ 
+				} 
+			} 
+		} 
+		void Start() 
+		{ 
+			while (NextState != GetEndString()) 
+			{ 
+				AsyncStep(); 
+			} 
 		}
-
-		virtual void AsyncStep()
+		virtual StateIdentifier DoSingleRun(StateIdentifier const& step)
 		{
-			if (NextState != "end")
-			{
-				auto from = NextState;
-				try
-				{
-					NextState = StateFunctions[from]();
-				}
-				catch (std::exception&)
-				{
-					NextState = from;
-				}
-				try
-				{
-					StateTransitions.at({from, NextState})();
-				}
-				catch (std::out_of_range&)
-				{
-				}
-			}
-		}
-
-		virtual void Start()
-		{
-			while (NextState != "end")
-			{
-				AsyncStep();
-			}
+			return StateFunctions[step]();
 		}
 	};
 }

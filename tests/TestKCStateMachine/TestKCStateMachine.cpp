@@ -1,7 +1,7 @@
 #include <Test.h>
 #include <KCStateMachine/src/KCStateMachine.hpp>
 
-SCENARIO("A basic state machine with one data type")
+SCENARIO("A basic state machine with one data type","[state machine][state]")
 {
 	GIVEN("A state machine with a single state and data")
 	{
@@ -22,8 +22,6 @@ SCENARIO("A basic state machine with one data type")
 					return "end";
 				});
 			}
-
-			REGISTER_VARIABLES;
 		} mainState;
 
 		WHEN("the state machine is not started")
@@ -77,8 +75,6 @@ SCENARIO("A basic state machine with one data type")
 					increment++;
 				});
 			}
-
-			REGISTER_VARIABLES;
 		} mainState;
 
 		WHEN("started")
@@ -89,5 +85,27 @@ SCENARIO("A basic state machine with one data type")
 				REQUIRE(mainState.increment == 8);
 			}
 		}
+	}
+	AND_GIVEN("a state machine with one state and a different end string")
+	{
+		class SM : public KC::StateMachine
+		{
+		protected:
+			StateIdentifier GetEndString() override
+			{
+				return "yes";
+			}
+
+		public:
+			int increments = 0;
+			SM() : StateMachine("yes")
+			{
+				RegisterState("no",[&]
+				{
+					increments--;
+					return "yes";
+				});
+			}
+		};
 	}
 }
