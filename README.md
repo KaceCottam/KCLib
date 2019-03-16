@@ -7,8 +7,11 @@ Developed by Kace Cottam.
 ## Usage
 In the [Latest Releases](https://github.com/KaceCottam/KCLib/releases), you will find a zip file. 
 Download and unzip that, and extract the `include` and `lib` folders into your project folder.
+
 Make sure that the `include` folder is registered as an additional include directory 
-and that the `lib` folder is registered as an additional library directory. _Make sure to link the `.lib` files!_
+and that the `lib` folder is registered as an additional library directory.
+
+_Make sure to link the `.lib` files!_
 
 Then, you can use
 ```C++
