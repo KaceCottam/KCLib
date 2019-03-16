@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.8)
+
+project(KCQueues VERSION 0.1)
+
+set(KCModules ${KCModules} KCQueues)
+set(KCQueues_FILES KCQueues.hpp KCQueues.cpp)
+set(KCQueues_HEADERS KCQueues.hpp)
+
+add_library(KCQueues STATIC ${KCQueues_FILES})
+
+target_link_libraries(KCQueues KCNodes)
+
+include_directories(${KCNodes_DIRECTORY})
+
+add_custom_command(
+	TARGET KCQueues POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy
+	${CMAKE_CURRENT_SOURCE_DIR}/KCQueues.hpp
+	${KCLIB_HEADER_OUTPUT_DIRECTORY}/KCQueues.hpp
+)
