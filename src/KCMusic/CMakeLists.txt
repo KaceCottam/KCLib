@@ -8,13 +8,9 @@ set(KCMusic_HEADERS KCMusic.hpp)
 
 add_library(KCMusic STATIC ${KCMusic_FILES})
 
-target_link_libraries(KCMusic KCNodes)
+set(KCLIB_FILE_COMMENT 
+ " KCLIB ${PROJECT_VERSION}
+// This is the KCLib ${PROJECT_NAME}. 
+// Project can be found at www.github.com/KaceCottam/KCLib/")
 
-include_directories(${KCNodes_DIRECTORY})
-
-add_custom_command(
-	TARGET KCMusic POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy
-	${CMAKE_CURRENT_SOURCE_DIR}/KCMusic.hpp
-	${KCLIB_HEADER_OUTPUT_DIRECTORY}/KCMusic.hpp
-)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/KCMusic.hpp ${KCLIB_HEADER_OUTPUT_DIRECTORY}/KCMusic.hpp )

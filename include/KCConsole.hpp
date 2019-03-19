@@ -1,3 +1,6 @@
+// KCLIB 1.0
+// This is the KCLib KCConsole. 
+// Project can be found at www.github.com/KaceCottam/KCLib/
 #pragma once
 #define _WIN32_WINNT 0x0500
 #include <Windows.h>

@@ -1,3 +1,4 @@
+//@KCLIB_FILE_COMMENT
 #pragma once
 
 #include <stdexcept>

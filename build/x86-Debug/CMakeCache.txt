@@ -220,9 +220,6 @@ KCLinkedLists_SOURCE_DIR:STATIC=C:/dev/KCLib/src/KCLinkedLists
 //Value Computed by CMake
 KCMusic_BINARY_DIR:STATIC=C:/dev/KCLib/build/x86-Debug/src/KCMusic
 
-//Dependencies for the target
-KCMusic_LIB_DEPENDS:STATIC=general;KCNodes;
-
 //Value Computed by CMake
 KCMusic_SOURCE_DIR:STATIC=C:/dev/KCLib/src/KCMusic
 

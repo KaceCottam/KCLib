@@ -1,3 +1,6 @@
+// KCLIB 1.0
+// This is the KCLib KCLinkedLists. 
+// Project can be found at www.github.com/KaceCottam/KCLib/
 #pragma once
 
 #include <stdexcept>

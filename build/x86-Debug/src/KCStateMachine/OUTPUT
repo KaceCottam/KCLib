@@ -1,7 +1,8 @@
-// KCLIB 1.0
-// This is the KCLib KCStateMachine. 
-// Project can be found at www.github.com/KaceCottam/KCLib/
 #pragma once
+/*
+ * KCLIB 
+This is the KCLib KCLib. Project found at www.github.com/KaceCottam/KCLib
+ */
 #include <map>
 #include <string>
 #include <functional>
