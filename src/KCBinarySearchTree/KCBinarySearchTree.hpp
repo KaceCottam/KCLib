@@ -11,7 +11,7 @@ namespace KC
 	class BinarySearchTree
 	{
 	public:
-		BinarySearchTree() = default;
+		BinarySearchTree();
 
 		struct Node final
 		{
@@ -60,15 +60,12 @@ namespace KC
 			Node* Right = nullptr;
 			Node* Parent = nullptr;
 
-			Node(const Node& other) = default;
-			Node(Node&& other) noexcept = default;
-			Node& operator=(const Node& other) = default;
-			Node& operator=(Node&& other) noexcept = default;
+			Node(const Node& other);
+			Node(Node&& other) noexcept;
+			Node& operator=(const Node& other);
+			Node& operator=(Node&& other) noexcept;
 
-			explicit Node(const T& data, Node* left = nullptr, Node* right = nullptr)
-				: Data(data), Left(left), Right(right)
-			{
-			}
+			explicit Node(const T& data, Node* left = nullptr, Node* right = nullptr);
 
 			friend static void LinkNodes(Node& left, Node& root, Node& right)
 			{
@@ -90,73 +87,30 @@ namespace KC
 			Node* CurrentNode = nullptr;
 			std::unordered_map<Node*, int> Steps;
 		public:
-			virtual ~TraversalNode() = default;
-			TraversalNode(const TraversalNode& other) = default;
-			TraversalNode(TraversalNode&& other) noexcept = default;
-			TraversalNode& operator=(const TraversalNode& other) = default;
-			TraversalNode& operator=(TraversalNode&& other) noexcept = default;
-			TraversalNode() = default;
+			virtual ~TraversalNode();
+			TraversalNode(const TraversalNode& other);
+			TraversalNode(TraversalNode&& other) noexcept;
+			TraversalNode& operator=(const TraversalNode& other);
+			TraversalNode& operator=(TraversalNode&& other) noexcept;
+			TraversalNode();
 
 			bool CompletedCycle = false;
 
-			virtual void CycleLeft()
-			{
-				CurrentNode = CurrentNode->Left;
-			};
+			virtual void CycleLeft();; 
+			virtual void CycleRight(); 
+			virtual void CycleUp(); 
+			virtual void Cycle();
 
-			virtual void CycleRight()
-			{
-				CurrentNode = CurrentNode->Right;
-			}
+			explicit TraversalNode(Node* node); 
+			explicit TraversalNode(Node& node);
 
-			virtual void CycleUp()
-			{
-				CurrentNode = CurrentNode->Parent;
-			}
+			Node& operator*(); 
+			Node* operator->(); 
+			explicit operator bool(); 
+			explicit operator Node*();
 
-			virtual void Cycle()
-			{
-			}
-
-			explicit TraversalNode(Node* node) : CurrentNode(node)
-			{
-				Steps[node] = 0;
-			}
-
-			explicit TraversalNode(Node& node) : CurrentNode(&node)
-			{
-				Steps[&node] = 0;
-			}
-
-			Node& operator*()
-			{
-				return *CurrentNode;
-			}
-
-			Node* operator->()
-			{
-				return CurrentNode;
-			}
-
-			explicit operator bool()
-			{
-				return CurrentNode != nullptr;
-			}
-
-			Node* PeekLeft() const
-			{
-				return CurrentNode->Left;
-			}
-
-			Node* PeekRight() const
-			{
-				return CurrentNode->Right;
-			}
-
-			explicit operator Node*()
-			{
-				return CurrentNode;
-			}
+			Node* PeekLeft() const; 
+			Node* PeekRight() const;
 		};
 
 		class PostOrderTraversalNode final : public TraversalNode
@@ -166,45 +120,10 @@ namespace KC
 		public:
 			using TraversalNode::CompletedCycle;
 
-			explicit PostOrderTraversalNode(Node* node) : TraversalNode(node)
-			{
-			}
+			explicit PostOrderTraversalNode(Node* node); 
+			explicit PostOrderTraversalNode(Node& node);
 
-			explicit PostOrderTraversalNode(Node& node) : TraversalNode(node)
-			{
-			}
-
-			void Cycle() override
-			{
-				++Steps[CurrentNode];
-				CompletedCycle = false;
-				while (Steps[CurrentNode] != 3)
-				{
-					switch (Steps[CurrentNode])
-					{
-					case 1:
-						if (CurrentNode->Left)
-							CurrentNode = CurrentNode->Left;
-						break;
-					case 2:
-						if (CurrentNode->Right)
-							CurrentNode = CurrentNode->Right;
-						break;
-					default:
-						if (CurrentNode->Parent)
-						{
-							CurrentNode = CurrentNode->Parent;
-						}
-						else
-						{
-							Steps = std::unordered_map<Node*, int>();
-							CompletedCycle = true;
-						}
-						break;
-					}
-					++Steps[CurrentNode];
-				}
-			}
+			void Cycle() override;
 		};
 
 		class InOrderTraversalNode final : public TraversalNode
@@ -214,45 +133,10 @@ namespace KC
 		public:
 			using TraversalNode::CompletedCycle;
 
-			explicit InOrderTraversalNode(Node* node) : TraversalNode(node)
-			{
-			}
+			explicit InOrderTraversalNode(Node* node); 
+			explicit InOrderTraversalNode(Node& node);
 
-			explicit InOrderTraversalNode(Node& node) : TraversalNode(node)
-			{
-			}
-
-			void Cycle() override
-			{
-				++Steps[CurrentNode];
-				CompletedCycle = false;
-				while (Steps[CurrentNode] != 2)
-				{
-					switch (Steps[CurrentNode])
-					{
-					case 1:
-						if (CurrentNode->Left)
-							CurrentNode = CurrentNode->Left;
-						break;
-					case 3:
-						if (CurrentNode->Right)
-							CurrentNode = CurrentNode->Right;
-						break;
-					default:
-						if (CurrentNode->Parent)
-						{
-							CurrentNode = CurrentNode->Parent;
-						}
-						else
-						{
-							Steps = std::unordered_map<Node*, int>();
-							CompletedCycle = true;
-						}
-						break;
-					}
-					++Steps[CurrentNode];
-				}
-			}
+			void Cycle() override;
 		};
 
 		class PreOrderTraversalNode final : public TraversalNode
@@ -262,182 +146,412 @@ namespace KC
 		public:
 			using TraversalNode::CompletedCycle;
 
-			explicit PreOrderTraversalNode(Node* node) : TraversalNode(node)
-			{
-			}
+			explicit PreOrderTraversalNode(Node* node); 
+			explicit PreOrderTraversalNode(Node& node);
 
-			explicit PreOrderTraversalNode(Node& node) : TraversalNode(node)
-			{
-			}
-
-			void Cycle() override
-			{
-				++Steps[CurrentNode];
-				CompletedCycle = false;
-				while (Steps[CurrentNode] != 1)
-				{
-					switch (Steps[CurrentNode])
-					{
-					case 2:
-						if (CurrentNode->Left)
-							CurrentNode = CurrentNode->Left;
-						break;
-					case 3:
-						if (CurrentNode->Right)
-							CurrentNode = CurrentNode->Right;
-						break;
-					default:
-						if (CurrentNode->Parent)
-						{
-							CurrentNode = CurrentNode->Parent;
-						}
-						else
-						{
-							Steps = std::unordered_map<Node*, int>();
-							CompletedCycle = true;
-						}
-						break;
-					}
-					++Steps[CurrentNode];
-				}
-			}
+			void Cycle() override;
 		};
 
 	private:
 		Node* Root = nullptr;
 	public:
-		BinarySearchTree& Insert(T const& data)
+		BinarySearchTree& Insert(T const& data); 
+		BinarySearchTree& Insert(T const data[]); 
+		BinarySearchTree& Insert(std::initializer_list<T> data);
+
+		template <class TraversalType=PreOrderTraversalNode>
+		TraversalType GetRoot();
+
+		BinarySearchTree& operator<<(T const& data);
+
+		BinarySearchTree& PrintInOrder(); 
+		BinarySearchTree& PrintPostOrder(); 
+		BinarySearchTree& PrintPreOrder();
+
+		bool IsEmpty();
+
+	private:
+		void static DestroyTreeNodes(Node* node);
+	public:
+		void DestroyTree();
+
+		~BinarySearchTree();
+	};
+
+	template <class T>
+	BinarySearchTree<T>::BinarySearchTree() = default;
+	template <class T>
+	BinarySearchTree<T>::Node::Node(const Node& other) = default;
+	template <class T>
+	BinarySearchTree<T>::Node::Node(Node&& other) noexcept = default;
+	template <class T>
+	auto BinarySearchTree<T>::Node::operator=(const Node& other) -> Node& = default;
+	template <class T>
+	auto BinarySearchTree<T>::Node::operator=(Node&& other) noexcept -> Node& = default;
+
+	template <class T>
+	BinarySearchTree<T>::Node::Node(const T& data, Node* left, Node* right): Data(data), Left(left), Right(right)
+	{
+	}
+
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::~TraversalNode() = default;
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::TraversalNode(const TraversalNode& other) = default;
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::TraversalNode(TraversalNode&& other) noexcept = default;
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::operator=( const TraversalNode& other) -> TraversalNode& = default;
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::operator=( TraversalNode&& other) noexcept -> TraversalNode& = default;
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::TraversalNode() = default;
+
+	template <class T>
+	void BinarySearchTree<T>::TraversalNode::CycleLeft()
+	{
+		CurrentNode = CurrentNode->Left;
+	}
+
+	template <class T>
+	void BinarySearchTree<T>::TraversalNode::CycleRight()
+	{
+		CurrentNode = CurrentNode->Right;
+	}
+
+	template <class T>
+	void BinarySearchTree<T>::TraversalNode::CycleUp()
+	{
+		CurrentNode = CurrentNode->Parent;
+	}
+
+	template <class T>
+	void BinarySearchTree<T>::TraversalNode::Cycle()
+	{
+	}
+
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::TraversalNode(Node* node): CurrentNode(node)
+	{
+		Steps[node] = 0;
+	}
+
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::TraversalNode(Node& node): CurrentNode(&node)
+	{
+		Steps[&node] = 0;
+	}
+
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::operator*() -> Node&
+	{
+		return *CurrentNode;
+	}
+
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::operator->() -> Node*
+	{
+		return CurrentNode;
+	}
+
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::operator bool()
+	{
+		return CurrentNode != nullptr;
+	}
+
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::PeekLeft() const -> Node*
+	{
+		return CurrentNode->Left;
+	}
+
+	template <class T>
+	auto BinarySearchTree<T>::TraversalNode::PeekRight() const -> Node*
+	{
+		return CurrentNode->Right;
+	}
+
+	template <class T>
+	BinarySearchTree<T>::TraversalNode::operator Node*()
+	{
+		return CurrentNode;
+	}
+
+	template <class T>
+	BinarySearchTree<T>::PostOrderTraversalNode::PostOrderTraversalNode(Node* node): TraversalNode(node)
+	{
+	}
+
+	template <class T>
+	BinarySearchTree<T>::PostOrderTraversalNode::PostOrderTraversalNode(Node& node): TraversalNode(node)
+	{
+	}
+
+	template <class T>
+	void BinarySearchTree<T>::PostOrderTraversalNode::Cycle()
+	{
+		++Steps[CurrentNode];
+		CompletedCycle = false;
+		while (Steps[CurrentNode] != 3)
 		{
-			// Root Node!
-			auto newNode = new Node(data);
-			if (!Root)
+			switch (Steps[CurrentNode])
 			{
-				// No Root Node!
-				Root = newNode;
-				return *this;
+			case 1:
+				if (CurrentNode->Left)
+					CurrentNode = CurrentNode->Left;
+				break;
+			case 2:
+				if (CurrentNode->Right)
+					CurrentNode = CurrentNode->Right;
+				break;
+			default:
+				if (CurrentNode->Parent)
+				{
+					CurrentNode = CurrentNode->Parent;
+				}
+				else
+				{
+					Steps = std::unordered_map<Node*, int>();
+					CompletedCycle = true;
+				}
+				break;
 			}
+			++Steps[CurrentNode];
+		}
+	}
 
-			auto traversalNode = TraversalNode(Root);
-			// Compare data to each node.
+	template <class T>
+	BinarySearchTree<T>::InOrderTraversalNode::InOrderTraversalNode(Node* node): TraversalNode(node)
+	{
+	}
 
-			bool inserted = false;
+	template <class T>
+	BinarySearchTree<T>::InOrderTraversalNode::InOrderTraversalNode(Node& node): TraversalNode(node)
+	{
+	}
 
-			while (!inserted)
+	template <class T>
+	void BinarySearchTree<T>::InOrderTraversalNode::Cycle()
+	{
+		++Steps[CurrentNode];
+		CompletedCycle = false;
+		while (Steps[CurrentNode] != 2)
+		{
+			switch (Steps[CurrentNode])
 			{
-				if (data < traversalNode->Data)
+			case 1:
+				if (CurrentNode->Left)
+					CurrentNode = CurrentNode->Left;
+				break;
+			case 3:
+				if (CurrentNode->Right)
+					CurrentNode = CurrentNode->Right;
+				break;
+			default:
+				if (CurrentNode->Parent)
 				{
-					if (traversalNode.PeekLeft() != nullptr)
-						traversalNode.CycleLeft();
-					else
-					{
-						traversalNode->Left = newNode;
-						newNode->Parent = (Node*)traversalNode;
-						inserted = true;
-					}
+					CurrentNode = CurrentNode->Parent;
 				}
-				else if (data > traversalNode->Data)
+				else
 				{
-					if (traversalNode.PeekRight() != nullptr)
-						traversalNode.CycleRight();
-					else
-					{
-						traversalNode->Right = newNode;
-						newNode->Parent = (Node*)traversalNode;
-						inserted = true;
-					}
+					Steps = std::unordered_map<Node*, int>();
+					CompletedCycle = true;
 				}
-				else if (data == traversalNode->Data)
+				break;
+			}
+			++Steps[CurrentNode];
+		}
+	}
+
+	template <class T>
+	BinarySearchTree<T>::PreOrderTraversalNode::PreOrderTraversalNode(Node* node): TraversalNode(node)
+	{
+	}
+
+	template <class T>
+	BinarySearchTree<T>::PreOrderTraversalNode::PreOrderTraversalNode(Node& node): TraversalNode(node)
+	{
+	}
+
+	template <class T>
+	void BinarySearchTree<T>::PreOrderTraversalNode::Cycle()
+	{
+		++Steps[CurrentNode];
+		CompletedCycle = false;
+		while (Steps[CurrentNode] != 1)
+		{
+			switch (Steps[CurrentNode])
+			{
+			case 2:
+				if (CurrentNode->Left)
+					CurrentNode = CurrentNode->Left;
+				break;
+			case 3:
+				if (CurrentNode->Right)
+					CurrentNode = CurrentNode->Right;
+				break;
+			default:
+				if (CurrentNode->Parent)
 				{
-					delete newNode;
+					CurrentNode = CurrentNode->Parent;
+				}
+				else
+				{
+					Steps = std::unordered_map<Node*, int>();
+					CompletedCycle = true;
+				}
+				break;
+			}
+			++Steps[CurrentNode];
+		}
+	}
+
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::Insert(T const& data)
+	{
+		// Root Node!
+		auto newNode = new Node(data);
+		if (!Root)
+		{
+			// No Root Node!
+			Root = newNode;
+			return *this;
+		}
+
+		auto traversalNode = TraversalNode(Root);
+		// Compare data to each node.
+
+		bool inserted = false;
+
+		while (!inserted)
+		{
+			if (data < traversalNode->Data)
+			{
+				if (traversalNode.PeekLeft() != nullptr)
+					traversalNode.CycleLeft();
+				else
+				{
+					traversalNode->Left = newNode;
+					newNode->Parent = (Node*)traversalNode;
 					inserted = true;
 				}
 			}
-			return *this;
-		}
-
-		BinarySearchTree& Insert(T const data[])
-		{
-			for (auto& i : data)
+			else if (data > traversalNode->Data)
 			{
-				Insert(i);
+				if (traversalNode.PeekRight() != nullptr)
+					traversalNode.CycleRight();
+				else
+				{
+					traversalNode->Right = newNode;
+					newNode->Parent = (Node*)traversalNode;
+					inserted = true;
+				}
 			}
-			return *this;
+			else if (data == traversalNode->Data)
+			{
+				delete newNode;
+				inserted = true;
+			}
 		}
+		return *this;
+	}
 
-		BinarySearchTree& Insert(std::initializer_list<T> data)
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::Insert(const T data[])
+	{
+		for (auto& i : data)
 		{
-			Insert(data.begin());
-			return *this;
+			Insert(i);
 		}
+		return *this;
+	}
 
-		template <class TraversalType=PreOrderTraversalNode>
-		TraversalType GetRoot()
-		{
-			return TraversalType(Root);
-		}
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::Insert(std::initializer_list<T> data)
+	{
+		Insert(data.begin());
+		return *this;
+	}
 
-		BinarySearchTree& operator<<(T const& data)
-		{
-			return Insert(data);
-		}
+	template <class T>
+	template <class TraversalType>
+	TraversalType BinarySearchTree<T>::GetRoot()
+	{
+		return TraversalType(Root);
+	}
 
-		void PrintInOrder()
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::operator<<(T const& data)
+	{
+		return Insert(data);
+	}
+
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::PrintInOrder()
+	{
+		auto b = GetRoot<InOrderTraversalNode>();
+		b.Cycle();
+		while (!b.CompletedCycle)
 		{
-			auto b = GetRoot<InOrderTraversalNode>();
+			std::cout << b->Data << std::endl;
 			b.Cycle();
-			while (!b.CompletedCycle)
-			{
-				std::cout << b->Data << std::endl;
-				b.Cycle();
-			}
 		}
+		return *this;
+	}
 
-		void PrintPostOrder()
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::PrintPostOrder()
+	{
+		auto b = GetRoot<PostOrderTraversalNode>();
+		b.Cycle();
+		while (!b.CompletedCycle)
 		{
-			auto b = GetRoot<PostOrderTraversalNode>();
+			std::cout << b->Data << std::endl;
 			b.Cycle();
-			while (!b.CompletedCycle)
-			{
-				std::cout << b->Data << std::endl;
-				b.Cycle();
-			}
 		}
+		return *this;
+	}
 
-		void PrintPreOrder()
+	template <class T>
+	BinarySearchTree<T>& BinarySearchTree<T>::PrintPreOrder()
+	{
+		auto b = GetRoot<PreOrderTraversalNode>();
+		b.Cycle();
+		while (!b.CompletedCycle)
 		{
-			auto b = GetRoot<PreOrderTraversalNode>();
+			std::cout << b->Data << std::endl;
 			b.Cycle();
-			while (!b.CompletedCycle)
-			{
-				std::cout << b->Data << std::endl;
-				b.Cycle();
-			}
 		}
+		return *this;
+	}
 
-		bool IsEmpty()
-		{
-			return Root != nullptr;
-		}
+	template <class T>
+	bool BinarySearchTree<T>::IsEmpty()
+	{
+		return Root != nullptr;
+	}
 
-	private:
-		void static DestroyTreeNodes(Node* node)
+	template <class T>
+	void BinarySearchTree<T>::DestroyTreeNodes(Node* node)
+	{
+		if (node != nullptr)
 		{
-			if (node != nullptr)
-			{
-				DestroyTreeNodes(node->Left);
-				DestroyTreeNodes(node->Right);
-				delete node;
-			}
+			DestroyTreeNodes(node->Left);
+			DestroyTreeNodes(node->Right);
+			delete node;
 		}
-	public:
-		void DestroyTree()
-		{
-			DestroyTreeNodes(Root);
-		}
+	}
 
-		~BinarySearchTree()
-		{
-			DestroyTree();
-		}
-	};
+	template <class T>
+	void BinarySearchTree<T>::DestroyTree()
+	{
+		DestroyTreeNodes(Root);
+	}
+
+	template <class T>
+	BinarySearchTree<T>::~BinarySearchTree()
+	{
+		DestroyTree();
+	}
 }
