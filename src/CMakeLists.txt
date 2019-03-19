@@ -6,5 +6,6 @@ add_subdirectory(KCNodes)
 add_subdirectory(KCLinkedLists) 
 add_subdirectory(KCQueues) 
 add_subdirectory(KCMusic)
+add_subdirectory(KCBinarySearchTree)
 
 add_subdirectory(examples)
