@@ -354,6 +354,62 @@ build src\KCQueues\rebuild_cache: phony src\KCQueues\CMakeFiles\rebuild_cache.ut
 # C:/dev/KCLib/src/CMakeLists.txt
 # =============================================================================
 
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target KCMusic
+
+
+#############################################
+# Order-only phony target for KCMusic
+
+build cmake_object_order_depends_target_KCMusic: phony || cmake_object_order_depends_target_KCNodes
+build src\KCMusic\CMakeFiles\KCMusic.dir\KCMusic.cpp.obj: CXX_COMPILER__KCMusic ..\..\src\KCMusic\KCMusic.cpp || cmake_object_order_depends_target_KCMusic
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  INCLUDES = -I..\..\src\KCNodes
+  OBJECT_DIR = src\KCMusic\CMakeFiles\KCMusic.dir
+  OBJECT_FILE_DIR = src\KCMusic\CMakeFiles\KCMusic.dir
+  TARGET_COMPILE_PDB = src\KCMusic\CMakeFiles\KCMusic.dir\KCMusic.pdb
+  TARGET_PDB = ..\..\lib\KCMusic.pdb
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target KCMusic
+
+
+#############################################
+# Link the static library ..\..\lib\KCMusic.lib
+
+build ..\..\lib\KCMusic.lib: CXX_STATIC_LIBRARY_LINKER__KCMusic src\KCMusic\CMakeFiles\KCMusic.dir\KCMusic.cpp.obj || ..\..\lib\KCNodes.lib
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LINK_FLAGS = /machine:X86
+  OBJECT_DIR = src\KCMusic\CMakeFiles\KCMusic.dir
+  POST_BUILD = cmd.exe /C "cd /D C:\dev\KCLib\build\x86-Debug\src\KCMusic && "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/dev/KCLib/src/KCMusic/KCMusic.hpp C:/dev/KCLib/include/KCMusic.hpp"
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = src\KCMusic\CMakeFiles\KCMusic.dir\KCMusic.pdb
+  TARGET_FILE = ..\..\lib\KCMusic.lib
+  TARGET_PDB = ..\..\lib\KCMusic.pdb
+
+#############################################
+# Utility command for edit_cache
+
+build src\KCMusic\CMakeFiles\edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D C:\dev\KCLib\build\x86-Debug\src\KCMusic && "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build src\KCMusic\edit_cache: phony src\KCMusic\CMakeFiles\edit_cache.util
+
+#############################################
+# Utility command for rebuild_cache
+
+build src\KCMusic\CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D C:\dev\KCLib\build\x86-Debug\src\KCMusic && "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -HC:\dev\KCLib -BC:\dev\KCLib\build\x86-Debug"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build src\KCMusic\rebuild_cache: phony src\KCMusic\CMakeFiles\rebuild_cache.util
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/dev/KCLib/src/CMakeLists.txt
+# =============================================================================
+
 
 #############################################
 # Utility command for edit_cache
@@ -636,6 +692,8 @@ build KCConsole: phony ..\..\lib\KCConsole.lib
 build KCConsole.lib: phony ..\..\lib\KCConsole.lib
 build KCLinkedLists: phony ..\..\lib\KCLinkedLists.lib
 build KCLinkedLists.lib: phony ..\..\lib\KCLinkedLists.lib
+build KCMusic: phony ..\..\lib\KCMusic.lib
+build KCMusic.lib: phony ..\..\lib\KCMusic.lib
 build KCNodes: phony ..\..\lib\KCNodes.lib
 build KCNodes.lib: phony ..\..\lib\KCNodes.lib
 build KCQueues: phony ..\..\lib\KCQueues.lib
@@ -659,7 +717,7 @@ build TestKCStateMachine.exe: phony ..\..\bin\tests\TestKCStateMachine.exe
 #############################################
 # Folder: C:/dev/KCLib/build/x86-Debug/src
 
-build  src\all: phony src\KCConsole\all src\KCStateMachine\all src\KCNodes\all src\KCLinkedLists\all src\KCQueues\all src\examples\all
+build  src\all: phony src\KCConsole\all src\KCStateMachine\all src\KCNodes\all src\KCLinkedLists\all src\KCQueues\all src\KCMusic\all src\examples\all
 # =============================================================================
 
 #############################################
@@ -672,6 +730,12 @@ build  src\KCConsole\all: phony KCConsole
 # Folder: C:/dev/KCLib/build/x86-Debug/src/KCLinkedLists
 
 build  src\KCLinkedLists\all: phony KCLinkedLists
+# =============================================================================
+
+#############################################
+# Folder: C:/dev/KCLib/build/x86-Debug/src/KCMusic
+
+build  src\KCMusic\all: phony KCMusic
 # =============================================================================
 
 #############################################
@@ -733,7 +797,7 @@ build  tests\TestKCStateMachine\all: phony TestKCStateMachine
 #############################################
 # The main all target.
 
-build all: phony ..\..\lib\KCConsole.lib ..\..\lib\KCStateMachine.lib ..\..\lib\KCNodes.lib ..\..\lib\KCLinkedLists.lib ..\..\lib\KCQueues.lib ..\..\bin\SimpleConsoleShowcase.exe ..\..\bin\tests\TestKCLinkedLists.exe ..\..\bin\tests\TestKCQueues.exe ..\..\bin\tests\TestKCStateMachine.exe
+build all: phony ..\..\lib\KCConsole.lib ..\..\lib\KCStateMachine.lib ..\..\lib\KCNodes.lib ..\..\lib\KCLinkedLists.lib ..\..\lib\KCQueues.lib ..\..\lib\KCMusic.lib ..\..\bin\SimpleConsoleShowcase.exe ..\..\bin\tests\TestKCLinkedLists.exe ..\..\bin\tests\TestKCQueues.exe ..\..\bin\tests\TestKCStateMachine.exe
 
 #############################################
 # Make the all target the default.
@@ -743,13 +807,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ..\..\CMakeLists.txt ..\..\src\CMakeLists.txt ..\..\src\KCConsole\CMakeLists.txt ..\..\src\KCLinkedLists\CMakeLists.txt ..\..\src\KCNodes\CMakeLists.txt ..\..\src\KCQueues\CMakeLists.txt ..\..\src\KCStateMachine\CMakeLists.txt ..\..\src\examples\CMakeLists.txt ..\..\src\examples\SimpleConsoleShowcase\CMakeLists.txt ..\..\tests\CMakeLists.txt ..\..\tests\TestKCLinkedLists\CMakeLists.txt ..\..\tests\TestKCQueues\CMakeLists.txt ..\..\tests\TestKCStateMachine\CMakeLists.txt C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.12.18081601-MSVC_2\CMakeCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ..\..\CMakeLists.txt ..\..\src\CMakeLists.txt ..\..\src\KCConsole\CMakeLists.txt ..\..\src\KCLinkedLists\CMakeLists.txt ..\..\src\KCMusic\CMakeLists.txt ..\..\src\KCNodes\CMakeLists.txt ..\..\src\KCQueues\CMakeLists.txt ..\..\src\KCStateMachine\CMakeLists.txt ..\..\src\examples\CMakeLists.txt ..\..\src\examples\SimpleConsoleShowcase\CMakeLists.txt ..\..\tests\CMakeLists.txt ..\..\tests\TestKCLinkedLists\CMakeLists.txt ..\..\tests\TestKCQueues\CMakeLists.txt ..\..\tests\TestKCStateMachine\CMakeLists.txt C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.12.18081601-MSVC_2\CMakeCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeSystem.cmake
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ..\..\CMakeLists.txt ..\..\src\CMakeLists.txt ..\..\src\KCConsole\CMakeLists.txt ..\..\src\KCLinkedLists\CMakeLists.txt ..\..\src\KCNodes\CMakeLists.txt ..\..\src\KCQueues\CMakeLists.txt ..\..\src\KCStateMachine\CMakeLists.txt ..\..\src\examples\CMakeLists.txt ..\..\src\examples\SimpleConsoleShowcase\CMakeLists.txt ..\..\tests\CMakeLists.txt ..\..\tests\TestKCLinkedLists\CMakeLists.txt ..\..\tests\TestKCQueues\CMakeLists.txt ..\..\tests\TestKCStateMachine\CMakeLists.txt C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.12.18081601-MSVC_2\CMakeCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeSystem.cmake: phony
+build ..\..\CMakeLists.txt ..\..\src\CMakeLists.txt ..\..\src\KCConsole\CMakeLists.txt ..\..\src\KCLinkedLists\CMakeLists.txt ..\..\src\KCMusic\CMakeLists.txt ..\..\src\KCNodes\CMakeLists.txt ..\..\src\KCQueues\CMakeLists.txt ..\..\src\KCStateMachine\CMakeLists.txt ..\..\src\examples\CMakeLists.txt ..\..\src\examples\SimpleConsoleShowcase\CMakeLists.txt ..\..\tests\CMakeLists.txt ..\..\tests\TestKCLinkedLists\CMakeLists.txt ..\..\tests\TestKCQueues\CMakeLists.txt ..\..\tests\TestKCStateMachine\CMakeLists.txt C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake C$:\Program$ Files$ (x86)\Microsoft$ Visual$ Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.12.18081601-MSVC_2\CMakeCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.12.18081601-MSVC_2\CMakeSystem.cmake: phony
 
 #############################################
 # Clean all the built files.

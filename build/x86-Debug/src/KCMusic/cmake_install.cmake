@@ -1,4 +1,4 @@
-# Install script for directory: C:/dev/KCLib/src
+# Install script for directory: C:/dev/KCLib/src/KCMusic
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -30,17 +30,5 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  include("C:/dev/KCLib/build/x86-Debug/src/KCConsole/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/KCStateMachine/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/KCNodes/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/KCLinkedLists/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/KCQueues/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/KCMusic/cmake_install.cmake")
-  include("C:/dev/KCLib/build/x86-Debug/src/examples/cmake_install.cmake")
-
 endif()
 

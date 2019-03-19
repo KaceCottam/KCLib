@@ -17,6 +17,9 @@ C:/dev/KCLib/build/x86-Debug/src/KCLinkedLists/CMakeFiles/rebuild_cache.dir
 C:/dev/KCLib/build/x86-Debug/src/KCQueues/CMakeFiles/KCQueues.dir
 C:/dev/KCLib/build/x86-Debug/src/KCQueues/CMakeFiles/edit_cache.dir
 C:/dev/KCLib/build/x86-Debug/src/KCQueues/CMakeFiles/rebuild_cache.dir
+C:/dev/KCLib/build/x86-Debug/src/KCMusic/CMakeFiles/KCMusic.dir
+C:/dev/KCLib/build/x86-Debug/src/KCMusic/CMakeFiles/edit_cache.dir
+C:/dev/KCLib/build/x86-Debug/src/KCMusic/CMakeFiles/rebuild_cache.dir
 C:/dev/KCLib/build/x86-Debug/src/examples/CMakeFiles/edit_cache.dir
 C:/dev/KCLib/build/x86-Debug/src/examples/CMakeFiles/rebuild_cache.dir
 C:/dev/KCLib/build/x86-Debug/src/examples/SimpleConsoleShowcase/CMakeFiles/SimpleConsoleShowcase.dir
