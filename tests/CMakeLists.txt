@@ -8,5 +8,6 @@ add_subdirectory(TestKCLinkedLists)
 add_subdirectory(TestKCQueues) 
 add_subdirectory(TestKCStateMachine)
 add_subdirectory(TestKCBinarySearchTree)
+add_subdirectory(TestKCStacks)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/RunAllTests.bat DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

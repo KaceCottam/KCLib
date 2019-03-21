@@ -17,6 +17,7 @@ set(KCLinkedLists_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCLinkedLists)
 set(KCQueues_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCQueues)
 set(KCMusic_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCMusic)
 set(KCBinarySearchTree_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCBinarySearchTree)
+set(KCStacks_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCStacks)
 
 add_subdirectory(src)
 
