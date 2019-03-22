@@ -366,6 +366,7 @@ int KC::Console::ConsoleEngine::ConstructConsole(COORD const& bufSize, COORD con
 
 int KC::Console::ConsoleEngine::ConstructConsole()
 {
+	throw std::exception("Not implemented");
 	if (Console == INVALID_HANDLE_VALUE)
 		throw L"Bad Handle";
 

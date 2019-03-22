@@ -1,5 +1,5 @@
+//@KCLIB_FILE_COMMENT@
 #pragma once
-
 #include <map>
 #include <string>
 #include <functional>

@@ -1,1 +1,0 @@
-for /r "." %%a in (*.exe) do start "" "%%~fa" --wait-for-keypress exit

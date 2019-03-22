@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCLinkedLists VERSION 0.1)
+project(KCLinkedLists VERSION 1.0)
 
 set(KCModules ${KCModules} KCLinkedLists)
 set(KCLinkedLists_FILES KCLinkedLists.hpp KCLinkedLists.cpp)
@@ -12,9 +12,9 @@ target_link_libraries(KCLinkedLists KCNodes)
 
 include_directories(${KCNodes_DIRECTORY})
 
-add_custom_command(
-	TARGET KCLinkedLists POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy
-	${CMAKE_CURRENT_SOURCE_DIR}/KCLinkedLists.hpp
-	${KCLIB_HEADER_OUTPUT_DIRECTORY}/KCLinkedLists.hpp
-)
+set(KCLIB_FILE_COMMENT 
+ " KCLIB ${PROJECT_VERSION}
+// This is the KCLib ${PROJECT_NAME}. 
+// Project can be found at www.github.com/KaceCottam/KCLib/")
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/KCLinkedLists.hpp ${KCLIB_HEADER_OUTPUT_DIRECTORY}/KCLinkedLists.hpp )
