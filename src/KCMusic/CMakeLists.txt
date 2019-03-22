@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCMusic VERSION 0.1)
+project(KCMusic VERSION 1.0)
 
 set(KCModules ${KCModules} KCMusic)
 set(KCMusic_FILES KCMusic.hpp KCMusic.cpp)
