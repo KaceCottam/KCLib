@@ -25,8 +25,8 @@ namespace KC
 
 		T Pop();
 
-		T& Peek(int const index) const; 
-		T& Peek() const;
+		T Peek(int const index) const; 
+		T Peek() const;
 
 		int GetSize() const;
 	};
@@ -86,7 +86,7 @@ namespace KC
 	}
 
 	template <class T, int Max>
-	T& Stack<T, Max>::Peek(int const index) const
+	T Stack<T, Max>::Peek(int const index) const
 	{
 		if (index < 0 || index > Max)
 		{
@@ -100,7 +100,7 @@ namespace KC
 	}
 
 	template <class T, int Max>
-	T& Stack<T, Max>::Peek() const
+	T Stack<T, Max>::Peek() const
 	{
 		return Peek(Size - 1);
 	}
