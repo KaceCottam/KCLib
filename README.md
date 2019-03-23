@@ -50,8 +50,9 @@ A few more thanks to my father, and my professor at Washington State University.
 
 ## CHANGELOG
   Version 3.2:
-    Added KCQueues, KCStacks, KCBinarySearchTree
-    Made KCStateMachine transitions into identifiers. Updated the code so it is now an std::unordered_map instead of std::map
+  - Added KCQueues, KCStacks, KCBinarySearchTree
+  - Made KCStateMachine transitions into identifiers. Updated the code so it is now an std::unordered_map instead of std::map
+  
   Version 3.1b "CMakeRemake":
   - Reformatted entire library to use CMake.
   - Removed KCCore, KCColors, KCController in favor of the new KCConsole module.
