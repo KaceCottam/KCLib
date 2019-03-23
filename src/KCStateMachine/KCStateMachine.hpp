@@ -37,28 +37,81 @@ namespace KC
 		unordered_map<TransitionIdentifier, Transition> TransitionFunctions;
 		unordered_map<pair<StateIdentifier, StateIdentifier>, vector<Transition>> StateTransitions;
 
-		virtual StateIdentifier GetEndString();
+		virtual StateIdentifier GetEndString()
+		{
+			return "end";
+		}
 
 		StateIdentifier NextState;
 
-		void RegisterState(StateIdentifier const& id, State const& func);
+		void RegisterState(StateIdentifier const& id, State const& func)
+		{
+			StateFunctions[id] = func;
+		}
 
 		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to,
-			Transition const& func); 
-		void RegisterTransition(TransitionIdentifier const& id, Transition const& func);
+			Transition const& func)
+		{
+			StateTransitions[{from, to}].push_back(func);
+		} 
+		void RegisterTransition(TransitionIdentifier const& id, Transition const& func)
+		{
+			TransitionFunctions[id] = func;
+		}
 
 		void BindTransition(StateIdentifier const& from, StateIdentifier const& to,
-			TransitionIdentifier const& transition);
+			TransitionIdentifier const& transition)
+		{
+			StateTransitions[{from, to}].push_back(TransitionFunctions[transition]);
+		}
 
-		explicit StateMachine(StateIdentifier const& initialState);
+		explicit StateMachine(StateIdentifier const& initialState) : NextState(initialState) { }
 
 	public:
-		virtual ~StateMachine();
+		virtual ~StateMachine() = default;
 
-		void AsyncStep();
+		void AsyncStep()
+		{
+			if (NextState != "end")
+			{
+				auto const from = NextState;
+				try
+				{
+					NextState = DoSingleRun(from);
+				}
+				catch (std::exception&)
+				{
+					NextState = from;
+				}
+				try
+				{
+					DoTransitions(from,NextState);
+				}
+				catch (std::out_of_range&)
+				{
+				}
+			}
+		}
 
-		void Start();
+		void Start() 
+		{
+			while (NextState != GetEndString())
+			{
+				AsyncStep();
+			}
+		}
 
-		StateIdentifier DoSingleRun(StateIdentifier const& step);
+		StateIdentifier DoSingleRun(StateIdentifier const& step)
+		{
+			return StateFunctions[step]();
+		}
+
+		void DoTransitions(StateIdentifier const& from, StateIdentifier const& to)
+		{
+			for (auto const& i : StateTransitions.at({ from, to }))
+			{
+				i();
+			}
+		}
 	};
 }
