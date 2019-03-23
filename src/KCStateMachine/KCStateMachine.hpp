@@ -37,79 +37,28 @@ namespace KC
 		unordered_map<TransitionIdentifier, Transition> TransitionFunctions;
 		unordered_map<pair<StateIdentifier, StateIdentifier>, vector<Transition>> StateTransitions;
 
-		virtual StateIdentifier GetEndString()
-		{
-			return "end";
-		}
+		virtual StateIdentifier GetEndString();
 
 		StateIdentifier NextState;
 
-		void RegisterState(StateIdentifier const& id, State const& func)
-		{
-			StateFunctions[id] = func;
-		}
+		void RegisterState(StateIdentifier const& id, State const& func);
 
 		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to,
-			Transition const& func)
-		{
-			StateTransitions[{from, to}].push_back(func);
-		}
-
-		void RegisterTransition(TransitionIdentifier const& id, Transition const& func)
-		{
-			TransitionFunctions[id] = func;
-		}
+			Transition const& func); 
+		void RegisterTransition(TransitionIdentifier const& id, Transition const& func);
 
 		void BindTransition(StateIdentifier const& from, StateIdentifier const& to,
-			TransitionIdentifier const& transition)
-		{
-			StateTransitions[{from, to}].push_back(TransitionFunctions[transition]);
-		}
+			TransitionIdentifier const& transition);
 
-		explicit StateMachine(StateIdentifier const& initialState) : NextState(std::move(initialState))
-		{
-		}
+		explicit StateMachine(StateIdentifier const& initialState);
 
 	public:
-		virtual ~StateMachine() ;
+		virtual ~StateMachine();
 
-		void AsyncStep()
-		{
-			if (NextState != "end")
-			{
-				auto from = NextState;
-				try
-				{
-					NextState = StateFunctions[from]();
-				}
-				catch (std::exception&)
-				{
-					NextState = from;
-				}
-				try
-				{
-					for (auto const& i : StateTransitions.at({ from,NextState }))
-					{
-						i();
-					}
-				}
-				catch (std::out_of_range&)
-				{
-				}
-			}
-		}
+		void AsyncStep();
 
-		void Start()
-		{
-			while (NextState != GetEndString())
-			{
-				AsyncStep();
-			}
-		}
+		void Start();
 
-		StateIdentifier DoSingleRun(StateIdentifier const& step)
-		{
-			return StateFunctions[step]();
-		}
+		StateIdentifier DoSingleRun(StateIdentifier const& step);
 	};
 }
