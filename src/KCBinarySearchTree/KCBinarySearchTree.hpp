@@ -156,7 +156,7 @@ namespace KC
 			PreOrderTraversalNode(TraversalNode const& node);
 			PreOrderTraversalNode(TraversalNode const&& node);
 			explicit PreOrderTraversalNode(Node* const node); 
-			explicit PreOrderTraversalNode(Node& const node);
+			explicit PreOrderTraversalNode(Node const& node);
 
 			void Cycle() override;
 		};
@@ -173,9 +173,9 @@ namespace KC
 
 		BinarySearchTree& operator<<(T const& data);
 
-		BinarySearchTree& PrintInOrder() const; 
-		BinarySearchTree& PrintPostOrder() const; 
-		BinarySearchTree& PrintPreOrder() const;
+		void PrintInOrder() const; 
+		void PrintPostOrder() const; 
+		void PrintPreOrder() const;
 
 		int GetLength() const;
 
@@ -417,7 +417,7 @@ namespace KC
 	}
 
 	template <class T>
-	BinarySearchTree<T>::PreOrderTraversalNode::PreOrderTraversalNode(Node& node): TraversalNode(node)
+	BinarySearchTree<T>::PreOrderTraversalNode::PreOrderTraversalNode(Node const& node): TraversalNode(node)
 	{
 		Cycle();
 	}
@@ -536,7 +536,7 @@ namespace KC
 	}
 
 	template <class T>
-	BinarySearchTree<T>& BinarySearchTree<T>::PrintInOrder() const
+	void BinarySearchTree<T>::PrintInOrder() const
 	{
 		InOrderTraversalNode b = GetRoot();
 		while (!b.CompletedCycle)
@@ -544,11 +544,10 @@ namespace KC
 			std::cout << b->Data << std::endl;
 			b.Cycle();
 		}
-		return *this;
 	}
 
 	template <class T>
-	BinarySearchTree<T>& BinarySearchTree<T>::PrintPostOrder() const
+	void BinarySearchTree<T>::PrintPostOrder() const
 	{
 		PostOrderTraversalNode b = GetRoot();
 		while (!b.CompletedCycle)
@@ -556,11 +555,10 @@ namespace KC
 			std::cout << b->Data << std::endl;
 			b.Cycle();
 		}
-		return *this;
 	}
 
 	template <class T>
-	BinarySearchTree<T>& BinarySearchTree<T>::PrintPreOrder() const
+	void BinarySearchTree<T>::PrintPreOrder() const
 	{
 		PreOrderTraversalNode b = GetRoot();
 		while (!b.CompletedCycle)
@@ -568,7 +566,6 @@ namespace KC
 			std::cout << b->Data << std::endl;
 			b.Cycle();
 		}
-		return *this;
 	}
 
 	template <class T>

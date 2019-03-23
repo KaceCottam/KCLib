@@ -1,111 +1,64 @@
 //@KCLIB_FILE_COMMENT@
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <functional>
 #include <utility>
 #include <vector>
 
-using std::map;
-using std::string;
-using std::function;
-using std::initializer_list;
-using std::pair;
-using std::vector;
-
-using NextState = string;
-using FunctionInitializerList = initializer_list<pair<string, function<NextState()>>>;
-using StateIdentifier = string;
-using State = function<NextState()>;
-using TransitionInitializerList = initializer_list<pair<pair<StateIdentifier, StateIdentifier>, function<void()>>>;
+namespace std
+{
+	template <> struct hash<pair<std::string, std::string>>
+	{
+		size_t operator()(const pair<std::string, std::string>& x) const
+		{
+			return size_t(39 * x.first[0] | x.second[0]);
+		}
+	};
+}
 
 namespace KC
 {
-	template <class T>
+	using std::unordered_map;
+	using std::string;
+	using std::function;
+	using std::initializer_list;
+	using std::pair;
+	using std::vector;
+
 	class StateMachine
 	{
 	protected:
-		map<StateIdentifier, State> StateFunctions;
-		map<pair<StateIdentifier, StateIdentifier>, function<void()>> StateTransitions;
+		using StateIdentifier = string;
+		using State = function<StateIdentifier()>;
+		using TransitionIdentifier = string;
+		using Transition = function<void()>;
+		unordered_map<StateIdentifier, State> StateFunctions;
+		unordered_map<TransitionIdentifier, Transition> TransitionFunctions;
+		unordered_map<pair<StateIdentifier, StateIdentifier>, vector<Transition>> StateTransitions;
 
-		virtual StateIdentifier GetEndString()
-		{
-			return "end";
-		}
+		virtual StateIdentifier GetEndString();
 
-		StateIdentifier NextState = GetEndString();
+		StateIdentifier NextState;
 
-		void RegisterState(StateIdentifier const& id, State const& func)
-		{
-			StateFunctions[id] = func;
-		}
+		void RegisterState(StateIdentifier const& id, State const& func);
 
-		void RegisterStates(FunctionInitializerList const& funcList)
-		{
-			for (auto const& i : funcList)
-			{
-				RegisterState(i.first, i.second);
-			}
-		}
+		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to,
+			Transition const& func); 
+		void RegisterTransition(TransitionIdentifier const& id, Transition const& func);
 
-		//TODO: REFORMAT TRANSITIONS
+		void BindTransition(StateIdentifier const& from, StateIdentifier const& to,
+			TransitionIdentifier const& transition);
 
-		void RegisterTransition(StateIdentifier const& from, StateIdentifier const& to, function<void()> const& func)
-		{
-			StateTransitions[{from, to}] = func;
-		}
-
-		void RegisterTransitions(TransitionInitializerList const& funcList)
-		{
-			for (auto const& i : funcList)
-			{
-				RegisterTransition(i.first.first, i.first.second, i.second);
-			}
-		}
-
-		StateMachine(StateIdentifier initialState) : NextState(std::move(initialState))
-		{
-		}
+		explicit StateMachine(StateIdentifier const& initialState);
 
 	public:
-		virtual ~StateMachine() = default;
+		virtual ~StateMachine();
 
-		T& AsyncStep()
-		{
-			if (NextState != "end")
-			{
-				auto from = NextState;
-				try
-				{
-					NextState = StateFunctions[from]();
-				}
-				catch (std::exception&)
-				{
-					NextState = from;
-				}
-				try
-				{
-					StateTransitions.at({from, NextState})();
-				}
-				catch (std::out_of_range&)
-				{
-				}
-			}
-			return *static_cast<T*>(this);
-		}
+		void AsyncStep();
 
-		T& Start()
-		{
-			while (NextState != GetEndString())
-			{
-				AsyncStep();
-			}
-			return *static_cast<T*>(this);
-		}
+		void Start();
 
-		StateIdentifier DoSingleRun(StateIdentifier const& step)
-		{
-			return StateFunctions[step]();
-		}
+		StateIdentifier DoSingleRun(StateIdentifier const& step);
 	};
 }
