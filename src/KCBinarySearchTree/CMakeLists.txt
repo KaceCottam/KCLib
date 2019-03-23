@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCBinarySearchTree VERSION 1.0.1)
+project(KCBinarySearchTree VERSION 1.0.2)
 
 set(KCModules ${KCModules} KCBinarySearchTree)
 set(KCBinarySearchTree_FILES KCBinarySearchTree.hpp KCBinarySearchTree.cpp)

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCStateMachine VERSION 1.0)
+project(KCStateMachine VERSION 1.1)
 
 set(KCModules ${KCModules} KCStateMachine)
 set(KCStateMachine_FILES KCStateMachine.hpp KCStateMachine.cpp)
