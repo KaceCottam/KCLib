@@ -13,16 +13,15 @@ namespace KC
 	protected:
 		using NodeT = Node<T, false>;
 		using TraversalNodeT = TraversalNode<T, false>;
-		using QueueT = Queue<T>;
 
 		NodeT* Header = nullptr;
 		int Length = 0;
 	public:
 		Queue() = default;
-		Queue(QueueT&& other) noexcept = default;
-		Queue(QueueT const& other);
-		QueueT& operator=(QueueT&& other) noexcept;
-		QueueT& operator=(QueueT const& other);
+		Queue(Queue<T>&& other) noexcept = default;
+		Queue(Queue<T> const& other);
+		Queue<T>& operator=(Queue<T>&& other) noexcept;
+		Queue<T>& operator=(Queue<T> const& other);
 		Queue(std::initializer_list<T> data);
 		Queue(int length, T const* data);
 
@@ -33,10 +32,10 @@ namespace KC
 
 		void Delete();
 
-		QueueT& Enqueue(T const& data);
-		QueueT& Enqueue(int num, T const* data);
-		QueueT& Enqueue(std::initializer_list<T> data);
-		QueueT& Enqueue(QueueT const& data);
+		Queue<T>& Enqueue(T const& data);
+		Queue<T>& Enqueue(int num, T const* data);
+		Queue<T>& Enqueue(std::initializer_list<T> data);
+		Queue<T>& Enqueue(Queue<T> const& data);
 
 		T Dequeue();
 		T& Peek() const;
@@ -46,13 +45,13 @@ namespace KC
 	};
 
 	template <class T>
-	Queue<T>::Queue(QueueT const& other)
+	Queue<T>::Queue(Queue<T> const& other)
 	{
 		Enqueue(other);
 	}
 
 	template <class T>
-	auto Queue<T>::operator=(QueueT&& other) noexcept -> QueueT&
+	auto Queue<T>::operator=(Queue<T>&& other) noexcept -> Queue<T>&
 	{
 		if (this != &other)
 		{
@@ -64,7 +63,7 @@ namespace KC
 	}
 
 	template <class T>
-	auto Queue<T>::operator=(QueueT const& other) -> QueueT&
+	auto Queue<T>::operator=(Queue<T> const& other) -> Queue<T>&
 	{
 		if (this != &other)
 		{
@@ -122,7 +121,7 @@ namespace KC
 	}
 
 	template <class T>
-	auto Queue<T>::Enqueue(T const& data) -> QueueT&
+	auto Queue<T>::Enqueue(T const& data) -> Queue<T>&
 	{
 		auto newNode = new NodeT(data);
 		if (!Header)
@@ -138,7 +137,7 @@ namespace KC
 	}
 
 	template <class T>
-	auto Queue<T>::Enqueue(int const num, T const* data) -> QueueT&
+	auto Queue<T>::Enqueue(int const num, T const* data) -> Queue<T>&
 	{
 		for (auto i = 0; i < num; i++)
 		{
@@ -148,14 +147,14 @@ namespace KC
 	}
 
 	template <class T>
-	auto Queue<T>::Enqueue(std::initializer_list<T> data) -> QueueT&
+	auto Queue<T>::Enqueue(std::initializer_list<T> data) -> Queue<T>&
 	{
 		Enqueue(data.size(), data.begin());
 		return *this;
 	}
 
 	template <class T>
-	auto Queue<T>::Enqueue(QueueT const& data) -> QueueT&
+	auto Queue<T>::Enqueue(Queue<T> const& data) -> Queue<T>&
 	{
 		auto travel = data.GetHeader();
 		while (*travel)
