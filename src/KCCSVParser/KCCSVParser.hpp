@@ -2,11 +2,12 @@
 #pragma once
 
 #include <utility>
-#include <string>
 #include <sstream>
+#include <string>
 #include <tuple>
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 namespace KC
 {
@@ -14,81 +15,81 @@ namespace KC
 	auto ExtractValueFromString(std::string const& data);
 
 	template <>
-	auto ExtractValueFromString<int>(std::string const& data)
+	inline auto ExtractValueFromString<int>(std::string const& data)
 	{
 		return std::stoi(data);
 	}
 	template <>
-	auto ExtractValueFromString<double>(std::string const& data)
+	inline auto ExtractValueFromString<double>(std::string const& data)
 	{
 		return std::stod(data);
 	}
 	template <>
-	auto ExtractValueFromString<float>(std::string const& data)
+	inline auto ExtractValueFromString<float>(std::string const& data)
 	{
 		return std::stof(data);
 	}
 	template <>
-	auto ExtractValueFromString<char>(std::string const& data)
+	inline auto ExtractValueFromString<char>(std::string const& data)
 	{
 		return data[0];
 	}
 	template<>
-	auto ExtractValueFromString<std::string>(std::string const& data)
+	inline auto ExtractValueFromString<std::string>(std::string const& data)
 	{
 		return data;
 	}
 
-	struct CSVEndOfFileException : std::exception
+	struct CSVEndOfFileException final : std::exception
 	{
 		using std::exception::what;
 		CSVEndOfFileException() : std::exception("CSV Parser Error: End of file encountered unexpectedly") { }
 	};
 
-	struct CSVFileNotFoundException : std::exception
+	struct CSVFileNotFoundException final : std::exception
 	{
 		using std::exception::what;
 		CSVFileNotFoundException() : std::exception("CSV Parser Error: File not found") { }
 	};
 
 	template<class ...Types>
-	class CSVParser
+	class CSVParser final
 	{
 		using Data = std::tuple<Types...>;
 
-		std::string const fileName;
-		std::ifstream dataFile{};
-		int const defaultLinesToSkip = 0;
+		std::string const FileName;
+		std::ifstream DataFile{};
+		int const DefaultLinesToSkip = 0;
 
-		char delim{','};
+		char Delimiter{','};
 
 	public:
-		CSVParser(std::string const& fileName, int const linesToSkip = 0) : fileName{fileName}, dataFile{fileName}, defaultLinesToSkip(linesToSkip)
+		explicit CSVParser(std::string const& fileName, int const linesToSkip = 0) : FileName{fileName}, DataFile{fileName}, DefaultLinesToSkip(linesToSkip)
 		{
-			if(!dataFile.is_open())
+			if(!DataFile.is_open())
 			{
 				throw CSVFileNotFoundException{};
 			}
-			SkipLines(defaultLinesToSkip);
+			SkipLines(DefaultLinesToSkip);
 		}
 
 		void ResetFile()
 		{
-			dataFile.close();
-			dataFile.open(fileName);
+			DataFile.close();
+			DataFile.open(FileName);
 		}
 
 		void SkipLines(int const linesToSkip)
 		{
 			for (auto i = 0; i < linesToSkip; i++)
 			{
-				std::getline(dataFile,std::string{},'\n');
+				std::getline(DataFile,std::string{},'\n');
 			}
 		}
 
-		void SetDelim(char const c)
+		void SetDelimiter(char const c)
 		{
-			delim = c;
+			Delimiter = c;
 		}
 
 	private:
@@ -107,20 +108,20 @@ namespace KC
 	public: 
 		auto ReadLine()
 		{
-			if(dataFile.eof())
+			if(DataFile.eof())
 			{
 				throw CSVEndOfFileException{};
 			}
 			Data d;
 			std::string line;
-			std::getline(dataFile,line,'\n');
+			std::getline(DataFile,line,'\n');
 			std::stringstream lineStream{line};
 
 			std::vector<std::string> dataArray;
 			for (auto i = 0; i < sizeof...(Types); i++)
 			{
 				std::string dataValue{};
-				std::getline(lineStream,dataValue,delim);
+				std::getline(lineStream,dataValue,Delimiter);
 				dataArray.push_back(dataValue);
 			}
 
@@ -136,7 +137,7 @@ namespace KC
 		auto ReadFile()
 		{
 			ResetFile();
-			SkipLines(defaultLinesToSkip);
+			SkipLines(DefaultLinesToSkip);
 
 			std::vector<Data> dataList;
 			try
@@ -156,11 +157,20 @@ namespace KC
 			return vd;
 		}
 
-		~CSVParser()
+		void CloseFile() 
 		{
-			dataFile.close();
+			try
+			{
+				DataFile.close();
+			} catch (std::fstream::failure const& e)
+			{
+				std::cerr << "Error while closing file: " << e.what();
+			}
 		}
 
-
+		~CSVParser()
+		{
+			CloseFile();
+		}
 	};
 }
