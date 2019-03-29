@@ -118,7 +118,7 @@ namespace KC
 			std::stringstream lineStream{line};
 
 			std::vector<std::string> dataArray;
-			for (auto i = 0; i < sizeof...(Types); i++)
+			for (auto i = 0u; i < sizeof...(Types); i++)
 			{
 				std::string dataValue{};
 				std::getline(lineStream,dataValue,Delimiter);

@@ -334,3 +334,6 @@ bin/
 build/
 include/
 lib/
+
+# Remove self-built cpp files
+src/examples/SimpleCSVParserShowcase/SimpleCSVParserShowcase.cpp

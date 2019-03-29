@@ -3,7 +3,7 @@
 int main()
 {
 	std::cout << "Trying to start parser.." << std::endl;
-	KC::CSVParser<int,std::string,double> parser("data.csv",1);
+	KC::CSVParser<int,std::string,double,char> parser("@CMAKE_CURRENT_SOURCE_DIR@/data.csv",1);
 	std::cout << "Trying to read from file..." << std::endl;
 	auto lines = parser.ReadFile();
 	std::cout << "done" << std::endl;
@@ -18,5 +18,6 @@ int main()
 		std::cout << std::endl;
 	}
 
+	std::cout << "Press enter to continue..." << std::endl;
 	std::cin.get();
 }

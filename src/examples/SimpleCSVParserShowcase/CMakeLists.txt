@@ -7,12 +7,11 @@ set(ExSimpleCSVParserShowcase_LIBS KCCSVParser)
 
 include_directories(${KCCSVParser_DIRECTORY})
 
+configure_file(
+	${CMAKE_CURRENT_SOURCE_DIR}/SimpleCSVParserShowcase.in.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SimpleCSVParserShowcase.cpp
+)
+
 add_executable(SimpleCSVParserShowcase ${ExSimpleCSVParserShowcase_FILES})
 
 target_link_libraries(SimpleCSVParserShowcase ${ExSimpleCSVParserShowcase_LIBS})
-
-add_custom_command(
-TARGET SimpleCSVParserShowcase POST_BUILD
-COMMAND ${CMAKE_COMMAND} -E copy 
-${CMAKE_CURRENT_SOURCE_DIR}/data.csv 
-${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data.csv)
