@@ -1,5 +1,6 @@
 //#comment file
 #include <KCConsole.hpp>
+#include <Windows.h>
 
 class Console : public KC::Console::ConsoleEngine
 {

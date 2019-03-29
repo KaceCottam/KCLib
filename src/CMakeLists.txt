@@ -8,5 +8,6 @@ add_subdirectory(KCQueues)
 add_subdirectory(KCMusic)
 add_subdirectory(KCBinarySearchTree)
 add_subdirectory(KCStacks)
+add_subdirectory(KCCSVParser)
 
 add_subdirectory(examples)
