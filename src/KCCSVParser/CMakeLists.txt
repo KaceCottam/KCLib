@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCCSVParser VERSION 0.1)
+project(KCCSVParser VERSION 1.0)
 
 set(KCModules ${KCModules} KCCSVParser)
 set(KCCSVParser_FILES KCCSVParser.hpp KCCSVParser.cpp)

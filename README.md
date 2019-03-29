@@ -49,6 +49,9 @@ You made it really easy to understand the information about syntax and modern co
 A few more thanks to my father, and my professor at Washington State University.
 
 ## CHANGELOG
+  Version 3.3:
+  - Added KCCSVParser, which parses CSV files.
+
   Version 3.2:
   - Added KCQueues, KCStacks, KCBinarySearchTree
   - Made KCStateMachine transitions into identifiers. Updated the code so it is now an std::unordered_map instead of std::map
