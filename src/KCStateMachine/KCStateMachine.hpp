@@ -10,9 +10,10 @@ namespace std
 {
 	template <> struct hash<pair<std::string, std::string>>
 	{
-		size_t operator()(const pair<std::string, std::string>& x) const
+		size_t operator()(const pair<std::string, std::string>& x) const noexcept
 		{
-			return size_t(39 * x.first[0] | x.second[0]);
+			std::hash<string> const stringHash;
+			return size_t(stringHash(x.first) | stringHash(x.second) * 39);
 		}
 	};
 }

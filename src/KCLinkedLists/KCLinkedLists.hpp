@@ -11,53 +11,50 @@ namespace KC
 	class LinkedList final
 	{
 	protected:
-		using NodeT = Node<T, DoublyLinked>;
-		using TraversalNodeT = TraversalNode<T, DoublyLinked>;
-		using LinkedListT = LinkedList<T, DoublyLinked>;
-		NodeT* Header = nullptr;
-		TraversalNodeT EndNode;
+		Node<T, DoublyLinked>* Header = nullptr;
+		TraversalNode<T, DoublyLinked> EndNode;
 		int Length = 0;
 		bool FlagChangedLastNode = false;
 	public:
 		LinkedList();
-		LinkedList(LinkedListT&& other) noexcept;
-		LinkedList(LinkedListT const& other);
-		LinkedListT& operator=(LinkedListT&& other) noexcept;
-		LinkedListT& operator=(LinkedListT const& other);
+		LinkedList(LinkedList<T, DoublyLinked>&& other) noexcept;
+		LinkedList(LinkedList<T, DoublyLinked> const& other);
+		LinkedList<T, DoublyLinked>& operator=(LinkedList<T, DoublyLinked>&& other) noexcept;
+		LinkedList<T, DoublyLinked>& operator=(LinkedList<T, DoublyLinked> const& other);
 		LinkedList(std::initializer_list<T> data);
 		LinkedList(int length, T const* data);
 
-		TraversalNodeT GetHeader() const;
-		TraversalNodeT GetIndex(int index) const;
+		TraversalNode<T, DoublyLinked> GetHeader() const;
+		TraversalNode<T, DoublyLinked> GetIndex(int index) const;
 		int GetLength() const;
 		bool IsEmpty() const;
 
 		void Delete();
 
-		LinkedListT& Append(T const& data);
-		LinkedListT& Append(int const& length, T const* data);
-		LinkedListT& Append(LinkedListT const& other);
-		LinkedListT& Append(std::initializer_list<T> data);
+		LinkedList<T, DoublyLinked>& Append(T const& data);
+		LinkedList<T, DoublyLinked>& Append(int const& length, T const* data);
+		LinkedList<T, DoublyLinked>& Append(LinkedList<T, DoublyLinked> const& other);
+		LinkedList<T, DoublyLinked>& Append(std::initializer_list<T> data);
 
-		LinkedListT& Push(T const& data, int const& index = 0);
-		LinkedListT& Push(int length, T const* data, int const& index = 0);
-		LinkedListT& Push(LinkedListT const& other, int const& index = 0);
-		LinkedListT& Push(std::initializer_list<T> data, int const& index = 0);
+		LinkedList<T, DoublyLinked>& Push(T const& data, int const& index = 0);
+		LinkedList<T, DoublyLinked>& Push(int length, T const* data, int const& index = 0);
+		LinkedList<T, DoublyLinked>& Push(LinkedList<T, DoublyLinked> const& other, int const& index = 0);
+		LinkedList<T, DoublyLinked>& Push(std::initializer_list<T> data, int const& index = 0);
 
 		T Pull(int const& index = 0);
-		T Pull(TraversalNodeT& traversalNode, int const& index = 0);
+		T Pull(TraversalNode<T, DoublyLinked>& traversalNode, int const& index = 0);
 		T& operator[](int index) const;
 
-		TraversalNodeT Begin();
-		TraversalNodeT End();
+		TraversalNode<T, DoublyLinked> Begin();
+		TraversalNode<T, DoublyLinked> End();
 
 		~LinkedList();
 	};
 
 	template <class T, bool DoublyLinked>
-	typename LinkedList<T, DoublyLinked>::TraversalNodeT LinkedList<T, DoublyLinked>::GetHeader() const
+	TraversalNode<T, DoublyLinked> LinkedList<T, DoublyLinked>::GetHeader() const
 	{
-		return TraversalNodeT(Header);
+		return TraversalNode<T, DoublyLinked>(Header);
 	}
 
 	template <class T, bool DoublyLinked>
@@ -73,7 +70,7 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::GetIndex(const int index) const -> TraversalNodeT
+	TraversalNode<T, DoublyLinked> LinkedList<T, DoublyLinked>::GetIndex(const int index) const
 	{
 		if (index > Length - 1)
 		{
@@ -84,7 +81,7 @@ namespace KC
 			throw std::out_of_range("Index is less than 0!");
 		}
 
-		TraversalNodeT traversalNode(Header);
+		TraversalNode<T, DoublyLinked> traversalNode(Header);
 
 		traversalNode += index;
 
@@ -101,7 +98,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Push(LinkedListT const& other, int const& index) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Push(LinkedList<T, DoublyLinked> const& other, int const& index)
 	{
 		auto length = other.Length;
 		for (auto i = length - 1; i >= 0; --i)
@@ -112,7 +110,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Push(const int length, T const* data, int const& index) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Push(const int length, T const* data, int const& index)
 	{
 		for (auto i = 0; i < length; ++i)
 		{
@@ -122,7 +121,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Push(std::initializer_list<T> data, int const& index) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Push(std::initializer_list<T> data, int const& index)
 	{
 		Push(data.size(), data.begin(), index);
 		return *this;
@@ -141,7 +141,7 @@ namespace KC
 		if (index == 0)
 		{
 			data = Header->Data;
-			NodeT* oldHeader = Header;
+			Node<T, DoublyLinked>* oldHeader = Header;
 			if (oldHeader != Header->Next)
 			{
 				Header = Header->Next;
@@ -162,12 +162,12 @@ namespace KC
 		}
 		else
 		{
-			TraversalNodeT traversalNode(Header);
+			TraversalNode<T, DoublyLinked> traversalNode(Header);
 			traversalNode += index;
 
 			data = traversalNode->Data;
 
-			NodeT::LinkNodes({traversalNode->Previous, traversalNode->Next});
+			Node<T, DoublyLinked>::LinkNodes({traversalNode->Previous, traversalNode->Next});
 
 			delete *traversalNode;
 		}
@@ -178,7 +178,7 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	T LinkedList<T, DoublyLinked>::Pull(TraversalNodeT& traversalNode, int const& index)
+	T LinkedList<T, DoublyLinked>::Pull(TraversalNode<T, DoublyLinked>& traversalNode, int const& index)
 	{
 		if (traversalNode->Next == *traversalNode)
 		{
@@ -203,19 +203,20 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	LinkedList<T, DoublyLinked>::LinkedList(LinkedListT&& other) noexcept
+	LinkedList<T, DoublyLinked>::LinkedList(LinkedList<T, DoublyLinked>&& other) noexcept
 	{
 		Push(other);
 	}
 
 	template <class T, bool DoublyLinked>
-	LinkedList<T, DoublyLinked>::LinkedList(LinkedListT const& other)
+	LinkedList<T, DoublyLinked>::LinkedList(LinkedList<T, DoublyLinked> const& other)
 	{
 		Push(other);
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::operator=(LinkedListT&& other) noexcept -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::operator=(LinkedList<T, DoublyLinked>&& other) noexcept
 	{
 		if (this != &other)
 		{
@@ -230,7 +231,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::operator=(LinkedListT const& other) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::operator=(LinkedList<T, DoublyLinked> const& other)
 	{
 		if (this != &other)
 		{
@@ -253,33 +255,34 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Begin() -> TraversalNodeT
+	TraversalNode<T, DoublyLinked> LinkedList<T, DoublyLinked>::Begin()
 	{
-		return TraversalNodeT(Header);
+		return TraversalNode<T, DoublyLinked>(Header);
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::End() -> TraversalNodeT
+	TraversalNode<T, DoublyLinked> LinkedList<T, DoublyLinked>::End()
 	{
 		if (!FlagChangedLastNode)
 		{
 			return EndNode;
 		}
 		FlagChangedLastNode = false;
-		TraversalNodeT traversalNode = Begin();
+		TraversalNode<T, DoublyLinked> traversalNode = Begin();
 		traversalNode += Length - 1;
 		EndNode = traversalNode;
 		return traversalNode;
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Push(T const& data, int const& index) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Push(T const& data, int const& index)
 	{
 		if (!Header)
 		{
 			FlagChangedLastNode = true;
 		}
-		auto newNode = new NodeT(data);
+		auto newNode = new Node<T, DoublyLinked>(data);
 		if (Header && index != 0)
 		{
 			if (index > Length - 1)
@@ -290,13 +293,13 @@ namespace KC
 			{
 				throw std::out_of_range("Index less than 0!");
 			}
-			TraversalNodeT traversalNode(Header);
+			TraversalNode<T, DoublyLinked> traversalNode(Header);
 			traversalNode += index;
-			NodeT::LinkNodes({traversalNode->Previous, newNode, *traversalNode});
+			Node<T, DoublyLinked>::LinkNodes({traversalNode->Previous, newNode, *traversalNode});
 		}
 		else
 		{
-			NodeT::LinkNodes({newNode, Header});
+			Node<T, DoublyLinked>::LinkNodes({newNode, Header});
 			Header = newNode;
 		}
 
@@ -305,7 +308,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Append(T const& data) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Append(T const& data)
 	{
 		if (!Header)
 		{
@@ -313,15 +317,16 @@ namespace KC
 			return *this;
 		}
 		auto previousHeader = End();
-		auto newNode = new NodeT(data);
-		NodeT::LinkNodes({*previousHeader, newNode});
+		auto newNode = new Node<T, DoublyLinked>(data);
+		Node<T, DoublyLinked>::LinkNodes({*previousHeader, newNode});
 		++Length;
 		FlagChangedLastNode = true;
 		return *this;
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Append(LinkedListT const& other) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Append(LinkedList<T, DoublyLinked> const& other)
 	{
 		auto length = other.GetLength();
 		for (auto i = 0; i < length; ++i)
@@ -332,7 +337,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Append(int const& length, T const* data) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Append(int const& length, T const* data)
 	{
 		for (auto i = 0; i < length; ++i)
 		{
@@ -342,7 +348,8 @@ namespace KC
 	}
 
 	template <class T, bool DoublyLinked>
-	auto LinkedList<T, DoublyLinked>::Append(std::initializer_list<T> data) -> LinkedListT&
+	LinkedList<T, DoublyLinked>&
+	LinkedList<T, DoublyLinked>::Append(std::initializer_list<T> data)
 	{
 		Append(data.size(), data.begin());
 		return *this;
