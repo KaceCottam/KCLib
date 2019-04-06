@@ -75,8 +75,8 @@ namespace KC
 
 		void ResetFile()
 		{
-			DataFile.close();
-			DataFile.open(FileName);
+			OpenFile(FileName);
+			CloseFile();
 		}
 
 		void SkipLines(int const linesToSkip)
@@ -165,6 +165,16 @@ namespace KC
 			} catch (std::fstream::failure const& e)
 			{
 				std::cerr << "Error while closing file: " << e.what();
+			}
+		}
+		void OpenFile(std::string const& fileName)
+		{
+			try
+			{
+				DataFile.open(fileName);
+			} catch(std::fstream::failure const& e)
+			{
+				std::cerr << "Error while opening file: " << e.what();
 			}
 		}
 
