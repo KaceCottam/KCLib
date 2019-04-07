@@ -49,6 +49,9 @@ You made it really easy to understand the information about syntax and modern co
 A few more thanks to my father, and my professor at Washington State University.
 
 ## CHANGELOG
+  Version 4.0:
+  - Update KCConsole. No longer does things on an update, has console output panes. In a prerelease state.
+
   Version 3.3:
   - Added KCCSVParser, which parses CSV files.
 

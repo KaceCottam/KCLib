@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(KCConsole VERSION 1.0)
+project(KCConsole VERSION 2.0)
 
 set(KCModules ${KCModules} KCConsole)
 set(KCConsole_FILES KCConsole.hpp KCConsole.cpp)
