@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <locale>
+#include <stdexcept>
 
 using KC::Music::FetchTone;
 using KC::Music::TONE_VALUE;
@@ -12,23 +13,23 @@ auto KC::MusicFile::TestFileParsing(const bool& fileStart, const bool& fileEnd, 
 {
     if (!fileStart)
     {
-        throw std::exception("ERROR: No 00 marker!");
+        throw std::logic_error("ERROR: No 00 marker!");
     }
     if (bpm == 0)
     {
-        throw std::exception("ERROR: No tempo set!");
+        throw std::logic_error("ERROR: No tempo set!");
     }
     if (baseNote == 0)
     {
-        throw std::exception("ERROR: No base note set!");
+        throw std::logic_error("ERROR: No base note set!");
     }
     if (!musicStart)
     {
-        throw std::exception("ERROR: No M0 marker!");
+        throw std::logic_error("ERROR: No M0 marker!");
     }
     if (!fileEnd)
     {
-        throw std::exception("ERROR: No FF marker!");
+        throw std::logic_error("ERROR: No FF marker!");
     }
 }
 
@@ -87,11 +88,11 @@ auto KC::MusicFile::SetLocals(const std::stringstream& buffer, const int& bpm, c
         EighthNoteDuration = 60 * 1000 / bpm;
         break;
     default:
-        throw std::exception("Base NoteLength is invalid!");
+        throw std::logic_error("Base NoteLength is invalid!");
     }
     if (Buffer.length() == 0)
     {
-        throw std::exception("Buffer remained unset!");
+        throw std::logic_error("Buffer remained unset!");
     }
 }
 

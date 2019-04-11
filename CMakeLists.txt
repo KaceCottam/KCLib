@@ -3,23 +3,21 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project (KCLib)
+project(KCLib VERSION 4.0)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-set(KCLIB_HEADER_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include)
+option(COMPILE_SOURCE ON)
+option(COMPILE_TESTS OFF)
+option(COMPILE_EXAMPLES OFF)
 
-set(KCConsole_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCConsole)
-set(KCStateMachine_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCStateMachine)
-set(KCNodes_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCNodes)
-set(KCLinkedLists_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCLinkedLists)
-set(KCQueues_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCQueues)
-set(KCMusic_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCMusic)
-set(KCBinarySearchTree_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCBinarySearchTree)
-set(KCStacks_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCStacks)
-set(KCCSVParser_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/KCCSVParser)
+if(COMPILE_SOURCE)
+  add_subdirectory(src)
+endif()
 
-add_subdirectory(src)
+if(COMPILE_TESTS)
+  add_subdirectory(tests)
+endif()
 
-add_subdirectory(tests)
+if(COMPILE_EXAMPLES)
+  add_subdirectory(examples/SimpleBSTShowcase)
+  add_subdirectory(examples/SimpleCSVParserShowcase)
+endif()

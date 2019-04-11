@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <conio.h>
+#include <cstring>
 
 #define NOT_IMPLEMENTED 0 // Error Code
 
@@ -250,7 +251,7 @@ namespace KC
 			void SetColor(WORD const in, WORDS const ... args)
 			{
 				SetColor(in);
-				SetAttributes(args);
+				SetAttributes(args...);
 			}
 
 			// DrawLine function adapted from https://github.com/OneLoneCoder/olcPixelGameEngine/
