@@ -1,10 +1,12 @@
 //@KCLIB_FILE_COMMENT@
 #pragma once
 
-#include <memory>
 #include <KCLib/KCExceptions.hpp>
+#include <memory>
 
 namespace kc {
+
+struct no_data : failure {};
 
 template <typename T>
 class list final {
@@ -40,8 +42,9 @@ class list final {
 
   size_t size() const noexcept;
   bool empty() const noexcept;
-  iterator begin() const noexcept;
-  iterator end() const noexcept;
+  iterator begin() const;
+  iterator end() const;
+  iterator end(int) const;
   T &operator[](size_t index) noexcept;
   T &at(size_t index);
   void push(const T &data);
@@ -79,8 +82,8 @@ T *list<T>::node::operator->() noexcept {
 
 template <typename T>
 void list<T>::node::LinkNodes(node *lhs, node *rhs) noexcept {
-  lhs->next = rhs;
-  rhs->previous = lhs;
+  if (lhs) lhs->next = rhs;
+  if (rhs) rhs->previous = lhs;
 }
 
 template <typename T>
@@ -94,11 +97,8 @@ template <typename T>
 list<T>::iterator::iterator(node &node) noexcept : iterator{&node} {}
 
 template <typename T>
-list<T>::iterator::iterator(node *node) noexcept : current_node{node} {
-  if (!current_node) {
-    // throw bad_index(1);
-  }
-}
+list<T>::iterator::iterator(node *node) noexcept : current_node{node} {}
+
 template <typename T>
 list<T>::iterator::iterator(const iterator &other) noexcept
     : current_node{other.current_node} {}
@@ -207,13 +207,18 @@ bool list<T>::empty() const noexcept {
 }
 
 template <typename T>
-auto list<T>::begin() const noexcept -> iterator {
+auto list<T>::begin() const -> iterator {
   return iterator{header_};
 }
 
 template <typename T>
-auto list<T>::end() const noexcept -> iterator {
+auto list<T>::end() const -> iterator {
   return begin() += size();
+}
+
+template <typename T>
+auto list<T>::end(int) const -> iterator {
+  return begin() += size() - 1;
 }
 
 template <typename T>
@@ -264,6 +269,9 @@ void list<T>::push_back(const T &data, const Args &... args) {
 template <typename T>
 T list<T>::pop() {
   auto header = begin();
+  if (!header.current_node) {
+    throw no_data{};
+  }
   T data{*header};
   header_ = header->next;
   delete header.current_node;
@@ -273,7 +281,7 @@ T list<T>::pop() {
 
 template <typename T>
 T list<T>::pop_back() {
-  auto back = end();
+  auto back = end(0);
   T data{*back};
   node::LinkNodes(back->previous, nullptr);
   delete (back.current_node);

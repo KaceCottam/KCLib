@@ -1,31 +1,47 @@
 cmake_minimum_required(VERSION 3.8)
 
-macro(add_kc_project TARGET TARGET_VERSION)
-  project(${TARGET} VERSION ${TARGET_VERSION})
+function(add_kc_project)
+  set(CURRENT_OPTION "NAME")
+  foreach(I IN ITEMS ${ARGN})
+    if("${I}" MATCHES "NAME")
+      set(CURRENT_OPTION NAME)
+    elseif("${I}" MATCHES "VERSION")
+      set(CURRENT_OPTION VERSION)
+    elseif("${I}" MATCHES "REQUIRES")
+      set(CURRENT_OPTION REQUIRES)
+    elseif("${I}" MATCHES "FILES")
+      set(CURRENT_OPTION FILES)
+    else()
+      set(${CURRENT_OPTION} ${${CURRENT_OPTION}} ${I})
+    endif() 
+  endforeach()
 
-  if(EXISTS KCLib/${TARGET}.cpp)
-    add_library(${TARGET} KCLib/${TARGET}.hpp KCLib/${TARGET}.cpp)
+  project(${NAME} VERSION ${VERSION})
+
+  if(${FILES})
+    add_library(${NAME} KCLib/${NAME}.hpp ${FILES}})
   else()
-    add_library(${TARGET} KCLib/${TARGET}.hpp KCLib/static.cpp)
+    add_library(${NAME} KCLib/${NAME}.hpp KCLib/static.cpp)
   endif()
-  set(KCModules ${KCModules} ${TARGET} PARENT_SCOPE)
+  set(KCModules ${KCModules} ${NAME} PARENT_SCOPE)
 
-  set_target_properties(${TARGET} PROPERTIES
+  set_target_properties(${NAME} PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-  if(${ARGC} GREATER 2)
-    target_include_directories(${TARGET} PRIVATE .)
-    message("Added KC project: " ${TARGET} " (" ${TARGET_VERSION} ") [requires " ${ARGN} "]")
+  if(${REQUIRES})
+    target_include_directories(${NAME} PRIVATE .)
+    message("Added KC project: " ${NAME} " (" ${VERSION} ") [requires " ${REQUIRES} "]")
   else()
-    message("Added KC project: " ${TARGET} " (" ${TARGET_VERSION} ")")
+    message("Added KC project: " ${NAME} " (" ${VERSION} ")")
   endif() 
-endmacro(add_kc_project TARGET TARGET_VERSION)
+endfunction(add_kc_project)
 
-add_kc_project(KCExceptions 1.0)
-add_kc_project(KCLists 2.0 KCExceptions) 
-add_kc_project(KCQueues 2.0 KCExceptions) # UNTESTED
+
+add_kc_project(KCExceptions VERSION 1.0)
+add_kc_project(KCLists VERSION 2.0 REQUIRES KCExceptions) 
+add_kc_project(KCQueues VERSION 2.0 REQUIRES KCExceptions) # UNTESTED
 # add_kc_project(KCConsole 2.0) # UNTESTED
 # add_kc_project(KCStateMachine 2.0) # UNTESTED
 # add_kc_project(KCMusic 1.0) # UNTESTED

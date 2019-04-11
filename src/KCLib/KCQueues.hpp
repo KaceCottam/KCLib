@@ -18,25 +18,18 @@ class queue final {
     iterator &operator+=(size_t number);
     T *operator->();
     T &operator*();
-    friend bool operator==(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
-    friend bool operator!=(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
-    friend bool operator<(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
-    friend bool operator>(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
-    friend bool operator<=(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
-    friend bool operator>=(queue<T, Size>::iterator &lhs,queue<T, Size>::iterator &rhs);
   };
   queue();
   queue(queue<T, Size> &&other) noexcept;
-  queue(queue<T, Size> const &other);
+  queue(const queue<T, Size> &other);
   queue<T, Size> &operator=(queue<T, Size> &&other) noexcept;
-  queue<T, Size> &operator=(queue<T, Size> const &other);
-  queue(const T &data);
+  queue<T, Size> &operator=(const queue<T, Size> &other);
   template <typename... Args>
   queue(const Args &... data);
   size_t size() const;
   bool empty() const;
   void empty(int);
-  void enqueue(T const &data);
+  void enqueue(const T &data);
   template <typename... Args>
   void enqueue(const T &data, const Args &... args);
   T dequeue();
@@ -102,11 +95,36 @@ T &queue<T, Size>::iterator::operator*() {
 }
 
 template <typename T, int Size>
+bool operator==(typename queue<T, Size>::iterator &lhs,typename  queue<T, Size>::iterator &rhs) {
+  return lhs.current_data == rhs.current_data;
+}
+template <typename T, int Size>
+bool operator!=(typename queue<T, Size>::iterator &lhs, typename queue<T, Size>::iterator &rhs) {
+  return !(lhs == rhs);
+}
+template <typename T, int Size>
+bool operator<(typename queue<T, Size>::iterator &lhs, typename queue<T, Size>::iterator &rhs) {
+  return lhs.current_data < rhs.current_data;
+}
+template <typename T, int Size>
+bool operator>(typename queue<T, Size>::iterator &lhs, typename queue<T, Size>::iterator &rhs) {
+  return lhs.current_data > rhs.current_data;
+}
+template <typename T, int Size>
+bool operator<=(typename queue<T, Size>::iterator &lhs, typename queue<T, Size>::iterator &rhs) {
+  return !(lhs > rhs);
+}
+template <typename T, int Size>
+bool operator>=(typename queue<T, Size>::iterator &lhs, typename queue<T, Size>::iterator &rhs) {
+  return !(lhs < rhs);
+}
+
+template <typename T, int Size>
 queue<T, Size>::queue() = default;
 
 template <typename T, int Size>
 queue<T, Size>::queue(queue<T, Size> &&other) noexcept
-  : current_data_{other._data_}, current_size_{other.current_size_} {
+    : current_data_{other._data_}, current_size_{other.current_size_} {
   other.current_size_ = 0;
   other.data_ = nullptr;
 }
@@ -116,6 +134,78 @@ queue<T, Size>::queue(const queue<T, Size> &other) {
   for (auto i : other) {
     enqueue(*i);
   }
+}
+
+template <typename T, int Size>
+auto queue<T, Size>::operator=(queue<T, Size> &&other) noexcept -> queue & {
+  if(this != &other)
+  {
+    empty(0);
+    data_ = std::move(other.data_);
+    current_size_ = std::move(other.current_size_);
+  }
+}
+
+template <typename T, int Size>
+auto queue<T, Size>::operator=(const queue<T, Size> &other) -> queue & {
+  if(this != &other)
+  {
+    empty(0);
+    for (auto i : other) {
+      enqueue(*i);
+    }
+  }
+}
+
+template <typename T, int Size>
+template <typename... Args>
+queue<T, Size>::queue(const Args &... data) {
+  enqueue(data...);
+}
+
+template <typename T, int Size>
+size_t queue<T, Size>::size() const {
+  return current_size_;
+}
+
+template <typename T, int Size>
+bool queue<T, Size>::empty() const {
+  return size() == 0;
+}
+
+template <typename T, int Size>
+void queue<T, Size>::empty(int) {
+  while (!empty()) {
+    dequeue();
+  }
+}
+
+template <typename T, int Size>
+void queue<T, Size>::enqueue(const T &data) {
+  data_[current_size_++] = data;
+}
+
+template <typename T, int Size>
+template <typename... Args>
+void queue<T, Size>::enqueue(const T &data, const Args &... args)
+{
+  enqueue(data);
+  enqueue(args...);
+}
+
+template <typename T, int Size>
+T queue<T, Size>::dequeue() {
+  return std::move(data_[--current_size_]);
+}
+
+template <typename T, int Size>
+T &queue<T, Size>::peek() const {
+  return data_[current_size_ - 1]);
+}
+
+template <typename T, int Size>
+queue<T, Size>::~queue() {
+  empty(0);
 }
 
 }  // namespace kc

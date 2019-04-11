@@ -5,11 +5,11 @@ cmake_minimum_required (VERSION 3.8)
 
 project(KCLib VERSION 4.0)
 
-option(COMPILE_SOURCE ON)
+option(COMPILE_SOURCES ON)
 option(COMPILE_TESTS OFF)
 option(COMPILE_EXAMPLES OFF)
 
-if(COMPILE_SOURCE)
+if(COMPILE_SOURCES)
   add_subdirectory(src)
 endif()
 
