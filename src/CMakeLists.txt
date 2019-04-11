@@ -6,6 +6,11 @@ macro(add_kc_project TARGET TARGET_VERSION)
   add_library(${TARGET} KCLib/${TARGET}.hpp KCLib/${TARGET}.cpp)
   set(KCModules ${KCModules} ${TARGET} PARENT_SCOPE)
 
+  set_target_properties(${TARGET} PROPERTIES
+  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
+  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
   if(${ARGC} GREATER 2)
     target_include_directories(${TARGET} PRIVATE .)
     message("Added KC project: " ${TARGET} " (" ${TARGET_VERSION} ") [requires " ${ARGN} "]")
