@@ -8,6 +8,7 @@ project(KCLib VERSION 4.0)
 option(COMPILE_SOURCES ON)
 option(COMPILE_TESTS OFF)
 option(COMPILE_EXAMPLES OFF)
+option(CODE_COVERAGE ON)
 
 if(COMPILE_SOURCES)
   add_subdirectory(src)

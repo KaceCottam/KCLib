@@ -26,12 +26,13 @@ function(add_kc_project)
   set(KCModules ${KCModules} ${NAME} PARENT_SCOPE)
 
   set_target_properties(${NAME} PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
-  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin
+  )
 
   if(${REQUIRES})
-    target_include_directories(${NAME} PRIVATE .)
+    target_include_directories(${NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/)
     message("Added KC project: " ${NAME} " (" ${VERSION} ") [requires " ${REQUIRES} "]")
   else()
     message("Added KC project: " ${NAME} " (" ${VERSION} ")")

@@ -1,8 +1,9 @@
 //@KCLIB_FILE_COMMENT@
 #pragma once
 
-#include <KCLib/KCExceptions.hpp>
 #include <memory>
+
+#include <KCLib/KCExceptions.hpp>
 
 namespace kc {
 
