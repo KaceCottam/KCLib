@@ -5,22 +5,11 @@
 #include <KCLib/KCExceptions.hpp>
 
 namespace kc {
-struct out_of_range : bad_index {
-  enum Range {
-    LESS_THAN,
-    GREATER_THAN,
-    LESS_THAN_OR_EQUAL_TO,
-    GREATER_THAN_OR_EQUAL_TO,
-    INVALID
-  } range;
-  out_of_range(Range range, size_t value);
-  out_of_range();
-};
 
 template <typename T>
-class list {
+class list final {
  public:
-  struct node {
+  struct node final {
     T data;
     node *next;
     node *previous;
@@ -33,7 +22,7 @@ class list {
     T *operator->() noexcept;
   };
 
-  struct iterator {
+  struct iterator final {
     node *current_node;
     iterator(node &node) noexcept;
     iterator(node *node) noexcept;
@@ -77,11 +66,6 @@ class list {
   size_t length_{0};
   node *header_{nullptr};
 };
-
-inline out_of_range::out_of_range(Range const range, size_t const value)
-    : bad_index{value}, range{range} {}
-
-inline out_of_range::out_of_range() : bad_index{0}, range{INVALID} {}
 
 template <typename T>
 T &list<T>::node::operator*() noexcept {
@@ -127,8 +111,9 @@ list<T>::iterator::iterator(iterator &&other) noexcept
 
 template <typename T>
 auto list<T>::iterator::operator--() -> iterator & {
-  if (!current_node) throw out_of_range{};
-  current_node = current_node->previous;
+  if (current_node) {
+    current_node = current_node->previous;
+  }
   return *this;
 }
 
@@ -149,8 +134,9 @@ auto list<T>::iterator::operator-=(size_t const rhs) -> iterator & {
 
 template <typename T>
 auto list<T>::iterator::operator++() -> iterator & {
-  if (!current_node) throw out_of_range{};
-  current_node = current_node->next;
+  if (current_node) {
+    current_node = current_node->next;
+  }
   return *this;
 }
 
@@ -175,8 +161,39 @@ auto list<T>::iterator::operator-> () noexcept -> node * {
 }
 
 template <typename T>
-auto list<T>::iterator::operator*() noexcept -> T& {
+auto list<T>::iterator::operator*() noexcept -> T & {
   return **current_node;
+}
+
+template <typename T>
+bool operator==(typename list<T>::iterator &lhs,
+                typename list<T>::iterator &rhs) {
+  return lhs.current_node == rhs.current_node;
+}
+template <typename T>
+bool operator!=(typename list<T>::iterator &lhs,
+                typename list<T>::iterator &rhs) {
+  return !(lhs == rhs);
+}
+template <typename T>
+bool operator<(typename list<T>::iterator &lhs,
+               typename list<T>::iterator &rhs) {
+  return lhs.current_node < rhs.current_node;
+}
+template <typename T>
+bool operator>(typename list<T>::iterator &lhs,
+               typename list<T>::iterator &rhs) {
+  return lhs.current_node > rhs.current_node;
+}
+template <typename T>
+bool operator<=(typename list<T>::iterator &lhs,
+                typename list<T>::iterator &rhs) {
+  return !(lhs > rhs);
+}
+template <typename T>
+bool operator>=(typename list<T>::iterator &lhs,
+                typename list<T>::iterator &rhs) {
+  return !(lhs < rhs);
 }
 
 template <typename T>
@@ -196,7 +213,7 @@ auto list<T>::begin() const noexcept -> iterator {
 
 template <typename T>
 auto list<T>::end() const noexcept -> iterator {
-  return begin() += (size() - 1);
+  return begin() += size();
 }
 
 template <typename T>
@@ -254,8 +271,6 @@ T list<T>::pop() {
   return data;
 }
 
-// TODO: T[] pop()
-
 template <typename T>
 T list<T>::pop_back() {
   auto back = end();
@@ -265,8 +280,6 @@ T list<T>::pop_back() {
   --length_;
   return data;
 }
-
-// TODO: T[] pop_back()
 
 template <typename T>
 void list<T>::empty(const int) noexcept {
@@ -325,4 +338,5 @@ list<T> &list<T>::operator=(list<T> &&other) noexcept {
   }
   return *this;
 }
+
 }  // namespace kc
