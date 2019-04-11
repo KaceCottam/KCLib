@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 3.8)
 
-set(Tests_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+function(add_kc_test TARGET TEST_TARGET)
+  project(${TARGET})#VERSION ${${TEST_TARGET}_VERSION}
+  # add_test(${TARGET} ${TARGET}.cpp)
+  add_executable(${TARGET} ${TARGET}.cpp)
+  target_include_directories(${TARGET} PRIVATE ${CMAKE_SOURCE_DIR}/src .)
+  message("Added KC Test: " ${TARGET} " testing " ${TEST_TARGET} " (" ${${TEST_TARGET}_VERSION} ")")
+endfunction(add_kc_test)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/tests)
-
-add_subdirectory(TestKCLinkedLists)
-add_subdirectory(TestKCQueues) 
-add_subdirectory(TestKCStateMachine)
-add_subdirectory(TestKCBinarySearchTree)
-add_subdirectory(TestKCStacks)
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/RunAllTests.bat DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+add_kc_test(TestLists KCLists)
+# add_subdirectory(TestKCQueues) 
+# add_subdirectory(TestKCStateMachine)
+# add_subdirectory(TestKCBinarySearchTree)
+# add_subdirectory(TestKCStacks)

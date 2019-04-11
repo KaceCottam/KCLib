@@ -1,5 +1,5 @@
-#include <Test.h>
-#include <KCBinarySearchTree.hpp>
+#include <Catch2/catch.hpp>
+#include <KCLib/KCBinarySearchTree.hpp>
 
 TEMPLATE_TEST_CASE("template works with multiple types","[bst][multiple values][insert]",int,float,char,double,long,long long)
 {

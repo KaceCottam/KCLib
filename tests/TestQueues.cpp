@@ -1,5 +1,5 @@
-#include <Test.h>
-#include <KCQueues.hpp>
+#include <Catch2/catch.hpp>
+#include <KCLib/KCQueues.hpp>
 
 TEMPLATE_TEST_CASE("test queue with multiple types","[queue][enqueue][dequeue][multiple values]",int, char, long, long long, float, double)
 {

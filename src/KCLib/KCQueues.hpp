@@ -2,7 +2,6 @@
 #pragma once
 
 #include <stdexcept>
-#include <KCNodes.hpp>
 #include <initializer_list>
 
 namespace KC

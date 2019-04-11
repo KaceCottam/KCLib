@@ -1,5 +1,5 @@
-#include <Test.h>
-#include <KCStacks.hpp>
+#include <Catch2/catch.hpp>
+#include <KCLib/KCStacks.hpp>
 
 TEMPLATE_TEST_CASE("stacks work with many data types","[stack][array][data structure]",int,char,double,float,long,long long)
 {
