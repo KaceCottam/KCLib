@@ -285,12 +285,16 @@ function(SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML)
 
         # Running gcovr
         COMMAND ${Python_EXECUTABLE} ${GCOVR_PATH} --html --html-details
-            -r ${PROJECT_SOURCE_DIR} ${GCOVR_EXCLUDES}
+            -r ${CMAKE_SOURCE_DIR} ${GCOVR_EXCLUDES}
             --object-directory=${PROJECT_BINARY_DIR}
             -o ${Coverage_NAME}/index.html
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
         DEPENDS ${Coverage_DEPENDENCIES}
         COMMENT "Running gcovr to produce HTML code coverage report."
+        COMMENT "${Python_EXECUTABLE} ${GCOVR_PATH} --html --html-details
+            -r ${CMAKE_SOURCE_DIR} ${GCOVR_EXCLUDES}
+            --object-directory=${PROJECT_BINARY_DIR}
+            -o ${Coverage_NAME}/index.html"
     )
 
     # Show info where to find the report

@@ -55,7 +55,9 @@ class list final {
   template <typename... Args>
   void push_back(const T &data, const Args &... args);
   T pop();
+  T &pop(T &data);
   T pop_back();
+  T &pop_back(T &data);
   void empty(int) noexcept;
   ~list() noexcept;
   list();
@@ -281,12 +283,24 @@ T list<T>::pop() {
 }
 
 template <typename T>
+T &list<T>::pop(T &data) {
+  data = pop();
+  return data;
+}
+
+template <typename T>
 T list<T>::pop_back() {
   auto back = end(0);
   T data{*back};
   node::LinkNodes(back->previous, nullptr);
   delete (back.current_node);
   --length_;
+  return data;
+}
+
+template <typename T>
+T &list<T>::pop_back(T &data) {
+  data = pop_back();
   return data;
 }
 
